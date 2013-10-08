@@ -1,4 +1,5 @@
 <?php
+require_once('UKM/innslag.class.php');
 function UKMprogram_forestilling($m) {
 require_once(WP_PLUGIN_DIR.'/UKMdeltakere/liste.inc.php');
 	$tittellose_innslag = array(4,5,8,9);
