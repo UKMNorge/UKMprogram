@@ -1,0 +1,238 @@
+/* Huskeregel - marin: Top Right Bottom Left; (TRBL, uttales trouble) */
+/* lightGray = #D3D3D3 */
+
+#hugesubmit {
+	border-color: #0a6158;
+	border-style: solid;
+	border-width: 1px;
+	cursor: pointer;
+	position: fixed;
+	left: 850px;
+	top: 124px;
+	background: #a0cf67;
+	color: #1e4a45;
+	font-weight: normal;
+	font-size: 14px;
+	text-align: center;
+	-moz-border-radius: 10px; /* Firefox */
+  	-webkit-border-radius: 10px; /* Safari, Chrome */
+ 	border-radius: 10px; /* CSS3 */
+ 	padding: 45px;
+}
+#hugesubmit div#lagre {
+	font-size: 24px;
+	font-weight: bold;
+	margin-bottom: 8px;
+}
+#hugesubmit:hover {
+	background: #b7e580;
+}
+
+a#leggtilforestilling {
+	font-size:16px;
+	font-weight: bold;
+	display:block;
+	padding:5px;
+	margin:5px 0px 0px 0px;
+	border-bottom:1px solid #D3D3D3;
+}
+
+.red_text {
+	color:#FF0000;
+}
+
+.forklaring {
+	font-size: 11px;
+	font-style: italic;
+}
+
+div.clear {
+	clear:both;
+}
+div.group {
+	float:left;
+	display: inline-block;
+	margin: 0 0 0 0;
+}
+li.innslag > div.group em {
+	font-weight: normal;
+}
+
+.forestilling_dag {
+	float: left;
+	width: 220px;
+	padding: 10px 0px 10px 10px;
+}
+.forestilling_detaljer {
+	width: 200px;
+}
+.forestilling_detaljer .name {
+	font-weight: bold;
+}
+.forestilling_detaljer .tid {
+	float: right;
+	width: 50px;
+	margin: 4px 0 0 0;
+}
+
+.forestilling_detaljer .varighet {
+	float: right;
+	text-align: right;
+	width: 80px;
+	margin: 4px 0 0 0;
+}
+.forestilling_detaljer .antall {
+	float: left;
+	margin: 4px 0 0 0;
+}
+
+.forestilling_dag .header {
+	font-size: 14px;
+	font-weight: bold;
+}
+
+
+.dash_forestilling {	
+	border: 1px solid rgb(211, 211, 211);
+	background-color: rgb(245,245,245);
+	padding: 5px;
+	margin:10px 0;
+	padding-top: 6px;
+
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-ie-border-radius: 3px;
+	-o-border-radius: 3px;
+	border-radius: 3px;
+}
+
+/* Tabs */
+.ukmdeltakere_tabs a div > span.tab_header {
+	margin-top:5px;
+}
+
+/* ** *** **** *** ** */
+
+div.container_forestilling_dag { display:block; border-left:1px solid #ccc; padding:5px 0 25px 0; }
+
+
+/* Edit Show */
+form.edit_show_form label {cursor:default;}
+form.edit_show_form .group {margin:0 5px;}
+form.edit_show_form input, form.edit_show_form select, form.edit_show_form textarea {display:block;}
+form.edit_show_form .name_input {width:185px;}
+form.edit_show_form .description_input {width:185px;}
+form.edit_show_form .dato_input {width:185px;}
+form.edit_show_form .time_label{display:block; margin-top:-8px;}
+form.edit_show_form .time_select{display:inline-block;} 
+form.edit_show_form .forklaring{margin:0 0 10px 0;}
+
+div.order {
+	width: 30px;
+	font-weight: bold;
+	padding: 10px;
+	line-height: 40px;
+}
+div.drag {
+	width: 60px;
+}
+div.name {
+	border-left: 1px dashed #ccc;
+}
+
+/* Dashboard */
+#suppleringsliste {
+	display: none;
+}
+.container_suppleringsliste {	
+	/* width:500px; /* 500px passer fint, men alle de andre boksene er 208px */
+	width: 208px;
+	float:left;
+}
+
+li.dash_innslag {
+	display:block;
+	width:95%;
+	border: 1px #D3D3D3 solid;
+	background-color: #E3E3E3;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-o-border-radius: 5px;
+	border-radius: 5px;
+	padding:3px 0 3px 5px;
+}
+
+.draggable {
+	cursor: move;
+}
+
+#oppmotetid_title {
+	border-bottom: 1px solid #ccc;
+	margin-bottom: 10px;
+	margin-top: 20px;
+	width: 650px;
+}
+#oppmotetid {
+	width: 250px;
+	margin-right: 30px;
+}
+#oppmotedetaljer {
+	width: 370px;
+}
+
+#rammeprogram, #detaljprogram {
+	width: 200px;
+	margin:10px 40px 0 0;
+}
+#rammeprogram input, #detaljprogram input, #oppmotetid input {
+	float: left;
+	margin-right: 10px;
+}
+
+.radio_group > label {
+	padding-top: 0px;
+	font-weight: normal;
+}
+label {
+	padding-top: 10px;
+	font-weight: bold;
+}
+
+
+.container_forestilling_dag {
+	border-right: 1px solid lightgray;
+	margin: 0 10px 0 0;
+	width: 750px;
+	float: left;
+}
+.dragable{cursor:move;}
+.clickable{cursor:pointer;}
+
+#program_rekkefolge {
+	min-height: 500px;
+}
+
+
+#delete-concert {
+	margin: 20px 0 0 0;
+	background: #e83715;
+	color: #fff;
+	position: fixed;
+	left: 850px;
+	top: 280px;
+}
+
+#duplicate-concert {
+	margin: 20px 0 0 0;
+	background: rgba(19,39,249,0.92);
+	color: #fff;
+	position: fixed;
+	left: 850px;
+	top: 244px;
+}
+
+.hideshow_details {
+	text-align: right;
+	padding-top: 8px;
+	font-size: 10px;
+}
