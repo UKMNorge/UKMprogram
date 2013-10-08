@@ -18,6 +18,7 @@ if(is_admin()) {
 		require_once('ajax/save/'.$_POST['save'].'.save.php');
 
 	add_action('wp_ajax_UKMprogram_ajax', 'UKMprogram_ajax');
+	require_once('UKM/inc/phaseout.ico.inc.php');
 }
 
 ## CREATE A MENU
