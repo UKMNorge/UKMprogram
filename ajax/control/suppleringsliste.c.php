@@ -1,6 +1,8 @@
 <?php
 function UKMprogram_ajax_controller($info){
-	UKM_loader('api/innslag.class|api/forestilling.class|api/monstring.class');
+	require_once('UKM/innslag.class.php');
+	require_once('UKM/forestilling.class.php');
+	require_once('UKM/monstring.class.php');
 	$m = new monstring(get_option('pl_id'));
 	$c = new forestilling($info['c_id']);
 

@@ -1,6 +1,6 @@
 <?php
 function UKMprogram_save($info) {
-	UKM_loader('sql|api/forestilling.class');
+	require_once('UKM/forestilling.class.php');
 
 	$url = parse_url($_SERVER['HTTP_REFERER']);
 	parse_str($url['query'], $query);

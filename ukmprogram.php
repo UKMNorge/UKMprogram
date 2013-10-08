@@ -19,6 +19,7 @@ if(is_admin()) {
 
 	add_action('wp_ajax_UKMprogram_ajax', 'UKMprogram_ajax');
 	require_once('UKM/inc/phaseout.ico.inc.php');
+	require_once('UKM/inc/ukmlog.inc.php');
 }
 
 ## CREATE A MENU

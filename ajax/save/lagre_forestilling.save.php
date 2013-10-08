@@ -16,7 +16,7 @@ function getDatePickerTime($postname) {
 
 function UKMprogram_save($info) {
 	
-	UKM_loader('api/forestilling.class');
+	require_once('UKM/forestilling.class.php');
 
 	$_POST['c_start'] = getDatePickerTime('c_start');	
 	unset($_POST['c_start_time']);

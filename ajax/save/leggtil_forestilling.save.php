@@ -1,6 +1,6 @@
 <?php
 function UKMprogram_save($info) {
-	UKM_loader('sql|api/monstring.class');
+	require_once('UKM/monstring.class.php');
 	
 	$m = new monstring(get_option('pl_id'));
 	
