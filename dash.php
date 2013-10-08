@@ -1,4 +1,5 @@
 <?php
+require_once('UKM/innslag.class.php');
 $m = new monstring(get_option('pl_id'));
 $forestillinger = $m->forestillinger('c_start',false);
 
