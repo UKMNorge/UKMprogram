@@ -7,8 +7,6 @@ Author: UKM Norge / M Mandal
 Version: 1.0 
 Author URI: http://www.ukm-norge.no
 */
-/* UKM LOADER */ if(!defined('UKM_HOME')) define('UKM_HOME', '/home/ukmno/public_html/UKM/'); require_once(UKM_HOME.'loader.php');
-
 if(is_admin()) {
 	global $blog_id;
 	if($blog_id != 1)
@@ -58,7 +56,9 @@ function UKMprogram_scriptsandstyles() {
 function UKMprogram_admin() {
 	global $UKMN, $lang;
 
-	UKM_loader('form|toolkit|ukmlog|api/forestilling.class');
+	require_once('UKM/form.class.php');
+	require_once('UKM/inc/toolkit.inc.php');
+	require_once('UKM/forestilling.class.php');
 	require_once('program.gui.php');
 
 	echo '<div class="wrap">'.UKMprogram_list().'</div>';	
