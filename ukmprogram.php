@@ -10,7 +10,7 @@ Author URI: http://www.ukm-norge.no
 if(is_admin()) {
 	global $blog_id;
 	if($blog_id != 1)
-		add_action('admin_menu', 'UKMprogram_menu',200);
+		add_action('UKM_admin_menu', 'UKMprogram_menu',200);
 
 	require_once('program.ajax.php');
 	
@@ -24,10 +24,9 @@ if(is_admin()) {
 
 ## CREATE A MENU
 function UKMprogram_menu() {
-	global $UKMN;
-	$page = add_menu_page('Program', 'Program', 'editor', 'UKMprogram_admin', 'UKMprogram_admin', 'http://ico.ukm.no/chart-menu.png',208);    
+	UKM_add_menu_page('monstring','Program', 'Program', 'editor', 'UKMprogram_admin', 'UKMprogram_admin', 'http://ico.ukm.no/chart-menu.png',10);    
 
-	add_action( 'admin_print_styles-' . $page, 'UKMprogram_scriptsandstyles' );
+	UKM_add_scripts_and_styles('UKMprogram_admin', 'UKMprogram_scriptsandstyles' );
 }
 ## INCLUDE SCRIPTS
 function UKMprogram_scriptsandstyles() {
