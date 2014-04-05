@@ -24,8 +24,8 @@ foreach( $hendelser as $c ) {
 	$stop = $start + $varighet;
 	
 	// Start 8 min før
-	$varighet += 60*8;
-	$start = $start - 60*8;
+#	$varighet += 60*8;
+#	$start = $start - 60*8;
 	
 	$perioder[] = (object) array('start' => $start, 'stop' => $stop);
 }
