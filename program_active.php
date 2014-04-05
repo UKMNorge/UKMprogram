@@ -18,16 +18,18 @@ foreach( $hendelser as $c ) {
 	// Beregn varighet og stopp-tidspunkt
 	$varighet = $h->varighet();
 
-	if( $varighet <= 60*30 ) {
+	/*
+if( $varighet <= 60*30 ) {
 		$varighet = 60*45;
 	} else {
 		$varighet = $varighet * 1.2;
 	}
+*/
 	$stop = $start + $varighet;
 	
-	// Start 8 min før
-	$varighet += 60*8;
-	$start = $start - 60*8;
+	// Start 3 min før
+	$varighet += 60*3;
+	$start = $start - 60*3;
 	
 	$perioder[] = (object) array('navn' => $navn, 'start' => $start, 'stop' => $stop);
 }
