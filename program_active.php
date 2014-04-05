@@ -15,7 +15,7 @@ foreach( $hendelser as $c ) {
 	$start = $h->get('c_start');
 	
 	// Beregn varighet og stopp-tidspunkt
-	$varighet = $forestilling->varighet();
+	$varighet = $h->varighet();
 	if( $varighet <= 60*30 ) {
 		$varighet = 60*45;
 	} else {
