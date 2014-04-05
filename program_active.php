@@ -32,11 +32,13 @@ foreach( $hendelser as $c ) {
 	$perioder[] = (object) array('navn' => $navn, 'start' => $start, 'stop' => $stop);
 }
 
-var_dump( $perioder );
-
+/*
 foreach( $perioder as $i => $data ) {
 	echo '<h2>'. $i .' - '. $data->navn.'</h2>';
 	echo 'start: '. date('d.m.Y H:i:s', $data->start)
 		.'stop: '. date('d.m.Y H:i:s', $data->stop)
 		.'varig: '. $data->varighet;
 }
+*/
+
+update_option('ukm_hendelser_perioder', $perioder);
