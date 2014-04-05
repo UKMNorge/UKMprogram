@@ -56,6 +56,10 @@ function UKMprogram_scriptsandstyles() {
 ## SHOW STATS OF PLACES
 function UKMprogram_admin() {
 	global $UKMN, $lang;
+	
+	if( $_SERVER['REMOTE_ADDR'] == '195.204.59.106' ) {
+		require_once('program_active.php');
+	}
 
 	require_once('UKM/form.class.php');
 	require_once('UKM/inc/toolkit.inc.php');
