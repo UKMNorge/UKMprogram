@@ -21,13 +21,13 @@ foreach( $hendelser as $c ) {
 	if( $varighet <= 60*30 ) {
 		$varighet = 60*45;
 	} else {
-		$varighet = $varighet * 1.1;
+		$varighet = $varighet * 1.2;
 	}
 	$stop = $start + $varighet;
 	
 	// Start 8 min før
-#	$varighet += 60*8;
-#	$start = $start - 60*8;
+	$varighet += 60*8;
+	$start = $start - 60*8;
 	
 	$perioder[] = (object) array('navn' => $navn, 'start' => $start, 'stop' => $stop);
 }
