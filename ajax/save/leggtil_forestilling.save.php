@@ -9,7 +9,8 @@ function UKMprogram_save($info) {
 	$sql->add('pl_id',get_option('pl_id'));
 	$sql->add('c_start', $m->g('pl_start')+3600);
 	$sql->run();
-		
+	
+	do_action('UKMprogram_save', 'leggtil_forestilling', $sql->insid());
 	die(get_bloginfo('url').'/wp-admin/admin.php?page=UKMprogram_admin&tab=1&c_id='.$sql->insid());
 }
 ?>

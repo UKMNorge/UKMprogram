@@ -10,12 +10,14 @@ function UKMprogram_save($info) {
 	if(empty($info['innslag']) && $f->antall_innslag()==1) {
 		$f->fjern_alle_innslag();
 		echo json_encode(array('antall'=>0,'c_id'=>$info['forestilling']));
-		die();		
+		do_action('UKMprogram_save', 'fjern_alle_innslag', $info['forestilling']);
+		die();
 	}
 
 	$rekkefolge = implode(',', $info['innslag']);
 	$antall = $f->helt_ny_rekkefolge($rekkefolge);
-	
+	do_action('UKMprogram_save', 'grovsortering', $info['forestilling']);
+
 	echo json_encode(array('antall'=>(!$antall?0:$antall),'c_id'=>$info['forestilling'], 'varighet'=>$f->tid()));	
 	die();
 }

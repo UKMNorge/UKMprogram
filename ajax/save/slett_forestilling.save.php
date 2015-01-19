@@ -8,7 +8,7 @@ function UKMprogram_save($info) {
 	$f = new forestilling($query['c_id']);
 	$res = $f->slett();
 
-	
+	do_action('UKMprogram_save', 'slett');
 	die($url['scheme'].'://'.$url['host'].$url['path'].'?page='.$query['page']);
 }
 ?>
