@@ -391,7 +391,7 @@ function showCounter(object, antall_hendelser) {
 function showNextInfo(object) {
 	state = parseInt(object.attr('data-state'));
 	state++;
-	if(state > 4)
+	if(state > 5)
 		state = 0;
 
 	object.attr('data-state', state);
@@ -406,6 +406,7 @@ function showInfo(object) {
 		case 2:	show = 'time';		break;
 		case 3: show = 'antall';	break;
 		case 4: show = 'kommune';	break;
+		case 5: show = 'titler'; 	break;
 		default:
 			alert('out of range');
 	}

@@ -22,6 +22,17 @@ function li_innslag($inn, $vis_kommune) {
 	
 	$geodata = $vis_kommune === null ? $inn->g('fylke') : $inn->g('kommune');
 	
+	# Generer tittelliste, fordi flere ikke skjønner 
+	# at det kan være flere bokser per artist og glemmer noen.
+	#	asgeirsh@ukmmedia.no
+	#	10.02.16
+	$titler = $inn->titler($m->pl_id);
+	$t = '';
+	foreach ($titler as $tittel) {
+		$t .= $tittel->tittel .', ';
+	}
+	$t = rtrim($t, ', ');
+
 	return '<li class="dash_innslag dragable" '
 			.	'id="innslag_'.$inn->g('b_id').'" '
 #			.	'class="forestilling_rekkefolge" '
@@ -30,6 +41,7 @@ function li_innslag($inn, $vis_kommune) {
 			.	'data-name="'.$inn->g('b_name').'&nbsp;" '
 			.	'data-kommune="'.($vis_kommune!==false ? $geodata.'&nbsp;' : 'false').'" '
 			.	'data-time="&nbsp; '.$inn->tid(get_option('pl_id')).'" '
+			.	'data-titler="'. $t .'" '
 			.	'data-antall="&nbsp; Deltar i '.$inn->antall_hendelser(get_option('pl_id')).' hendelser" '
 			.	'data-tall="'.$inn->antall_hendelser(get_option('pl_id')).'" '
 #			.	'data-varighet="'.$inn->varighet(get_option('pl_id')).'"'
