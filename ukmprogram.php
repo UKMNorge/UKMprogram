@@ -31,7 +31,7 @@ function UKMprogram_menu() {
 }
 function UKMMprogram_dash_shortcut( $shortcuts ) {	
 	$shortcut = new stdClass();
-	$shortcut->url = 'admin.php?UKMprogram_admin';
+	$shortcut->url = 'admin.php?page=UKMprogram_admin';
 	$shortcut->title = 'Program';
 	$shortcut->icon = 'http://ico.ukm.no/chart-menu.png';
 	$shortcuts[] = $shortcut;
