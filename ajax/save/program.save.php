@@ -31,6 +31,8 @@ function UKMprogram_save($info){
 	$icon = $status ? 'red' : 'light-green';
 	
 	do_action('UKMprogram_save', 'lagre', $info['c_id']);
+	// To ensure embed-time is correct, ref. Github#4.
+	do_action('UKMpush_to_front_generate_object');
 
 	die(json_encode(array('id'=>$info['c_id'], 'icon'=>$icon, 'text'=>$text)));
 }

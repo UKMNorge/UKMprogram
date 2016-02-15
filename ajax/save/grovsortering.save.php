@@ -17,6 +17,7 @@ function UKMprogram_save($info) {
 	$rekkefolge = implode(',', $info['innslag']);
 	$antall = $f->helt_ny_rekkefolge($rekkefolge);
 	do_action('UKMprogram_save', 'grovsortering', $info['forestilling']);
+	
 
 	echo json_encode(array('antall'=>(!$antall?0:$antall),'c_id'=>$info['forestilling'], 'varighet'=>$f->tid()));	
 	die();
