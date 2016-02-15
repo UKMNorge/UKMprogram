@@ -115,6 +115,7 @@ foreach($forestillinger as $i => $f) {
 ?>
 <h1>Program for <?= $m->g('pl_name')?></h1>
 <a href="#" id="leggtilforestilling">Legg til ny hendelse</a>
+<a href="#" style="margin-left: 200px; margin-top: -24px; position: absolute; float:left;" id="hide_all_details">Skjul alle detaljer</a>
 <div class="clear"></div>
 
 <div class="container_forestilling_dag"><?php

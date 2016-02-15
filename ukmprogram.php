@@ -64,7 +64,9 @@ function UKMprogram_admin() {
 	require_once('UKM/forestilling.class.php');
 	require_once('program.gui.php');
 
+	
 	echo '<div class="wrap">'.UKMprogram_list().'</div>';	
+
 }
 
 

@@ -5,6 +5,10 @@ var searchIkon = '<img src="http://ico.ukm.no/search-256.png" alt="Klikk for å 
 
 jQuery(document).ready(function(){
 	var i_liste_cancel = false;
+
+	jQuery('#hide_all_details').click(function () {
+		jQuery(".hideshow_details").click();
+	});
 	
 	jQuery('li div.hideshow_details').live('click',function(){
 		jQuery(this).parents('ul').find('li.dash_innslag').slideToggle();
