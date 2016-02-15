@@ -9,10 +9,10 @@ Author URI: http://www.ukm-norge.no
 */
 if(is_admin()) {
 	global $blog_id;
-	if($blog_id != 1)
+	if( in_array( get_option('site_type'), array('kommune','fylke','land')) ) {
 		add_action('UKM_admin_menu', 'UKMprogram_menu',200);
 		add_action('UKMWPDASH_shortcuts', 'UKMMprogram_dash_shortcut', 40);
-
+	}
 	require_once('program.ajax.php');
 	
 	if(isset($_POST['save']) && strpos($_POST['action'],'UKMprogram_')!==false)
