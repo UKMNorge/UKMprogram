@@ -9,9 +9,10 @@ Author URI: http://www.ukm-norge.no
 */
 if(is_admin()) {
 	global $blog_id;
-	if($blog_id != 1)
+	if( in_array( get_option('site_type'), array('kommune','fylke','land')) ) {
 		add_action('UKM_admin_menu', 'UKMprogram_menu',200);
-
+		add_action('UKMWPDASH_shortcuts', 'UKMMprogram_dash_shortcut', 40);
+	}
 	require_once('program.ajax.php');
 	
 	if(isset($_POST['save']) && strpos($_POST['action'],'UKMprogram_')!==false)
@@ -28,6 +29,16 @@ function UKMprogram_menu() {
 
 	UKM_add_scripts_and_styles('UKMprogram_admin', 'UKMprogram_scriptsandstyles' );
 }
+function UKMMprogram_dash_shortcut( $shortcuts ) {	
+	$shortcut = new stdClass();
+	$shortcut->url = 'admin.php?page=UKMprogram_admin';
+	$shortcut->title = 'Program';
+	$shortcut->icon = 'http://ico.ukm.no/chart-menu.png';
+	$shortcuts[] = $shortcut;
+	
+	return $shortcuts;
+}
+
 ## INCLUDE SCRIPTS
 function UKMprogram_scriptsandstyles() {
 	wp_enqueue_style( 'jquery-ui-style', WP_PLUGIN_URL .'/UKMNorge/js/css/jquery-ui-1.7.3.custom.css');
