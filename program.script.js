@@ -278,6 +278,13 @@ jQuery(document).ready(function(){
 		jQuery('#detaljprogram').hide();
 	}
 	
+	jQuery('#readmore').click(function() {
+		jQuery('#forklaring_tekst').toggle();
+		if (jQuery('#readmore').text() == 'Les mer')
+			jQuery('#readmore').text('Skjul');
+		else
+			jQuery('#readmore').text('Les mer');
+	});
 	
 	jQuery('#oppmote_ja').click(function(){
 		jQuery('#oppmotedetaljer').slideDown();

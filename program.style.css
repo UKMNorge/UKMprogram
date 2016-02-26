@@ -113,7 +113,13 @@ li.innslag > div.group em {
 
 /* ** *** **** *** ** */
 
-div.container_forestilling_dag { display:block; border-left:1px solid #ccc; padding:5px 0 25px 0; }
+div.container_forestilling_dag { 
+	display:block; 
+	background-color: white;
+	border-left:1px solid #ccc; 
+	border-top: 1px solid #ccc;
+	padding:5px 0 25px 0; 
+}
 
 
 /* Edit Show */
@@ -146,8 +152,10 @@ div.name {
 }
 .container_suppleringsliste {	
 	/* width:500px; /* 500px passer fint, men alle de andre boksene er 208px */
+	/*
 	width: 208px;
 	float:left;
+	*/
 }
 
 li.dash_innslag {
@@ -201,9 +209,12 @@ label {
 
 .container_forestilling_dag {
 	border-right: 1px solid lightgray;
+	/*
 	margin: 0 10px 0 0;
+	
 	width: 750px;
 	float: left;
+	*/
 }
 .dragable{cursor:move;}
 .clickable{cursor:pointer;}

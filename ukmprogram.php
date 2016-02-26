@@ -33,6 +33,7 @@ function UKMprogram_scriptsandstyles() {
 	wp_enqueue_style( 'jquery-ui-style', WP_PLUGIN_URL .'/UKMNorge/js/css/jquery-ui-1.7.3.custom.css');
 	wp_enqueue_style( 'UKMdeltakere_style', WP_PLUGIN_URL .'/UKMdeltakere/deltakere.style.css');
 	wp_enqueue_style( 'UKMprogram_program', WP_PLUGIN_URL .'/UKMprogram/program.style.css');
+	wp_enqueue_style('WPbootstrap3_css');
 
 	wp_enqueue_script('jquery');
 	wp_enqueue_script('jqueryGoogleUI', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js');
