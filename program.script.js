@@ -185,9 +185,10 @@ jQuery(document).ready(function(){
 				 + '&'+jQuery('#forestilling_form').serialize();
 		jQuery.post(ajaxurl, data, function(response){
 			jQuery('#hugesubmit #lagre').html('Lagret');
-			setTimeout(function(){
-				jQuery('#hugesubmit #lagre').html('Lagre')
-			},2000);
+			window.location.href = '?page=UKMprogram_admin';
+			//setTimeout(function(){
+			//	jQuery('#hugesubmit #lagre').html('Lagre')
+			//},2000);
 		});
 	});
 	
