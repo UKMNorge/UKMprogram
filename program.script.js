@@ -18,7 +18,7 @@ jQuery(document).ready(function(){
 		
 	});
 
-	jQuery('#changeData').click(function() {
+	jQuery('#changeData').click(function () {
 		jQuery('li.dash_innslag img.dash_info').click();
 	});
 
