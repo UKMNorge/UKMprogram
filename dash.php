@@ -33,9 +33,14 @@ function li_innslag($inn, $vis_kommune) {
 		if ($inn->tittellos()) {
 			$personer = $inn->personObjekter();
 			foreach ($personer as $person) {
-				var_dump($person);
-				var_dump($person->get('instrument'));
-				$t .= $person->get('instrument') . ', ';
+				#var_dump($person);
+				#var_dump($person->get('instrument'));
+				if ($person->get('instrument')) {
+					$t .= 'Ingen rolle valgt';
+				}
+				else {
+					$t .= $person->get('instrument') . ', ';	
+				}
 			}
 		}
 		else {
