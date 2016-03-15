@@ -28,8 +28,27 @@ function li_innslag($inn, $vis_kommune) {
 	#	10.02.16
 	$titler = $inn->titler($m->pl_id);
 	$t = '';
-	foreach ($titler as $tittel) {
-		$t .= $tittel->tittel .', ';
+	// Hvis innslaget er tittelløst, type konferansier, media eller arrangør
+	if( is_super_admin() ) {
+		if ($inn->tittellos()) {
+			$personer = $inn->personObjekter();
+			foreach ($personer as $person) {
+				var_dump($person);
+				var_dump($person->get('instrument'));
+				$t .= $person->get('instrument') . ', ';
+			}
+		}
+		else {
+			foreach ($titler as $tittel) {
+				$t .= $tittel->tittel .', ';
+			}
+		}
+	}
+	else {
+		foreach ($titler as $tittel) {
+			$t .= $tittel->tittel .', ';
+		}
+	
 	}
 	$t = rtrim($t, ', ');
 
