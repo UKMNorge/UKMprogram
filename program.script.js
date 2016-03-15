@@ -18,6 +18,10 @@ jQuery(document).ready(function(){
 		
 	});
 
+	jQuery('#changeData').click(function() {
+		jQuery('li.dash_innslag img.dash_info').click();
+	});
+
 	jQuery('li div.detaljprogram').click(function(){
 		id = jQuery(this).parents('li').attr('id');
 		var data = 'action=UKMprogram_ajax'

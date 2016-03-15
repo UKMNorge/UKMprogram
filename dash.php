@@ -189,6 +189,7 @@ foreach($forestillinger as $i => $f) {
 		<div class="col-xs-4 col-lg-3">
 			<div class="container_suppleringsliste">
 				<h3>Deltar ikke i noen hendelse</h3>
+				<a href="#" id="changeData">Bla i info for hvert innslag</a>
 				<ul id="dash_supplering"><?php
 					$m = new monstring(get_option('pl_id'));
 					$innslag = $m->innslag();
