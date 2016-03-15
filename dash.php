@@ -29,23 +29,16 @@ function li_innslag($inn, $vis_kommune) {
 	$titler = $inn->titler($m->pl_id);
 	$t = '';
 	// Hvis innslaget er tittelløst, type konferansier, media eller arrangør
-	if( is_super_admin() ) {
-		if ($inn->tittellos()) {
-			$personer = $inn->personObjekter();
-			foreach ($personer as $person) {
-				#var_dump($person);
-				#var_dump($person->get('instrument'));
-				if (empty($person->get('instrument'))) {
-					$t .= 'Ingen rolle valgt';
-				}
-				else {
-					$t .= $person->get('instrument') . ', ';	
-				}
+	if ($inn->tittellos()) {
+		$personer = $inn->personObjekter();
+		foreach ($personer as $person) {
+			#var_dump($person);
+			#var_dump($person->get('instrument'));
+			if (empty($person->get('instrument'))) {
+				$t .= 'Ingen rolle valgt';
 			}
-		}
-		else {
-			foreach ($titler as $tittel) {
-				$t .= $tittel->tittel .', ';
+			else {
+				$t .= $person->get('instrument') . ', ';	
 			}
 		}
 	}
@@ -53,7 +46,6 @@ function li_innslag($inn, $vis_kommune) {
 		foreach ($titler as $tittel) {
 			$t .= $tittel->tittel .', ';
 		}
-	
 	}
 	$t = rtrim($t, ', ');
 
