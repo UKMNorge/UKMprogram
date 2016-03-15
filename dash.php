@@ -35,7 +35,7 @@ function li_innslag($inn, $vis_kommune) {
 			foreach ($personer as $person) {
 				#var_dump($person);
 				#var_dump($person->get('instrument'));
-				if ($person->get('instrument')) {
+				if (empty($person->get('instrument'))) {
 					$t .= 'Ingen rolle valgt';
 				}
 				else {
