@@ -7,6 +7,9 @@ jQuery(document).ready(function(){
 	var i_liste_cancel = false;
 
 	jQuery('#hide_all_details').click(function () {
+    	var nextText = jQuery(this).attr('data-text');
+    	jQuery(this).attr('data-text', jQuery(this).text());
+    	jQuery(this).text( nextText );
 		jQuery(".hideshow_details").click();
 	});
 	
@@ -402,6 +405,19 @@ function showCounter(object, antall_hendelser) {
 		object.html(temp_html);
 		showInfo(object);
 	}, 2500);
+}
+
+jQuery(document).on('change', '#show_same_details', function(){
+    showSameInfo( jQuery(this).val() );
+});
+
+function showSameInfo( state ) {
+    state = parseInt( state );
+    
+    jQuery('.dash_innslag').each(function(){
+        jQuery(this).attr('data-state', state);
+        showInfo( jQuery(this) );
+    });
 }
 
 function showNextInfo(object) {

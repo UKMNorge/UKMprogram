@@ -149,13 +149,30 @@ foreach($forestillinger as $i => $f) {
 		</div>
 	</div>
 </div>
-<a href="#" id="leggtilforestilling">Legg til ny hendelse</a>
-<a href="#" style="margin-left: 200px; margin-top: -24px; position: absolute; float:left;" id="hide_all_details">Skjul alle detaljer</a>
+<div class="clearfix"></div>
+<div class="row">
+    <div class="col-xs-12">
+        <a href="#" id="leggtilforestilling" class="btn btn-success">Legg til ny hendelse</a>
+    </div>
+</div>
 <div class="clear"></div>
 <div class="clearfix"></div>
 <div style="width: 95%;">
 	<div class="row">
 		<div class="col-xs-8">
+    		<div class="pull-right">
+                <a href="#" id="hide_all_details" class="btn btn-xs btn-primary" data-text="Vis rekkefølge for alle hendelser">Skjul rekkefølge for alle hendelser</a>
+                <select id="show_same_details">
+                    <option value="0" selected="selected" disabled="disabled">Vis samme info for alle innslag</option>
+                    <option value="0">Navn på innslag</option>
+                    <option value="1">Kategori</option>
+                    <option value="2">Varighet</option>
+                    <option value="3">Antall hendelser</option>
+                    <option value="4">Geografisk tilhørighet</option>
+                    <option value="5">Titler / rolle</option>
+                </select>
+    		</div>
+            <div class="clearfix"></div>
 			<div class="container_forestilling_dag"><?php
 				$teller = 0;
 				###########################################
