@@ -13,7 +13,7 @@ $dager = UKMp_dager($m);
 $dager = $dager['dager'];
 $alle_dager = array('s&oslash;n','man','tirs','ons','tors','fre','l&oslash;r','s&oslash;n');
 
-function li_innslag($inn, $vis_kommune) {
+function li_innslag($inn, $vis_kommune, $ignore_shortstring=false) {
 	$ant_tegn = 18;
 	$katogsjan = $inn->g('kategori_og_sjanger');
 	if(empty($katogsjan))
@@ -61,6 +61,7 @@ function li_innslag($inn, $vis_kommune) {
 			.	'data-antall="&nbsp; Deltar i '.$inn->antall_hendelser(get_option('pl_id')).' hendelser" '
 			.	'data-tall="'.$inn->antall_hendelser(get_option('pl_id')).'" '
 #			.	'data-varighet="'.$inn->varighet(get_option('pl_id')).'"'
+            .   'data-ignore-shortstring="'. ($ignore_shortstring?'true':'false') .'"'
 			.'>'
 				.$inn->g('b_name')
 			.'</li>';
@@ -213,7 +214,7 @@ foreach($forestillinger as $i => $f) {
 					foreach($innslag as $i) {
 						$inn = new innslag($i['b_id']);
 						if($inn->antall_forestillinger(get_option('pl_id'))==0)
-							echo li_innslag($inn, $vis_kommune);
+							echo li_innslag($inn, $vis_kommune, true);
 						#echo '<li class="dragable dash_innslag" id="innslag_'.$inn->g('b_id').'">'.$inn->g('b_name').'</li>';
 					}
 			?>	</ul>
@@ -228,7 +229,7 @@ foreach($forestillinger as $i => $f) {
 					$innslag = $m->innslag();
 					foreach($innslag as $i) {
 						$inn = new innslag($i['b_id']);
-						echo li_innslag($inn, $vis_kommune);
+						echo li_innslag($inn, $vis_kommune, true);
 						#'<li class="dragable dash_innslag" id="innslag_'.$inn->g('b_id').'">'.$inn->g('b_name').'</li>';
 					}
 			?>	</ul>

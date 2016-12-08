@@ -445,7 +445,11 @@ function showInfo(object) {
 	if(show == 'kommune' && jQuery(object).attr('data-kommune') == 'false') {
 		showNextInfo(object);
 	}
-	jQuery(object).html(shortString(jQuery(object).attr('data-'+show), 23) + infoIkon + searchIkon);
+	if( jQuery(object).attr('data-ignore-shortstring') == 'true' ) {
+    	jQuery(object).html( jQuery(object).attr('data-'+show) + infoIkon + searchIkon);
+    } else {
+    	jQuery(object).html(shortString(jQuery(object).attr('data-'+show), 18) + infoIkon + searchIkon);
+    }
 	jQuery(object).attr('alt', jQuery(object).attr('data-'+show));
 	jQuery(object).attr('title', jQuery(object).attr('data-'+show));
 	if(state == 0)
