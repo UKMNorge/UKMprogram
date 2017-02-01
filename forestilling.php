@@ -28,7 +28,7 @@ for($i=0;$i<60;$i+=5)
 			<input type="hidden" name="log_current_value_c_place" value="<?=$c->g('c_place')?>" />
 			<span class="forklaring">F.eks Volda kulturhus, ungdomsskolen</span>
 		</div>
-		
+		<div class="clearfix"></div>
 		<div class="group">
 			<input type="hidden" id="datepicker_start" value="<?=date('d.m.Y',$m->g('pl_start'))?>" />
 			<input type="hidden" id="datepicker_stop" value="<?=date('d.m.Y',$m->g('pl_stop'))?>" />
