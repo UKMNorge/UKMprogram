@@ -25,7 +25,7 @@ if(is_admin()) {
 
 ## CREATE A MENU
 function UKMprogram_menu() {
-	UKM_add_menu_page('monstring','Program', 'Program', 'editor', 'UKMprogram_admin', 'UKMprogram_admin', 'http://ico.ukm.no/chart-menu.png',10);    
+	UKM_add_menu_page('monstring','Program', 'Program', 'editor', 'UKMprogram_admin', 'UKMprogram_admin', '//ico.ukm.no/chart-menu.png',10);    
 
 	UKM_add_scripts_and_styles('UKMprogram_admin', 'UKMprogram_scriptsandstyles' );
 }
@@ -33,7 +33,7 @@ function UKMMprogram_dash_shortcut( $shortcuts ) {
 	$shortcut = new stdClass();
 	$shortcut->url = 'admin.php?page=UKMprogram_admin';
 	$shortcut->title = 'Program';
-	$shortcut->icon = 'http://ico.ukm.no/chart-menu.png';
+	$shortcut->icon = '//ico.ukm.no/chart-menu.png';
 	$shortcuts[] = $shortcut;
 	
 	return $shortcuts;
@@ -47,7 +47,7 @@ function UKMprogram_scriptsandstyles() {
 	wp_enqueue_style('WPbootstrap3_css');
 
 	wp_enqueue_script('jquery');
-	wp_enqueue_script('jqueryGoogleUI', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js');
+	wp_enqueue_script('jqueryGoogleUI', '//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js');
 
 /*
 	wp_enqueue_script('jquery-ui-core');

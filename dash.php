@@ -98,21 +98,21 @@ foreach($forestillinger as $i => $f) {
 			<div class="antall">'. $forestilling->antall_innslag().' innslag</div>
 			<div class="clear"></div>
 			<div class="rammeprogram clickable">
-				<img src="http://ico.ukm.no/circle-'.$rammeIkon.'-32.png" width="11" />
+				<img src="//ico.ukm.no/circle-'.$rammeIkon.'-32.png" width="11" />
 				<span>'. $ramme.'</span>
 			</div>
 			<div class="detaljprogram clickable">
-				<img src="http://ico.ukm.no/circle-'.$detaljIkon.'-32.png" width="11" />
+				<img src="//ico.ukm.no/circle-'.$detaljIkon.'-32.png" width="11" />
 				<span>'. $detalj.'</span>
 			</div>
 			<div class="clear"></div>
 			<div class="hideshow_details clickable">
 				<div class="hideshow_icons">
-					<img src="http://ico.ukm.no/sirkel-minus-256.png" width="11" />
+					<img src="//ico.ukm.no/sirkel-minus-256.png" width="11" />
 					<span>Skjul rekkefølge</span>
 				</div>
 				<div class="hideshow_icons" style="display:none;">
-					<img src="http://ico.ukm.no/plus-32.png" width="11" />
+					<img src="//ico.ukm.no/plus-32.png" width="11" />
 					<span>Vis rekkefølge</span>
 				</div>
 			</div>

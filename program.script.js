@@ -1,7 +1,7 @@
 var alle_lister = new Array();
 var visTeller = false;
-var infoIkon = '<img src="http://ico.ukm.no/info-sirkel-256.png" alt="Klikk flere ganger!" title="Klikk flere ganger" class="dash_info clickable" width="16" style="float:right; margin-right: 4px;" />';
-var searchIkon = '<img src="http://ico.ukm.no/search-256.png" alt="Klikk for å se hvilke hendelser innslaget deltar i" title="Klikk for å se hvilke hendelser innslaget deltar i" class="dash_search clickable" width="16" style="float:right; margin-right: 4px;" />'; 
+var infoIkon = '<img src="//ico.ukm.no/info-sirkel-256.png" alt="Klikk flere ganger!" title="Klikk flere ganger" class="dash_info clickable" width="16" style="float:right; margin-right: 4px;" />';
+var searchIkon = '<img src="//ico.ukm.no/search-256.png" alt="Klikk for å se hvilke hendelser innslaget deltar i" title="Klikk for å se hvilke hendelser innslaget deltar i" class="dash_search clickable" width="16" style="float:right; margin-right: 4px;" />'; 
 
 jQuery(document).ready(function(){
 	var i_liste_cancel = false;
