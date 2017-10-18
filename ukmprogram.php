@@ -19,8 +19,6 @@ if(is_admin()) {
 		require_once('ajax/save/'.$_POST['save'].'.save.php');
 
 	add_action('wp_ajax_UKMprogram_ajax', 'UKMprogram_ajax');
-	require_once('UKM/inc/phaseout.ico.inc.php');
-	require_once('UKM/inc/ukmlog.inc.php');
 }
 
 ## CREATE A MENU
@@ -235,12 +233,12 @@ function UKMprog_tabs($c) {
 
 	<a href="?page=<?=$_GET['page']?>&c_id=<?=$_GET['c_id']?>&tab=1" <?=((!isset($_GET['tab'])||$_GET['tab']=='1')?' class="active"':'')?>>
 		<div>
-			<span class="tab_header">Tid, sted og info</span><?= UKMN_icoAlt('info-sirkel', "", 20) ?><br>
+			<span class="tab_header">Tid, sted og info</span><img src="//ico.ukm.no/info-sirkel-256.png" width="20" /><br>
 		</div>
 	</a>
 	<a href="?page=<?=$_GET['page']?>&c_id=<?=$_GET['c_id']?>&tab=2" <?=($_GET['tab']=='2'?' class="active"':'')?>>
 		<div>
-			<span class="tab_header">Rekkefølge forestilling</span><?= UKMN_icoAlt('clipboard', "", 22) ?><br>
+			<span class="tab_header">Rekkefølge forestilling</span><img src="//ico.ukm.no/clipboard-256.png" width="20" /><br>
 		</div>
 	</a>
 <?php /*	<a href="?page=<?=$_GET['page']?>&c_id=<?=$_GET['c_id']?>&tab=3" <?=($_GET['tab']=='3'?' class="active"':'')?>>
