@@ -90,7 +90,8 @@ foreach($forestillinger as $i => $f) {
 	<ul class="dash_forestilling" data-show="true" id="dash_forestilling_'.$forestilling->g('c_id').'">
 		<li class="forestilling_detaljer" id="'.$forestilling->g('c_id').'">'
 			.'<span class="name clickable">'
-				. UKMN_ico('pencil',16,'rediger').' '. $f['c_name']
+			.'<img src="//ico.ukm.no/pencil-16.png" width="11" /> '
+				. $f['c_name']
 			.'</span>
 			<div class="tid">kl. '. date('H:i', $f['c_start']).'</div>
 			<div class="clear"></div>
