@@ -1,0 +1,415 @@
+.ukmdeltakere_kategorivelger {
+	float: right;
+	display:block;
+	margin: 0 100px 0 0;
+	width: 400px;
+	text-align: right;
+}
+.ukmdeltakere_filtrer > input {
+	margin: 3px 0 0 0;
+	width:90%;
+	float:left;
+}
+.ukmdeltakere_filtrer > img {
+	margin:7px 3px 0 0;
+}
+
+.ukmdeltakere_tabs {
+	margin-top: 9px;
+	min-width:880px;
+}
+.ukmdeltakere_tabs_desc {
+	background-color: #eee;
+	padding: 4px 4px 4px 10px;
+	border: 1px solid #CCC;
+	border-top: 0px solid #ccc;
+}
+
+.ukmdeltakere_tabs a {
+	border: 1px solid #ccc;
+	background: #ccc;  
+	color:#0F6799;
+	padding: 5px 5px;
+	border-bottom: none;
+	margin-right: 10px;
+	display: inline-block;
+	text-decoration:none;
+	width: 260px;
+	
+	-webkit-border-top-left-radius: 3px;
+	-webkit-border-top-right-radius: 3px;
+	-moz-border-radius-topleft: 3px;
+	-moz-border-radius-topright: 3px;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+}
+.ukmdeltakere_tabs a:hover{ background: #ddd; color: #21759B;}
+.ukmdeltakere_tabs a.active{ background: #eee; color: #21759B;}
+
+.ukmdeltakere_tabs a div{ clear:both;}
+.ukmdeltakere_tabs a div > span{display:inline-block; margin:0 0 0 10px; font-size:12px; font-weight: normal;}
+.ukmdeltakere_tabs a div > span.tab_header{font-size:14px; font-weight: bold;}
+.ukmdeltakere_tabs a div > img{display:block; float:left;}
+
+
+.kategori_wrapper img.kategori_image{float:left; margin:0 12px 10px 0; width: 50px; height: 50px; }
+.kategori_wrapper h1 {display: inline-block; margin: 18px 0 0 0;}
+
+.ukmdeltakere_wrapper { padding: 10px 0 10px 9px; border-left:1px solid #ccc;}
+
+#wpbody-content > h1 {
+	margin: 10px 0 5px 0;
+}
+#wpbody-content > h2 {
+	margin: 10px 0 5px 0; 
+	font-weight: normal;
+	font-size:17px;
+	color:#666;
+} 
+
+.ukmdeltakere_liste > li.innslag {
+	border: 1px solid #ccc;
+	color: #666;
+	padding: 2px;
+	margin: 0 0 -1px 0;
+	clear: both;
+	display: block;
+	width:800px;
+}
+.ukmdeltakere_liste > li.innslag:hover {color:#222;}
+.ukmdeltakere_liste > li.grayBackground {background-color:#EEE; color:black;}
+
+.ukmdeltakere_liste li:first-child {
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+.ukmdeltakere_liste li:last-child {
+	-webkit-border-bottom-right-radius: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	-moz-border-radius-bottomright: 5px;
+	-moz-border-radius-bottomleft: 5px;
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+
+.innslag div.ikon {
+	float: left;
+}
+
+.UKMdeltakere_buttons {
+	float: right;
+}
+.UKMdeltakere_buttons .ajax_save {
+	background: #159c1f;
+}
+
+div.group {
+	float:left;
+	display: block;
+	margin: 0 0 0 0;
+}
+
+span.loading {
+	display: block;
+	font-size: 16px;
+	font-weight: bold;
+	height: 35px;
+}
+
+span.loading > span {
+	margin-top: 10px;
+	display: block;
+	float: left;
+}
+
+span.loading > img {
+	float: left;
+	margin-right: 15px;
+}
+
+/* Alt av cursor-elementer */
+div.group > div.ikon_detaljer, 
+div.group > div.ikon_detaljer_skjul, 
+div.person_table .person_remove, 
+div.person_table .ikon_person_rediger,
+div.innslag_titler .title_remove_icon,
+div.innslag_titler .title_icon,
+div.topleft li.legg_til_person, 
+div.topleft li.bytt_kontaktperson, 
+div.topleft li.legg_til_tittel, 
+div.topleft li.legg_til_i_forestilling,
+div.forestillinger li.forestillinger_icon,
+div.ikon_duplicates,
+.clickable /* tips: gi de andre klassene denne, og fjern fra listen */
+{ cursor:pointer; }
+div.person_table .titles .person_remove {cursor: default;}
+
+/* person-lists in dropdown */
+div.group > div.ikon_detaljer, div.group > div.ikon_detaljer_skjul { width: 58px; }
+div.group > div.ikon_detaljer_skjul { display:none; }
+div.group > div.navn { display: block; width: 190px; }
+div.group > div.kategori { display: block; width: 80px; }
+div.group > div.personer {display: block; width: 78px; margin: 0 0 0 0;}
+div.group > div.tid { display: block; width: 61px; text-align: right; margin:0 0 0 -10px; }
+div.group > div.titler { display: block; width: 50px; text-align: right; }
+div.ikon_alert {width:60px;}
+div.ikon_alert p {line-height:10px; margin:0 0 0 0; padding:0 0 0 0;}
+
+li.innslag > div.ikon_meld_av, li.innslag > div.ikon_locked { width:80px; float:right; display: block; margin: 0 6px; cursor:pointer; }
+li.innslag > div.ikon_rediger { float: left; diplay: block; margin: 5px 0 0 6px; cursor:pointer; }
+li.innslag > div.group em { font-weight: bold; font-style: normal; }
+li.innslag > div.group, li.innslag > div.group_right {
+	font-size: 14px;
+	padding: 5px;
+	margin: 0 10px 0 0;
+}
+li > div.group {float:left}
+li div.group_right, div div.group_right {float:right;}
+
+
+li.innslag > div.group span.phone {
+	color: green;
+	display: inline-block;
+	margin: 0 0 0 3px;
+}
+
+div.detaljer, div.detaljer form { clear: left; }
+div.detaljer #message {margin: 0 10px 0 86px;}
+div.detaljer {margin: 10px 0 0 0;}
+div.detaljer form {
+	border: 1px solid #ccc;
+	background: #ddd;
+}
+
+
+div.personer > h1, div.error_wrapper > h1, div.innslag_titler > h1  {float: left; margin: 10px 0 0 10px;}
+div.personer > h3, div.error_wrapper > h3, div.innslag_titler > h3, div.forestillinger > h3 {margin:16px 0 5px 0;}
+
+div.innslag_titler, div.personer {margin: 0 0 10px 0;}
+div.forestillinger {margin: 0 0 50px 0px;}
+div.personer > div.topleft {float: right; margin: -30px 3px 0 0;}
+div.innslag_titler > div.topleft {float: right; margin: -40px 3px 0 0;}
+div.forestillinger > div.topleft {float: right; margin: -40px 3px 0 0;}
+div > div.topleft ul > li {display:inline-block; width:95px; float: left; margin: 12px 0 0 0;}
+div.error_wrapper > div.error {margin:10px 5px 0 80px;}
+
+div > ul.titles {
+	border-top: 1px solid #ccc;
+	font-size: 10px
+	margin: -4px 0 0 0;
+}
+
+
+div.person_table ul, div.innslag_titler_table ul, div.forestilling_wrapper ul {
+	clear: both;
+	display:block;
+	margin: 0 0 0px 0;
+	font-style:normal;
+	font-size: 12px;
+}
+div.person_table ul.titles li, div.innslag_titler_table ul.titles li, div.forestilling_wrapper ul.titles li {font-style: italic;}
+
+.thirdcol {
+	width: 30%;
+	float: left;
+	border: 1px solid #ccc;
+}
+.smallerFont{ font-size: 12px; }
+.permaGray{ color:#666; }
+.boldText{ font-weight: bold}
+
+
+/* lister i innslag-dropdown */
+div.personer ul > li, div.innslag_titler ul > li {
+	float:none;
+	display: inline-block;
+	margin: 0 5px 5px 5px;
+	font-style:normal;
+}
+
+/* Detaljer */
+div.detaljer div.personer, div.detaljer div.innslag_titler, div.detaljer div.forestillinger {
+	padding: 7px 0 0 0;
+}
+div.detaljer h3 {
+	margin: 10px 0 -5px 86px;
+	padding: 16px 0 0 0;
+	font-size: 13px;
+	font-weight: bold;
+}
+
+div.detaljer div.personer h3 {
+	margin: 10px 0 -15px 86px;
+}
+
+/* Personer-liste */
+div.personer ul > li > em{font-style:normal;}
+div.personer ul > li.person_icon {width:20px;}
+div.personer ul > li.person_contact {width:20px;}
+div.personer ul > li.person_name {width:150px;}
+div.personer ul > li.person_cellnumber {width:62px;}
+div.personer ul > li.person_instrument {width:170px;}
+div.personer ul > li.person_email {width:150px;}
+div.personer ul > li.person_remove {float:right; width:30px; margin:0 24px 0 0;}
+div.personer ul > li.person_remove img{float:right;}
+div.personer ul > li.clear {clear:both;}
+div.person_table {margin: 0 0 0 86px;}
+
+/* Innslagstitler-liste */
+div.innslag_titler ul > li > em{ font-style:normal; }
+div.innslag_titler ul > li.title_icon{ width:20px; }
+div.innslag_titler ul > li.title_tekst_av{ width:125px; }
+div.innslag_titler ul > li.title_melodi_av{ width:125px; }
+div.innslag_titler ul > li.title_tittel{ width:200px; }
+div.innslag_titler ul > li.title_varighet{ width:65px; }
+div.innslag_titler ul > li.title_koreografi { width:150px; }
+div.innslag_titler ul > li.title_beskrivelse { width:170px; }
+div.innslag_titler ul > li.title_teknikk { width:90px; }
+div.innslag_titler ul > li.title_format { width:100px; }
+div.innslag_titler ul > li.title_type { width:110px; }
+div.innslag_titler ul > li.title_remove_icon{float:right; display:inline-block; width:35px; margin:0 24px 0 0; }
+div.innslag_titler ul > li.title_remove_icon img{float:right;}
+div.innslag_titler ul > li.clear{ clear:both; }
+div.innslag_titler_table {margin: 0 0 0 86px; }
+
+/* Forestillinger-liste */
+div.forestillinger ul > li > em{ font-style:normal; }
+div.forestillinger ul > li.forestillinger_icon{ width:36px; }
+div.forestillinger ul > li.forestillinger_forestilling{width:150px;}
+div.forestillinger ul > li.forestillinger_start{width:140px;}
+div.forestillinger ul > li.forestillinger_number{width:70px; text-align:center;}
+div.forestillinger ul > li.forestillinger_antall{width:80px; text-align:center;}
+div.forestillinger ul > li.forestillinger_varighet{width:80px;}
+div.forestillinger ul > li.forestillinger_remove{width:110px; float:right; margin:0 24px 0 0;}
+div.forestillinger ul > li.forestillinger_remove img{float:right;}
+div.forestillinger ul > li.clear{ clear:both; }
+div.forestilling_wrapper {margin: 0 0 0 86px; }
+div.forestilling_wrapper li {display: inline-block;}
+div.topleft li.legg_til_i_forestilling {float:right;}
+
+/* duplikate.v.php */
+div.duplikate {margin: -10px 0 0 0;}
+div.duplikate h3 {margin: 0 0 0 86px;}
+div > input.approveband {display:block; float:right; margin: 0 10px 10px 0; background-color:#6BDF6B;}
+div.duplikate_wrapper {margin: 5px 0 0 86px; padding: 5px 0 0 10px; border-left:1px solid #ccc;}
+div.duplikate_wrapper > div > span.tittel {display:block; font-weight:bold; font-style:none;}
+div.duplikate_innslag {text-decoration:italic;}
+div.duplikate_innslag_table {margin:0 0 20px 0;}
+div.duplikate_innslag_table ul > li {display:inline-block;}
+div.duplikate_innslag_table ul.titles > li {font-style:italic;}
+div.duplikate_innslag_table ul > li.duplikate_name {width:200px;}
+div.duplikate_innslag_table ul > li.duplikate_band {width:200px;}
+
+div.forestillinger ul > li > em{ font-style:normal; }
+div.forestillinger ul > li.forestillinger_icon{ width:36px; }
+
+
+/* UKMdeltakere_buttons */
+div.UKMdeltakere_buttons {margin: 13px 5px 0 0;}
+div.UKMdeltakere_buttons .ajax_cancel{display:inline-block; clear:both; margin:0 10px 0 0;}
+div.UKMdeltakere_buttons .ajax_save{display:inline-block; clear:both;}
+
+/* person_rediger.v.php */
+
+form.edit_person_form input, form.edit_person_form textarea, form.edit_person_form select {display: block;}
+form.edit_person_form .first_name_input {width:136px;}
+form.edit_person_form .last_name_input {width:136px; margin-right:5px;}
+form.edit_person_form .age_select {width:60px; height:23px; margin-right:3px;} /* permanent height because of float issue */
+form.edit_person_form .cellphone_input {width:65px;}
+form.edit_person_form .role_input {}
+form.edit_person_form .adress_input {width:222px;}
+form.edit_person_form .postal_input {width:50px;}
+form.edit_person_form .county_input {}
+form.edit_person_form .email_input {width:276px; margin:0 5px;}
+/* tittellos */
+form.edit_person_form .erfaring_wrapper {display:inline-block; float:right; margin: 0 8px 0 0;}
+form.edit_person_form .erfaring_text {width:210px; margin:0 0 0 0;}
+
+/* innslag_rediger.v.php */
+form.edit_band_form input, form.edit_band_form select, form.edit_band_form textarea {display:block;}
+form.edit_band_form textarea {width:280px;}
+form.edit_band_form .name_input {width:185px;}
+form.edit_band_form .category_select {width:185px;}
+form.edit_band_form .genre_input {width:185px;}
+form.edit_band_form .tech_demands_text {}
+form.edit_band_form .description_text {}
+form.edit_band_form .radio_group {display:block;}
+form.edit_band_form .show_desc_radio {float:left; margin:0 8px;}
+form.edit_band_form .show_desc_label {margin:10px 0 0 0;}
+
+/* rediger tittel */
+div.edit_title_wrapper {display:block; margin: 0 0 0 86px;}
+form.edit_title_form input[type="text"], form.edit_title_form select {display:block;}
+form.edit_title_form ul > li > em{ font-style:normal; }
+form.edit_title_form .title_edit_tekst_av{ width:125px; }
+form.edit_title_form .title_edit_melodi_av{ width:125px; }
+form.edit_title_form .title_edit_tittel{ width:150px; }
+form.edit_title_form .title_edit_varighet{ width:65px; }
+form.edit_title_form .title_edit_koreografi { width:100px; }
+form.edit_title_form .title_edit_beskrivelse { width:100px; }
+form.edit_title_form .title_edit_teknikk { width:100px; }
+form.edit_title_form .title_edit_format { width:100px; }
+
+/* DETTE BLIR STYGT, SORRY */
+.ui-icon-grip-diagonal-se {
+	position: absolute;
+}
+
+form div.group {margin:0 0 0 5px;}
+form label {margin:0 0 0 2px;}
+div#person_liste ul input{display: inline;}
+form .group {display:inline-block; margin:1px 0 0 0;}
+
+/* Tarjei-liste */
+#person_liste > ul > li { display:block; }
+#kontaktperson_liste > ul > li { display:block; }
+img.empty_search_box{cursor: pointer; width: 12px;}
+#person_liste {height: 9em; overflow:auto; border: 1px solid #ccc;}
+#remove_new_data {display:block; clear:both;}
+div.sok_kontaktperson label, div.sok_kontaktperson input, div.sok_kontaktperson span {display:inline-block; float:left; margin:0 0 5px 0;}
+div.sok_kontaktperson span {display:inline-block; float:right; margin-left: 20px;}
+span.mobiltelefon { color: #16A765; }
+span.telefon { color: #4986E7; }
+span.ikke_telefon { color: #FA573C; }
+
+/*hjelpe-bikser*/
+.help_text{}
+.required{color:red}
+
+
+
+/* LEGG TIL NYTT INNSLAG-KNAPP WP-STYLE */
+h1 a.add-new-h2 {
+  background-color: #f1f1f1;
+  border: 1px solid #d1d1d1;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+  padding: 2px 4px 2px 4px;
+  font-size: 12px;
+  font-weight: normal;
+  text-decoration: none;
+}
+
+div.pameldte_missing > div {
+  float: left;
+  width: 290px;
+  margin-bottom: 10px;
+}
+div.pameldte_missing > div img {
+ 	width: 40px;
+  float: left;
+  margin-right: 10px;
+}
+div.pameldte_missing > div > h1 {
+ 	font-size: 16px;
+  margin-top: 14px;
+  margin-bottom: 10px;
+}
+div.pameldte_missing > div a {
+  margin-top: 5px;
+}

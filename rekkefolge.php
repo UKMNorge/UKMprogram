@@ -1,7 +1,7 @@
 <?php
 require_once('UKM/innslag.class.php');
 function UKMprogram_forestilling($m) {
-require_once(WP_PLUGIN_DIR.'/UKMdeltakere/liste.inc.php');
+require_once(WP_PLUGIN_DIR.'/UKMprogram/liste.inc.php');
 	$tittellose_innslag = array(4,5,8,9);
 	$c = new forestilling($_GET['c_id']);
 	$innslagene = $c->concertBands();

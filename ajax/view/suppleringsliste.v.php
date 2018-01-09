@@ -1,5 +1,5 @@
 <?php
-require_once(WP_PLUGIN_DIR.'/UKMdeltakere/liste.inc.php');
+require_once(WP_PLUGIN_DIR.'/UKMprogram/liste.inc.php');
 function UKMprogram_ajax_view($info){
 if(sizeof($info['alle_innslag'])==0)
 	die('Ingen innslag møter kravene til aktiv filtrering');

@@ -7,7 +7,26 @@ Author: UKM Norge / M Mandal
 Version: 1.0 
 Author URI: http://www.ukm-norge.no
 */
+
+function UKMdeltakere_ajax_handler() {
+	if(isset($_POST['c'])&&isset($_POST['v'])&&isset($_POST['i'])) {
+		require_once('ajax/control/'.$_POST['c'].'.c.php');
+		require_once('ajax/view/'.$_POST['v'].'.v.php');
+
+		die(UKMdeltakere_ajax_view(UKMdeltakere_ajax_controller($_POST['i'])));	
+	}
+	
+	if(isset($_POST['save'])) {
+		require_once('ajax/save/'.$_POST['save'].'.save.php');
+		UKMdeltakere_save();
+	}
+}
+
+
 if(is_admin()) {
+	
+	add_action('wp_ajax_UKMdeltakere_gui', 'UKMdeltakere_ajax_handler');
+
 	global $blog_id;
 	if( in_array( get_option('site_type'), array('kommune','fylke','land')) ) {
 		add_action('UKM_admin_menu', 'UKMprogram_menu',200);
@@ -15,8 +34,11 @@ if(is_admin()) {
 	}
 	require_once('program.ajax.php');
 	
-	if(isset($_POST['save']) && strpos($_POST['action'],'UKMprogram_')!==false)
+	if(isset($_POST['save']) && strpos($_POST['action'],'UKMprogram_')!==false) {
+		require_once('UKM/inc/toolkit.inc.php');
+
 		require_once('ajax/save/'.$_POST['save'].'.save.php');
+	}
 
 	add_action('wp_ajax_UKMprogram_ajax', 'UKMprogram_ajax');
 }
@@ -40,7 +62,7 @@ function UKMMprogram_dash_shortcut( $shortcuts ) {
 ## INCLUDE SCRIPTS
 function UKMprogram_scriptsandstyles() {
 	wp_enqueue_style( 'jquery-ui-style', WP_PLUGIN_URL .'/UKMNorge/js/css/jquery-ui-1.7.3.custom.css');
-	wp_enqueue_style( 'UKMdeltakere_style', WP_PLUGIN_URL .'/UKMdeltakere/deltakere.style.css');
+	wp_enqueue_style( 'UKMdeltakere_program_style', WP_PLUGIN_URL .'/UKMprogram/deltakere.style.css');
 	wp_enqueue_style( 'UKMprogram_program', WP_PLUGIN_URL .'/UKMprogram/program.style.css');
 	wp_enqueue_style('WPbootstrap3_css');
 
@@ -55,8 +77,8 @@ function UKMprogram_scriptsandstyles() {
 	wp_enqueue_script( 'jquery-ui-datepicker' );
 */
 
-	wp_enqueue_script('UKMdeltakere_script', WP_PLUGIN_URL . '/UKMdeltakere/deltakere.script.js' );
-	wp_enqueue_script('UKMdeltakere_script_modernizer', WP_PLUGIN_URL . '/UKMdeltakere/modernizr.input.js');
+	wp_enqueue_script('UKMdeltakere_script', WP_PLUGIN_URL . '/UKMprogram/deltakere.script.js' );
+#	wp_enqueue_script('UKMdeltakere_script_modernizer', WP_PLUGIN_URL . '/UKMdeltakere/modernizr.input.js');
 	wp_enqueue_script('UKMdeltakere_script_temp', WP_PLUGIN_URL . '/UKMdeltakere/temp.script.js' );
 
 	wp_enqueue_script('UKMprogram_script', WP_PLUGIN_URL . '/UKMprogram/program.script.js' );
@@ -266,4 +288,53 @@ function UKMprog_tabs($c) {
 	</span>
 </div><?php
 }
+
+
+function UKMdeltakere_tittelgui($btid,$kategori) {
+	$felter['musikk']	= array('tittel'=>'Tittel',
+								'melodi_av'=>'Melodi av',
+								'tekst_av'=>'Tekst av',
+								'varighet'=>'Varighet');
+	$felter['annet']	= array('tittel'=>'Tittel',
+								'melodi_av'=>'Evt melodi',
+								'tekst_av'=>'Evt tekst',
+								'varighet'=>'Varighet');
+	$felter['dans']		= array('tittel'=>'Tittel',
+								'koreografi'=>'Koreografi',
+								'varighet'=>'Varighet');
+	$felter['teater']	= array('tittel'=>'Tittel',
+								'melodi_av'=>'Komponist',
+								'tekst_av'=>'Forfatter',
+								'varighet'=>'Varighet');
+	$felter['litteratur']=array('tittel'=>'Tittel',
+								'melodi_av'=>'Evt komponist',
+								'tekst_av'=>'Evt medforfatter',
+								'varighet'=>'Varighet');
+	$felter[6]			= array('tittel'=>'Navn på gruppen/artisten',
+								'beskrivelse'=>'Beskrivelse');
+	$felter[3]			= array('tittel'=>'Tittel',
+								'beskrivelse'=>'Beskrivelse',
+								'teknikk'=>'Teknikk',
+								'type'=>'Type');
+	$felter[2]			= array('tittel'=>'Tittel',
+								'format'=>'Format',
+								'varighet'=>'Varighet');
+	switch($btid) {
+		case 1:
+			switch(strtolower($kategori)){
+				case 'musikk':		return $felter['musikk'];
+				case 'dans':		return $felter['dans'];
+				case 'teater':		return $felter['teater'];
+				case 'litteratur':	return $felter['litteratur'];
+				default: 		return $felter['annet'];
+			}
+			break;
+		case 2:
+		case 3:
+		case 6:
+			return $felter[$btid];
+	}
+	return array();
+}
+
 ?>
