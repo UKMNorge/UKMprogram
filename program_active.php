@@ -17,30 +17,14 @@ foreach( $hendelser as $c ) {
 	
 	// Beregn varighet og stopp-tidspunkt
 	$varighet = $h->varighet();
-
-	/*
-if( $varighet <= 60*30 ) {
-		$varighet = 60*45;
-	} else {
-		$varighet = $varighet * 1.2;
+	$stop = $start + $varighet + (60*5);
+	
+	// Start 5 min før
+	$start = $start - 60*5;
+	
+	if( $varighet > (60*5) ) {
+		$perioder[] = (object) array('navn' => $navn, 'start' => $start, 'stop' => $stop);
 	}
-*/
-	$stop = $start + $varighet;
-	
-	// Start 3 min før
-	$varighet += 60*3;
-	$start = $start - 60*3;
-	
-	$perioder[] = (object) array('navn' => $navn, 'start' => $start, 'stop' => $stop);
 }
-
-/*
-foreach( $perioder as $i => $data ) {
-	echo '<h2>'. $i .' - '. $data->navn.'</h2>';
-	echo 'start: '. date('d.m.Y H:i:s', $data->start)
-		.'stop: '. date('d.m.Y H:i:s', $data->stop)
-		.'varig: '. $data->varighet;
-}
-*/
 
 update_option('ukm_hendelser_perioder', $perioder);
