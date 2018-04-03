@@ -56,7 +56,12 @@ function li_innslag($inn, $vis_kommune, $ignore_shortstring=false) {
 			.	'data-type="&nbsp; '.$katogsjan.'" '
 			.	'data-name="'.$inn->g('b_name').'&nbsp;" '
 			.	'data-kommune="'.($vis_kommune!==false ? $geodata.'&nbsp;' : 'false').'" '
-			.	'data-time="&nbsp; '.$inn->tid(get_option('pl_id')).'" '
+			.	(
+					get_option('site_type') == 'kommune' ? 
+						'data-time="&nbsp; '.$inn->tid(get_option('pl_id')).'" '
+						: 
+						'data-time="&nbsp; '.$inn->tid(get_option('pl_id'),get_option('pl_id')).'" '
+				)
 			.	'data-titler="'. $t .'" '
 			.	'data-antall="&nbsp; Deltar i '.$inn->antall_hendelser(get_option('pl_id')).' hendelser" '
 			.	'data-tall="'.$inn->antall_hendelser(get_option('pl_id')).'" '
