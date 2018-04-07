@@ -138,6 +138,24 @@ for($i=0;$i<60;$i+=5)
 					<input type="hidden" value="<?= $c->g('c_delay')?>" name="log_current_value_c_delay" />
 				</div>
 
+				<div class="group" id="oppmote_vis">
+					<label class="oppmote_label" for="oppmote_vis">
+						Vil du vise oppmøtetid på nettsiden?
+					</label>
+					<div class="clearfix"></div>
+					<span class="radio_group">
+						<label>
+							<input id="vis_oppmote_ja" name="c_visible_oppmote" type="radio" <?= ($c->g('c_visible_oppmote')=='true'?'checked="checked"':'') ?> value="true">ja
+						</label>
+					</span>
+					<div class="clear"></div>
+					<span class="radio_group">
+						<label>
+							<input id="vis_oppmote_ja" name="c_visible_oppmote" type="radio" <?= ($c->g('c_visible_oppmote')=='false'?'checked="checked"':'') ?> value="false">nei
+						</label>
+					</span>
+					<div class="forklaring">Vil vises på program- og deltakersiden</div>
+				</div>
 
 			</div>
 	</fieldset>

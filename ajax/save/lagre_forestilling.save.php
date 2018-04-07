@@ -33,6 +33,12 @@ function UKMprogram_save($info) {
 */	
 	$c = new forestilling($_POST['c_id']);
 	$updates = array('c_name','c_place','c_start','c_visible_detail','c_visible_program','c_before','c_delay');
+
+	if( isset($_POST['c_visible_oppmote'])) {
+		$updates[] = 'c_visible_oppmote';
+		$_POST['log_current_value_c_visible_oppmote'] = 'fake';
+	}
+
 	foreach($updates as $field)
 		$c->update($field);
 		
