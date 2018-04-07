@@ -13,7 +13,7 @@ $dager = UKMp_dager($m);
 $dager = $dager['dager'];
 $alle_dager = array('s&oslash;n','man','tirs','ons','tors','fre','l&oslash;r','s&oslash;n');
 
-function li_innslag($inn, $vis_kommune, $ignore_shortstring=false) {
+function li_innslag($m, $inn, $vis_kommune, $ignore_shortstring=false) {
 	$ant_tegn = 18;
 	$katogsjan = $inn->g('kategori_og_sjanger');
 	if(empty($katogsjan))
@@ -26,7 +26,7 @@ function li_innslag($inn, $vis_kommune, $ignore_shortstring=false) {
 	# at det kan være flere bokser per artist og glemmer noen.
 	#	asgeirsh@ukmmedia.no
 	#	10.02.16
-	$titler = $inn->titler($m->pl_id);
+	$titler = $inn->titler($m->g('pl_id'));
 	$t = '';
 	// Hvis innslaget er tittelløst, type konferansier, media eller arrangør
 	if ($inn->tittellos()) {
@@ -122,7 +122,7 @@ foreach($forestillinger as $i => $f) {
 		</li>';
 	foreach($innslag as $i) {
 		$inn = new innslag($i['b_id']);
-		$ret .= li_innslag($inn, $vis_kommune);
+		$ret .= li_innslag($m, $inn, $vis_kommune);
 	}	
 	
 		
@@ -215,7 +215,7 @@ foreach($forestillinger as $i => $f) {
 					foreach($innslag as $i) {
 						$inn = new innslag($i['b_id']);
 						if($inn->antall_forestillinger(get_option('pl_id'))==0)
-							echo li_innslag($inn, $vis_kommune, true);
+							echo li_innslag($m, $inn, $vis_kommune, true);
 						#echo '<li class="dragable dash_innslag" id="innslag_'.$inn->g('b_id').'">'.$inn->g('b_name').'</li>';
 					}
 			?>	</ul>
@@ -230,7 +230,7 @@ foreach($forestillinger as $i => $f) {
 					$innslag = $m->innslag();
 					foreach($innslag as $i) {
 						$inn = new innslag($i['b_id']);
-						echo li_innslag($inn, $vis_kommune, true);
+						echo li_innslag($m, $inn, $vis_kommune, true);
 						#'<li class="dragable dash_innslag" id="innslag_'.$inn->g('b_id').'">'.$inn->g('b_name').'</li>';
 					}
 			?>	</ul>
