@@ -122,7 +122,6 @@ for($i=0;$i<60;$i+=5)
 			<select name="c_type_category_id">
 				<?php
 				foreach( get_categories() as $category ) {
-					var_dump( $category );
 					echo '<option value="' . $category->term_id . '" '.( $category->term_id == $c->get('c_type_category_id') ? 'selected="selected"':'' ) .'>' . $category->name . '</option>';
 				}
 				?>
