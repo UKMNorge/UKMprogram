@@ -90,10 +90,11 @@ for($i=0;$i<60;$i+=5)
 		if( $monstring->getType() != 'kommune' ) {
 	?>
 	<div class="group">
-		<h3>Type forestilling</h2>
+		<h3>Type hendelse</h2>
 		<select name="c_type" id="c_type">
 			<option value="default" <?php echo $c->g('c_type') == 'default' ? 'selected="selected"' : ''; ?>>Vanlig forestilling med innslag</option>
 			<option value="post" <?php echo $c->g('c_type') == 'post' ? 'selected="selected"' : ''; ?>>Egendefinert innhold fra innlegg/side</option>
+			<option value="category" <?php echo $c->g('c_type') == 'category' ? 'selected="selected"' : ''; ?>>Kategori</option>
 		</select>
 		
 		<div class="c_post" id="c_type_post" style="display:none;">
@@ -114,6 +115,20 @@ for($i=0;$i<60;$i+=5)
 				?>
 			</select>
 		</div>
+
+
+		<div class="c_post" id="c_type_category" style="display:none;">
+			<h3 id="c_type_category_title">Velg kategori</h3>
+			<select name="c_type_category_id">
+				<?php
+				foreach( get_categories() as $category ) {
+					var_dump( $category );
+					echo '<option value="' . $category->term_id . '" '.( $category->term_id == $c->get('c_type_category_id') ? 'selected="selected"':'' ) .'>' . $category->name . '</option>';
+				}
+				?>
+			</select>
+		</div>
+
 	</div>
 	<div class="clearfix"></div>
 	<?php 

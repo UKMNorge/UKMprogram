@@ -551,12 +551,22 @@ function lagreRekkefolge(rekkefolge) {
 }
 
 jQuery(document).on('change', '#c_type', function(){
-	if( jQuery(this).val() == 'post' ) {
-		jQuery('#c_type_post').slideDown();
-		jQuery('#c_oppmote').slideUp();
-	} else {
-		jQuery('#c_type_post').slideUp();
-		jQuery('#c_oppmote').slideDown();
+	switch( jQuery(this).val() ) {
+		case 'post':
+			jQuery('#c_type_category').slideUp();
+			jQuery('#c_oppmote').slideUp();
+			jQuery('#c_type_post').slideDown();
+		break;
+		case 'category':
+			jQuery('#c_type_post').slideUp();
+			jQuery('#c_oppmote').slideUp();
+			jQuery('#c_type_category').slideDown();			
+		break;
+		default:
+			jQuery('#c_type_post').slideUp();
+			jQuery('#c_type_category').slideUp();
+			jQuery('#c_oppmote').slideDown();			
+		break;
 	}
 });
 
