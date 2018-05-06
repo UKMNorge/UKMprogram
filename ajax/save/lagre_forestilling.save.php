@@ -28,7 +28,7 @@ function UKMprogram_save($info) {
 	}
 
 	$c = new forestilling($_POST['c_id']);
-	$updates = array('c_name','c_place','c_start','c_visible_detail','c_visible_program','c_before','c_delay','c_type','c_type_post_id','c_type_category_id');
+	$updates = array('c_name','c_place','c_start','c_visible_detail','c_visible_program','c_before','c_delay','c_type','c_type_post_id','c_type_category_id','c_intern');
 
 	if( isset($_POST['c_visible_oppmote'])) {
 		$updates[] = 'c_visible_oppmote';

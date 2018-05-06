@@ -83,6 +83,24 @@ for($i=0;$i<60;$i+=5)
 			<div class="forklaring">Skal alle kunne se hvilken rekkefølge du har satt på innslagene?</div>
 			<input type="hidden" name="log_current_value_c_visible_detail" value="<?=$c->g('c_visible_detail')?>" />
 		</div>
+		<div class="group" id="intern">
+			<label class="time_label" for="b_name">Intern hendelse?</label>
+			<span class="radio_group">
+				<label>
+					<input id="c_intern" type="radio" <?=($c->g('c_intern')=='true'?' checked="checked"':'')?> value="true" name="c_intern">ja
+				</label>
+			</span>
+			<br />
+			<span class="radio_group">
+				<label>
+					<input type="radio" <?=($c->g('c_intern')=='false'?' checked="checked"':'')?> value="false" name="c_intern">nei
+				</label>
+			</span>
+			<div class="forklaring">Interne hendelser vises kun på <a href="../deltakerprogram/">deltakerprogram-siden</a></div>
+			<input type="hidden" name="log_current_value_c_intern" value="<?=$c->g('c_intern')?>" />
+		</div>
+
+		
 	</fieldset>
 	
 	
