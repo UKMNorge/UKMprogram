@@ -87,7 +87,7 @@ for($i=0;$i<60;$i+=5)
 	
 	
 	<?php 
-		if( $monstring->getType() == 'fylke' ) {
+		if( $monstring->getType() != 'kommune' ) {
 	?>
 	<div class="group">
 		<h3>Type forestilling</h2>
