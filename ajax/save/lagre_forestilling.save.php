@@ -27,21 +27,18 @@ function UKMprogram_save($info) {
 		$_POST['c_before'] = 0;
 	}
 
-/*	echo '<pre>';
-	var_dump($_POST);
-	echo '</pre>';
-*/	
 	$c = new forestilling($_POST['c_id']);
-	$updates = array('c_name','c_place','c_start','c_visible_detail','c_visible_program','c_before','c_delay');
+	$updates = array('c_name','c_place','c_start','c_visible_detail','c_visible_program','c_before','c_delay','c_type','c_type_post_id');
 
 	if( isset($_POST['c_visible_oppmote'])) {
 		$updates[] = 'c_visible_oppmote';
 		$_POST['log_current_value_c_visible_oppmote'] = 'fake';
 	}
 
-	foreach($updates as $field)
+	foreach($updates as $field) {
 		$c->update($field);
-		
+	}
+	
 	do_action('UKMprogram_save', 'lagre', $_POST['c_id']);
 }
 ?>

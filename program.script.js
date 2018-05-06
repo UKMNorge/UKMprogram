@@ -549,3 +549,17 @@ function lagreRekkefolge(rekkefolge) {
 		//alert(response);
 	});
 }
+
+jQuery(document).on('change', '#c_type', function(){
+	if( jQuery(this).val() == 'post' ) {
+		jQuery('#c_type_post').slideDown();
+		jQuery('#c_oppmote').slideUp();
+	} else {
+		jQuery('#c_type_post').slideUp();
+		jQuery('#c_oppmote').slideDown();
+	}
+});
+
+jQuery(document).ready( function(){
+	jQuery('#c_type').change();
+});

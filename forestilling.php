@@ -5,6 +5,9 @@ $c = new forestilling($_GET['c_id']);
 $csh = date('H', $c->g('c_start'));
 $csi = date('i', $c->g('c_start'));
 
+require_once('UKM/monstring.class.php');
+$monstring = new monstring_v2( get_option('pl_id') );
+
 for($i=7;$i<24;$i++)
 	$timer .= '<option value="'.$i.'" '.($csh==$i?'selected="selected"':'').'>'.($i<10?'0'.$i:$i).'</option>';
 for($i=0;$i<60;$i+=5)
@@ -83,25 +86,61 @@ for($i=0;$i<60;$i+=5)
 	</fieldset>
 	
 	
-	<h3 id="oppmotetid_title">Detaljer om oppmøte (avansert)</h3>
-	<?php
-		$before = $c->g('c_before');
-		$delay = $c->g('c_delay');
-		
-		$oppmoteja = $oppmotenei = '';
-		if($before==$delay && $delay==0)
-			$oppmotenei = 'checked="checked"';
-		else
-			$oppmoteja = 'checked="checked"';
-		
-		$oppmote_before_option = '<option value="0">Når hendelsen begynner</option>';
-		for($i=5; $i<(10*60); $i+=5)
-			$oppmote_before_option .= '<option value="'.$i.'" '.($c->g('c_before')==$i?'selected="selected"':'').'>'.$i.' min før</option>';
-
-		$oppmote_delay_option = '<option value="0">Alle møter samtidig</option>';			
-		for($i=1; $i<20; $i++)
-			$oppmote_delay_option .= '<option value="'.$i.'" '.($c->g('c_delay')==$i?'selected="selected"':'').'>'.$i.' min etter forrige</option>';
+	<?php 
+		if( $monstring->getType() == 'fylke' ) {
 	?>
+	<div class="group">
+		<h3>Type forestilling</h2>
+		<select name="c_type" id="c_type">
+			<option value="default" <?php echo $c->g('c_type') == 'default' ? 'selected="selected"' : ''; ?>>Vanlig forestilling med innslag</option>
+			<option value="post" <?php echo $c->g('c_type') == 'post' ? 'selected="selected"' : ''; ?>>Egendefinert innhold fra innlegg/side</option>
+		</select>
+		
+		<div class="c_post" id="c_type_post" style="display:none;">
+			<h3 id="c_type_post_title">Velg side / innlegg</h3>
+			<select name="c_type_post_id">
+				<?php
+					global $wpdb;
+					// A sql query to return all post titles
+					$results = $wpdb->get_results( $wpdb->prepare( "SELECT ID, post_title, post_type FROM {$wpdb->posts} WHERE post_status = 'publish' ORDER BY ID DESC" ), ARRAY_A );
+					// Return null if we found no results
+					if ( ! $results ) {
+						echo '<option value="0" selected="selected" disabled="disabled">Du må ha minst én side eller post før du kan gjøre dette</option>';
+					} else {
+					foreach( $results as $index => $post ) {
+						echo '<option value="' . $post['ID'] . '" '.( $post['ID'] == $c->get('c_type_post_id') ? 'selected="selected"':'' ) .'>' . $post['post_title'] . ' ('. ($post['post_type'] == 'post' ? 'innlegg':'side').')</option>';
+					}
+				}
+				?>
+			</select>
+		</div>
+	</div>
+	<div class="clearfix"></div>
+	<?php 
+		}
+	?>
+		
+
+	<div id="c_oppmote">
+		<h3 id="oppmotetid_title">Detaljer om oppmøte (avansert)</h3>
+		<?php
+			$before = $c->g('c_before');
+			$delay = $c->g('c_delay');
+			
+			$oppmoteja = $oppmotenei = '';
+			if($before==$delay && $delay==0)
+				$oppmotenei = 'checked="checked"';
+			else
+				$oppmoteja = 'checked="checked"';
+			
+			$oppmote_before_option = '<option value="0">Når hendelsen begynner</option>';
+			for($i=5; $i<(10*60); $i+=5)
+				$oppmote_before_option .= '<option value="'.$i.'" '.($c->g('c_before')==$i?'selected="selected"':'').'>'.$i.' min før</option>';
+	
+			$oppmote_delay_option = '<option value="0">Alle møter samtidig</option>';			
+			for($i=1; $i<20; $i++)
+				$oppmote_delay_option .= '<option value="'.$i.'" '.($c->g('c_delay')==$i?'selected="selected"':'').'>'.$i.' min etter forrige</option>';
+		?>
 		<fieldset>
 			<div class="group" id="oppmotetid">
 				<label class="time_label" for="b_name">Vil du angi detaljer for oppmøtetid?</label>
@@ -156,9 +195,9 @@ for($i=0;$i<60;$i+=5)
 					</span>
 					<div class="forklaring">Vil vises på program- og deltakersiden</div>
 				</div>
-
 			</div>
-	</fieldset>
+		</fieldset>
+	</div>
 </form>
 
 <br />
