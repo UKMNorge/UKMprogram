@@ -45,8 +45,12 @@ function UKMd_innslagsboks($inn,$place,$tittellose_innslag,$forestilling=false,$
 					echo '1 person';
 				}
 			?></div>
-		<div class="snittalder smallerFont permaGray">Snitt
+		<div class="snittalder smallerFont permaGray">
 			<?php
+				$inn->loadGEO();
+				echo $inn->g('fylke');
+				/**
+				echo 'Snitt ';
 				$alder = 0;
 				foreach( $inn->personObjekter() as $person ) {
 					$alder = $alder + $person->getAge();
@@ -57,6 +61,7 @@ function UKMd_innslagsboks($inn,$place,$tittellose_innslag,$forestilling=false,$
 						$alder = ($alder - 0.5).' &frac12;';
 				}
 				echo ($alder==26 ? 'over 25' : $alder) . ' &aring;r';
+				**/
 			?>
 		</div>
 	</div>

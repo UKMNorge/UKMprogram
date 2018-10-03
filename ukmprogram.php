@@ -30,6 +30,7 @@ if(is_admin()) {
 	global $blog_id;
 	if( in_array( get_option('site_type'), array('kommune','fylke','land')) ) {
 		add_action('UKM_admin_menu', 'UKMprogram_menu',200);
+		add_filter('UKM_admin_menu_conditions', 'UKMprogram_menu_conditions');
 		add_action('UKMWPDASH_shortcuts', 'UKMMprogram_dash_shortcut', 40);
 	}
 	require_once('program.ajax.php');
@@ -44,6 +45,12 @@ if(is_admin()) {
 }
 
 ## CREATE A MENU
+function UKMprogram_menu_conditions( $_CONDITIONS ) {
+	return array_merge( $_CONDITIONS, 
+		['UKMprogram_admin' => 'monstring_er_registrert']
+	);
+}
+
 function UKMprogram_menu() {
 	UKM_add_menu_page('monstring','Program', 'Program', 'editor', 'UKMprogram_admin', 'UKMprogram_admin', '//ico.ukm.no/chart-menu.png',10);    
 
