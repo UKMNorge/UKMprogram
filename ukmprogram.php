@@ -123,7 +123,11 @@ function UKMP_veiviser_save(){
 	$monstringsstart = explode('.',str_replace(array(' kl. ',':'),'.',$m->starter()));
 			
 	$forestillinger = (int)$_POST['forestillinger'];
-	$fordelte_forestillinger = sizeof($_POST['hendelser_fordeling']);
+	if( is_array( $_POST['hendelser_fordeling'] ) ) {
+		$fordelte_forestillinger = sizeof($_POST['hendelser_fordeling']);
+	} else {
+		$fordelte_forestillinger = 0;
+	}
 			
 	if($forestillinger > $fordelte_forestillinger)
 		$ekstra_forestillinger = $forestillinger - $fordelte_forestillinger;
