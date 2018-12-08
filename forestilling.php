@@ -121,15 +121,21 @@ for($i=0;$i<60;$i+=5)
 				<?php
 					global $wpdb;
 					// A sql query to return all post titles
-					$results = $wpdb->get_results( $wpdb->prepare( "SELECT ID, post_title, post_type FROM {$wpdb->posts} WHERE post_status = 'publish' ORDER BY ID DESC" ), ARRAY_A );
+					$results = $wpdb->get_results(
+                        $wpdb->prepare( 
+                            "SELECT ID, post_title, post_type FROM {$wpdb->posts} WHERE post_status = 'publish' ORDER BY ID DESC"
+                            []
+                            ), 
+                        ARRAY_A 
+                    );
 					// Return null if we found no results
 					if ( ! $results ) {
 						echo '<option value="0" selected="selected" disabled="disabled">Du må ha minst én side eller post før du kan gjøre dette</option>';
 					} else {
-					foreach( $results as $index => $post ) {
-						echo '<option value="' . $post['ID'] . '" '.( $post['ID'] == $c->get('c_type_post_id') ? 'selected="selected"':'' ) .'>' . $post['post_title'] . ' ('. ($post['post_type'] == 'post' ? 'innlegg':'side').')</option>';
-					}
-				}
+                        foreach( $results as $index => $post ) {
+                            echo '<option value="' . $post['ID'] . '" '.( $post['ID'] == $c->get('c_type_post_id') ? 'selected="selected"':'' ) .'>' . $post['post_title'] . ' ('. ($post['post_type'] == 'post' ? 'innlegg':'side').')</option>';
+                        }
+                    }
 				?>
 			</select>
 		</div>
