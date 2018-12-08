@@ -123,7 +123,7 @@ for($i=0;$i<60;$i+=5)
 					// A sql query to return all post titles
 					$results = $wpdb->get_results(
                         $wpdb->prepare( 
-                            "SELECT ID, post_title, post_type FROM {$wpdb->posts} WHERE post_status = 'publish' ORDER BY ID DESC"
+                            "SELECT ID, post_title, post_type FROM {$wpdb->posts} WHERE post_status = 'publish' ORDER BY ID DESC",
                             []
                             ), 
                         ARRAY_A 
