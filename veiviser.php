@@ -111,7 +111,7 @@ function UKMp_pameldte_analyser($m, $dager, $anbefalinger) {
 	$stat['antall_dager'] = sizeof($dager['dager']);
 	
 	foreach($pameldte as $btid => $innslag_i_bt) {
-		$key = sizeof($stat['typer_innslag']);
+		$key = is_array( $stat['typer_innslag'] ) ? sizeof($stat['typer_innslag']) : 0;
 		$stat['typer_innslag'][$btid] = $alle_bt_id[$btid]['bt_name'];
 		$stat['antall_innslag'][$btid] = sizeof($innslag_i_bt);
 		
