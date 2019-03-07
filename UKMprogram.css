@@ -1,0 +1,38 @@
+/* DASHBOARD */
+
+.program .caron {
+	font-size: 3em;
+	line-height: 1.1em;
+	font-weight: lighter;
+	margin-right: 0px;
+	float:right;
+}
+.program .icon {
+	float: right;
+	margin-right: 1em;
+	cursor: pointer;
+}
+
+
+.program {
+	width: 100%;
+}
+.program th, 
+.program td {
+	padding: 6px;
+}
+.program th {
+	text-transform: uppercase;
+}
+.program td {
+	vertical-align: top;
+}
+
+/* HENDELSE */
+input.form-control + p.help {
+    margin-top: -.7em;
+}
+
+label.normal {
+	font-weight: normal;
+}

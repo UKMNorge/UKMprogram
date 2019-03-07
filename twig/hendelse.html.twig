@@ -1,0 +1,306 @@
+{% extends "Layout/base.html.twig" %}
+
+{% if GET('id') == 'new' %}
+	{% set current = '' %}
+{% else %}
+	{% set current = hendelse.getStart()|date('H:i') %}
+{% endif %}
+
+
+{% block content %}
+	<h1>Opprett hendelse</h1>
+	<div class="clearfix clear clear-fix"></div>
+
+	<form method="POST" action="?page=UKMprogram&action=save&save=hendelse">
+		<input type="hidden" name="id" value="{{ GET('id') }}" />
+		<div style="margin-left: .2em; margin-right: 1em; max-width: 768px;">
+			
+			{# NAVN OG STED #}
+			<div class="row">
+				<div class="col-12 col-sm-6">
+					<div class="form-group">
+						<label>Navn på hendelsen</label>
+						<input type="text" class="form-control" name="navn" required />
+						<p class="help text-muted">F.eks Forestilling A, Kirkekonsert</p>
+					</div>
+				</div>
+
+				<div class="col-12 col-sm-6">
+					<div class="form-group">
+						<label>Sted</label>
+						<input type="text" class="form-control" name="sted" required />
+						<p class="help text-muted">F.eks Ibsenhuset, Kulturhuset, Volda ungdomsskole</p>
+					</div>
+				</div>
+			</div>
+
+			{# TIDSPUNKT #}
+			<div class="row">
+				<div class="col-12 col-sm-6">
+					<div class="form-group">
+						<label>Når starter hendelsen</label>
+						<select class="form-control" name="start_date" required>
+							{% for dag in monstring.getDager() %} 
+								<option value="{{ dag|dato('d.m.Y') }}">{{ dag|dato('D d.M')|capitalize }}</option>
+							{% endfor %}
+						</select>
+					</div>
+				</div>
+
+				<div class="col-12 col-sm-6">
+					<label class="hidden-xs">&nbsp;</label>
+					<div class="input-group">
+						<span class="input-group-addon">kl. </span>
+						<select class="form-control" name="start_time" required>
+							{% for hour in 7..23 %}
+								{% set pad_hour = hour < 10 ? '0' ~ hour : hour %}
+								
+								{% for min in range(0,55,5) %}
+									{% set pad_min = min < 10 ? '0' ~ min : min %}	
+									<option value="{{ pad_hour }}:{{ pad_min }}" {{ current == pad_hour~':'~pad_min ? 'selected' }}>{{ pad_hour }}:{{ pad_min }}</option>
+								{% endfor %}
+							{% endfor %}
+						</select>
+					</div>
+				</div>
+				<div class="col-12 col-sm-12">
+					<p class="help text-muted">
+						Finner du ikke riktig dag? 
+						Listen viser kun dager mellom mønstringens start og slutt. 
+						Rediger dager fra <a href="?page=UKMMonstring">mønstring</a> og returner hit.
+					</p>
+				</div>
+			</div>
+
+
+			{% if true or site_type != 'kommune' %}
+			<div class="row">
+				<div class="col-12 col-sm-12" style="margin-top: 2em;">
+					<h3>Innhold i hendelsen</h3>
+				</div>
+			</div>
+			{% endif %}
+			
+			
+			{# INTERN / OFFENTLIG #}
+			<div class="row">
+				{% if true or site_type == 'land' %}
+					<div class="col-12 col-sm-6">
+						<div class="form-group">
+							<label>Er dette en offentlig eller intern hendelse?</label>
+							<br />
+							<label class="normal">
+								<input type="radio" class="form-control" name="synlig_intern" value="nei" checked />
+								🔓 Offentlig hendelse som er åpen for alle.
+							</label>
+							<br />
+							<label class="normal">
+								<input type="radio" class="form-control" name="synlig_intern" value="ja" />
+								🔐 Intern hendelse kun for deltakere.
+							</label>
+						</div>
+					</div>
+				{% endif %}
+			</div>
+
+
+			{# TYPE HENDELSE #}
+			{% if true or site_type != 'kommune' %}
+				<div class="row">
+					<div class="col-12 col-sm-6">
+						<div class="form-group">
+							<label>Hva består detaljprogrammet av?</label>
+							<br />
+							<label class="normal">
+								<input type="radio" class="form-control" name="type" value="default" checked />
+								Innslag (standard)
+							</label>
+							<br />
+							<label class="normal">
+								<input type="radio" class="form-control" name="type" value="post" />
+								Et innlegg eller en side
+							</label>
+							<br />
+							<label class="normal">
+								<input type="radio" class="form-control" name="type" value="category" />
+								En liste med innlegg fra en kategori
+							</label>
+						</div>
+					</div>
+
+					{# SUB-SELECT: POSTS #}
+					<div class="col-12 col-sm-6" id="posts" style="display:none">
+						<div class="form-group">
+							<label>Velg hvilket innlegg eller hvilken side som skal vises</label>
+							<select name="post_id" class="form-control">
+								<optgroup label="Innlegg">
+									{% for post in posts if post.post_type == 'post' %}
+										<option value="{{ post.ID }}">{{ post.post_title }} ({{post.post_type == 'post' ? 'innlegg' : 'side'}})</option>
+									{% else %}
+										<option value="false" disabled selected>Du må ha minst ett innlegg før du kan gjøre dette</option>
+									{% endfor %}
+								</optgroup>
+
+								<optgroup label="Sider">
+									{% for post in posts if post.post_type != 'post' %}
+										<option value="{{ post.ID }}">{{ post.post_title }} ({{post.post_type == 'post' ? 'innlegg' : 'side'}})</option>
+									{% else %}
+										<option value="false" disabled selected>Du må ha minst en side før du kan gjøre dette</option>
+									{% endfor %}
+								</optgroup>
+							</select>
+						</div>
+					</div>
+
+					{# SUB-SELECT: CATEGORIES #}
+					<div class="col-12 col-sm-6" id="categories" style="display:none">
+						<div class="form-group">
+							<label>Velg hvilken kategori som skal vises</label>
+							<select name="category_id" class="form-control">
+								{% for category in categories %}
+									<option value="{{ category.term_id }}">{{ category.name }}</option>
+								{% else %}
+									<option value="false" disabled selected>Du må ha minst en kategori før du kan gjøre dette</option>
+								{% endfor %}
+							</select>
+						</div>
+					</div>
+
+					{# SUB-SELECT: OPPMØTE #}
+					<div class="col-12 col-sm-6" id="oppmote" style="display:none">
+						<div class="form-group">
+							<label>Vil du angi detaljer for oppmøte-tid?</label>
+							<select id="angi_oppmote" name="angi_oppmote" class="form-control">
+								<option value="true">Ja</option>
+								<option value="false" selected>Nei</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			{% else %}
+				<input type="hidden" name="type" value="default" />
+			{% endif %}
+
+
+			<div class="row" id="oppmote_detaljer" style="display: none;">
+				<div class="col-12 col-sm-12" style="margin-top: 2em;">
+					<h3>Detaljer for oppmøte</h3>
+				</div>
+
+				<div class="col-12 col-sm-6">
+					<div class="form-group">
+						<label>Hvor lenge før hendelsen skal det første innslaget møte?
+					
+						<select class="form-control" name="oppmote_for">
+							{% for time in 0..12 %}
+								{% if time == 1 %}
+									<optgroup label="Første time">
+								{% elseif time > 1 %}
+									</optgroup>
+									<optgroup label="{{ time }} timer">
+								{% endif %}
+								{% for min in range(0,55,5) %}
+									<option value="{{ ( time * 60) + min }}">
+										{% if time == 1 %}
+											1 time, 
+										{% elseif time > 1 %}
+											{{ time }} timer, 
+										{% endif %}
+										{{ min }} min før
+									</option>
+								{% endfor %}
+							{% endfor %}
+						</select>
+					</div>
+				</div>
+
+				<div class="col-12 col-sm-6">
+					<div class="form-group">
+						<label>Deretter, hvor stor tidsforskyving skal det være per innslag?
+						<select class="form-control" name="oppmote_forskyving">
+							<option value="0" selected>Alle møter samtidig</option>
+							{% for i in 1..30 %}
+								<option value="{{ i }}">{{ i }} min etter forrige</option>
+							{% endfor %}
+						</select>
+					</div>
+				</div>
+
+				<div class="col-12 col-sm-12">
+					<div class="form-group">
+						<label>Skal oppmøtetiden vises i programmet?</label>
+						<br />
+						<label class="normal">
+							<input type="radio" class="form-control" name="oppmote_synlig" value="ja" />
+							Ja (helst ikke)
+						</label>
+						<br />
+						<label class="normal">
+							<input type="radio" class="form-control" name="oppmote_synlig" value="nei" checked />
+							Nei
+						</label>
+					</div>
+				</div>
+			</div>
+
+
+
+			{# SYNLIGHET #}
+			<div class="row">
+				<div class="col-12 col-sm-12" style="margin-top: 2em;">
+					<h3>Synlighet på UKM.no {% if site_type != 'kommune' %}og i appen{% endif %}</h3>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-12 col-sm-6">
+					<div class="form-group">
+						<label>Skal hendelsen vises?</label>
+						<br />
+						<label class="normal">
+							<input type="radio" class="form-control" name="synlig_ramme" value="ja" checked />
+							😃 Ja, denne kan vises allerede nå.
+						</label>
+						<br />
+						<label class="normal">
+							<input type="radio" class="form-control" name="synlig_ramme" value="nei" />
+							☹️ Nei, dette er en kladd.
+						</label>
+					</div>
+				</div>
+
+				<div class="col-12 col-sm-6">
+					<div class="form-group">
+						<label>Skal innholdet i hendelsen vises?</label>
+						<br />
+						<label class="normal">
+							<input type="radio" class="form-control" name="synlig_detalj" value="ja" checked />
+							🙉 Ja, alt er klart.
+						</label>
+						<br />
+						<label class="normal">
+							<input type="radio" class="form-control" name="synlig_detalj" value="nei" />
+							🔓 Nei, hold detaljene hemmelig.
+						</label>
+						<p class="help text-muted">
+							Hvis du holder detaljene hemmelig, kan ingen se hvilken
+							rekkefølge innslagene skal opptre i.
+							{% if true or site_type != 'kommune' %}
+							<br />
+							Innlegg betraktes også som detaljer.
+							{% endif %}
+						</p>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+
+
+		<div style="margin-top: 2em;">
+			<input type="submit" value="Lagre" class="btn btn-success" />
+		</div>
+
+	</form>
+{% endblock %}
