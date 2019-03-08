@@ -16,5 +16,5 @@ $hendelse = write_forestilling::create(
 
 $_POST['id'] = $hendelse->getId();
 
-UKMprogram::getFlashbag()->add('success', $_POST['navn'] .' opprettet');
+#UKMprogram::getFlashbag()->add('success', $_POST['navn'] .' opprettet');
 require_once('hendelse.save.php');

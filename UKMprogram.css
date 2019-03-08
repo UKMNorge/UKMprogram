@@ -48,15 +48,39 @@ label.normal {
 	border: none;
     text-decoration: none;
 }
-.grovsortering .line-sep li .infos {
+
+li.innslag {
+	font-size: .8em;
+	padding: .3em;
+}
+.list-inline > li.innslag:first-child {
+	padding-left: .3em;
+}
+
+li.innslag .navn {
+	line-height: 1.15em;
+}
+
+.grovsortering .alle ol {
+	display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.grovsortering .alle li.innslag {
+	width: 20rem;
+	border: 1px solid #ccc;
+	background: #fff;
+	display: block;
+	margin: .3em;
+}
+.grovsortering li.innslag .infos {
 	text-align: right;
 	margin-left: 1em;
 	float:right;
 }
 .line-sep {
-	margin: -.5em;
-	font-size: .85em;
-	
+	margin: -.5em;	
 }
 .line-sep li {
     border-bottom: 1px solid #ccc;
