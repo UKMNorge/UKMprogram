@@ -1,21 +1,54 @@
 /* DASHBOARD */
-jQuery(document).on('click', '.toggleState', function() {
 
-	var new_state_on = $(this).attr('data-state') == 'off';
-	jQuery(this).attr('data-state', new_state_on ? 'on' : 'off' );
+function setState( clicked, state ) {
 
 	// Hvorvidt hendelsen skal vises i program-listen
-	if( $(this).hasClass('toggleSynlig') ) {
-		$(this).parents('.hendelse').toggleClass('panel-danger', !new_state_on).toggleClass('panel-success', new_state_on);		
+	if( clicked.hasClass('toggleSynlig') ) {
+		clicked.parents('.hendelse').toggleClass('panel-danger', !state).toggleClass('panel-success', state);		
 	}
+	clicked.attr('data-state', state ? 'on' : 'off' );
 
-	if( new_state_on ) {
-		jQuery(this).find('.state-on').fadeIn();
-		jQuery(this).find('.state-off').hide();
+	if( state ) {
+		clicked.find('.state-on').fadeIn();
+		clicked.find('.state-off').hide();
 	} else {
-		jQuery(this).find('.state-on').hide();
-		jQuery(this).find('.state-off').fadeIn();
+		clicked.find('.state-on').hide();
+		clicked.find('.state-off').fadeIn();
 	}
+}
+jQuery(document).on('click', '.toggleState', function() {
+	var clicked = $(this);
+	var new_state_on = $(this).attr('data-state') == 'off';
+
+	setState( clicked, new_state_on );
+
+	jQuery.post(
+		ajaxurl,
+		{
+			action: 'UKMprogram_ajax',
+			controller: 'save',
+			save: jQuery(this).attr('data-controller'),
+			state: new_state_on,
+			hendelse: clicked.parents('.hendelse').attr('data-id')
+		},
+		function( response ) {
+			if( response !== null && response !== undefined ) {
+                try {
+                    response = JSON.parse( response );
+                } catch( error ) {
+                    response = null;
+                }
+            }
+            
+            /* HANDLING GJENNOMFØRT. HÅNDTER RESPONS */
+            if( response !== null && response.success ) {
+                // do nothing
+            } else {
+				setState( clicked, !new_state_on );
+                alert('Beklager, en feil har oppstått.');
+            }
+		}
+	);
 });
 
 /* HENDELSE */

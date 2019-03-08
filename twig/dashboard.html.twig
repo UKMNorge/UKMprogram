@@ -35,30 +35,30 @@
 				{% for dag in monstring.getDager() %}
 					<td class="kolonne tot-{{ monstring.getAntallDager() }}">					
 						{% for hendelse in program[ dag|dato('d_m') ].forestillinger %}
-							<div class="hendelse panel panel-{{ hendelse.erSynligRammeprogram() ? 'success' : 'danger' }}">
+							<div class="hendelse panel panel-{{ hendelse.erSynligRammeprogram() ? 'success' : 'danger' }}" data-id="{{ hendelse.getId() }}">
 								<div class="panel-heading">
 									{#
 									<div class="caron">
 										&caron;
 									</div>
 									#}
-									<div class="icon toggleState" data-state="{{ hendelse.erIntern() ? 'on' : 'off' }}">
-										<div class="state-on" {{ not hendelse.erIntern() ? 'style="display:none;"' }} title="Synlig i offentlig program">🔓</div>
-										<div class="state-off" {{ hendelse.erIntern() ? 'style="display:none;"' }} title="Intern hendelse">🔐</div>
+									<div class="icon toggleState" data-controller="erIntern" data-state="{{ hendelse.erIntern() ? 'on' : 'off' }}">
+										<div class="state-on" {{ not hendelse.erIntern() ? 'style="display:none;"' }} title="Intern hendelse">🔐</div>
+										<div class="state-off" {{ hendelse.erIntern() ? 'style="display:none;"' }} title="Synlig i offentlig program">🔓</div>
 									</div>
-									<div class="icon toggleState" data-state="{{ hendelse.harSynligDetaljprogram() ? 'on' : 'off' }}">
+									<div class="icon toggleState" data-controller="synligDetaljprogram" data-state="{{ hendelse.harSynligDetaljprogram() ? 'on' : 'off' }}">
 										<div class="state-on" {{ not hendelse.harSynligDetaljprogram() ? 'style="display:none;"' }} title="Detaljprogrammet er synlig">🙉</div>
 										<div class="state-off" {{ hendelse.harSynligDetaljprogram() ? 'style="display:none;"' }} title="Detaljprogrammet er skjult">🙈</div>
 									</div>
 									
-									<div class="icon toggleState toggleSynlig" data-state="{{ hendelse.erSynligRammeprogram() ? 'on' : 'off' }}">
+									<div class="icon toggleState toggleSynlig" data-controller="synligRammeprogram" data-state="{{ hendelse.erSynligRammeprogram() ? 'on' : 'off' }}">
 										<div class="state-on" {{ not hendelse.erSynligRammeprogram() ? 'style="display:none;"' }} title="Vises i programmet">😃</div>
 										<div class="state-off" {{ hendelse.erSynligRammeprogram() ? 'style="display:none;"' }} title="Vises ikke i programmet">☹️</div>
 									</div>
 
 									<h3 class="panel-title">
-										{{ hendelse.getStart()|dato('h:i') }}
-										{{ hendelse.getNavn() }}
+										{{ hendelse.getStart()|dato('H:i') }}
+										<a href="?page={{ GET('page') }}&action=hendelse&id={{ hendelse.getId() }}">{{ hendelse.getNavn() }}</a>
 									</h3>
 								</div>
 								

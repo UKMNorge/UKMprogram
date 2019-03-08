@@ -29,3 +29,7 @@ if( true || $monstring->getType() != 'kommune' ) {
 }
 
 UKMprogram::addViewData('monstring', $monstring);
+if( $_GET['id'] !== 'new' ) {
+	$hendelse = $monstring->getProgram()->get( $_GET['id'] );
+	UKMprogram::addViewData('hendelse', $hendelse);
+}

@@ -1,17 +1,25 @@
 {% extends "Layout/base.html.twig" %}
 
 {% if GET('id') == 'new' %}
-	{% set current = '' %}
+	{% set currentStartTime = '' %}
+	{% set currentStartDate = '' %}
 {% else %}
-	{% set current = hendelse.getStart()|date('H:i') %}
+	{% set currentStartTime = hendelse.getStart()|date('H:i') %}
+	{% set currentStartDate = hendelse.getStart()|dato('d.m.Y') %}
 {% endif %}
 
 
 {% block content %}
-	<h1>Opprett hendelse</h1>
+	<h1>
+		{% if GET('id') == 'new' %}
+			Opprett hendelse
+		{% else %}
+			Rediger {{ hendelse.getNavn() }}
+		{% endif %}
+	</h1>
 	<div class="clearfix clear clear-fix"></div>
 
-	<form method="POST" action="?page=UKMprogram&action=save&save=hendelse">
+	<form method="POST" action="?page=UKMprogram&save=hendelse">
 		<input type="hidden" name="id" value="{{ GET('id') }}" />
 		<div style="margin-left: .2em; margin-right: 1em; max-width: 768px;">
 			
@@ -20,7 +28,7 @@
 				<div class="col-12 col-sm-6">
 					<div class="form-group">
 						<label>Navn på hendelsen</label>
-						<input type="text" class="form-control" name="navn" required />
+						<input type="text" class="form-control" name="navn" value="{{ hendelse.getNavn() }}" required />
 						<p class="help text-muted">F.eks Forestilling A, Kirkekonsert</p>
 					</div>
 				</div>
@@ -28,7 +36,7 @@
 				<div class="col-12 col-sm-6">
 					<div class="form-group">
 						<label>Sted</label>
-						<input type="text" class="form-control" name="sted" required />
+						<input type="text" class="form-control" name="sted" value="{{ hendelse.getSted() }}" required />
 						<p class="help text-muted">F.eks Ibsenhuset, Kulturhuset, Volda ungdomsskole</p>
 					</div>
 				</div>
@@ -41,7 +49,7 @@
 						<label>Når starter hendelsen</label>
 						<select class="form-control" name="start_date" required>
 							{% for dag in monstring.getDager() %} 
-								<option value="{{ dag|dato('d.m.Y') }}">{{ dag|dato('D d.M')|capitalize }}</option>
+								<option value="{{ dag|dato('d.m.Y') }}" {{ currentStartDate == dag|dato('d.m.Y') ? 'selected' }}>{{ dag|dato('D d.M')|capitalize }}</option>
 							{% endfor %}
 						</select>
 					</div>
@@ -57,7 +65,7 @@
 								
 								{% for min in range(0,55,5) %}
 									{% set pad_min = min < 10 ? '0' ~ min : min %}	
-									<option value="{{ pad_hour }}:{{ pad_min }}" {{ current == pad_hour~':'~pad_min ? 'selected' }}>{{ pad_hour }}:{{ pad_min }}</option>
+									<option value="{{ pad_hour }}:{{ pad_min }}" {{ currentStartTime == pad_hour~':'~pad_min ? 'selected' }}>{{ pad_hour }}:{{ pad_min }}</option>
 								{% endfor %}
 							{% endfor %}
 						</select>
@@ -90,16 +98,18 @@
 							<label>Er dette en offentlig eller intern hendelse?</label>
 							<br />
 							<label class="normal">
-								<input type="radio" class="form-control" name="synlig_intern" value="nei" checked />
+								<input type="radio" class="form-control" name="intern" value="false" {{ not hendelse.erIntern() ? 'checked' }} />
 								🔓 Offentlig hendelse som er åpen for alle.
 							</label>
 							<br />
 							<label class="normal">
-								<input type="radio" class="form-control" name="synlig_intern" value="ja" />
+								<input type="radio" class="form-control" name="intern" value="true" {{ hendelse.erIntern() ? 'checked' }} />
 								🔐 Intern hendelse kun for deltakere.
 							</label>
 						</div>
 					</div>
+				{% else %}
+					<input type="hidden" value="false" name="intern" />
 				{% endif %}
 			</div>
 
@@ -112,17 +122,17 @@
 							<label>Hva består detaljprogrammet av?</label>
 							<br />
 							<label class="normal">
-								<input type="radio" class="form-control" name="type" value="default" checked />
+								<input type="radio" class="form-control" name="type" value="default" {{ hendelse.getType() == 'default' ? 'checked' }} />
 								Innslag (standard)
 							</label>
 							<br />
 							<label class="normal">
-								<input type="radio" class="form-control" name="type" value="post" />
+								<input type="radio" class="form-control" name="type" value="post" {{ hendelse.getType() == 'post' ? 'checked' }} />
 								Et innlegg eller en side
 							</label>
 							<br />
 							<label class="normal">
-								<input type="radio" class="form-control" name="type" value="category" />
+								<input type="radio" class="form-control" name="type" value="category" {{ hendelse.getType() == 'category' ? 'checked' }} />
 								En liste med innlegg fra en kategori
 							</label>
 						</div>
@@ -135,15 +145,15 @@
 							<select name="post_id" class="form-control">
 								<optgroup label="Innlegg">
 									{% for post in posts if post.post_type == 'post' %}
-										<option value="{{ post.ID }}">{{ post.post_title }} ({{post.post_type == 'post' ? 'innlegg' : 'side'}})</option>
+										<option value="{{ post.ID }}" {{ hendelse.getTypePostId() == post.ID ? 'selected' }}>{{ post.post_title }} ({{post.post_type == 'post' ? 'innlegg' : 'side'}})</option>
 									{% else %}
-										<option value="false" disabled selected>Du må ha minst ett innlegg før du kan gjøre dette</option>
+										<option value="false" disabled>Du må ha minst ett innlegg før du kan gjøre dette</option>
 									{% endfor %}
 								</optgroup>
 
 								<optgroup label="Sider">
 									{% for post in posts if post.post_type != 'post' %}
-										<option value="{{ post.ID }}">{{ post.post_title }} ({{post.post_type == 'post' ? 'innlegg' : 'side'}})</option>
+										<option value="{{ post.ID }}" {{ hendelse.getTypePostId() == post.ID ? 'selected' }}>{{ post.post_title }} ({{post.post_type == 'post' ? 'innlegg' : 'side'}})</option>
 									{% else %}
 										<option value="false" disabled selected>Du må ha minst en side før du kan gjøre dette</option>
 									{% endfor %}
@@ -158,9 +168,9 @@
 							<label>Velg hvilken kategori som skal vises</label>
 							<select name="category_id" class="form-control">
 								{% for category in categories %}
-									<option value="{{ category.term_id }}">{{ category.name }}</option>
+									<option value="{{ category.term_id }}" {{ hendelse.getTypeCategoryId == category.term_id ? 'selected' }}>{{ category.name }}</option>
 								{% else %}
-									<option value="false" disabled selected>Du må ha minst en kategori før du kan gjøre dette</option>
+									<option value="false" disabled>Du må ha minst en kategori før du kan gjøre dette</option>
 								{% endfor %}
 							</select>
 						</div>
@@ -171,8 +181,8 @@
 						<div class="form-group">
 							<label>Vil du angi detaljer for oppmøte-tid?</label>
 							<select id="angi_oppmote" name="angi_oppmote" class="form-control">
-								<option value="true">Ja</option>
-								<option value="false" selected>Nei</option>
+								<option value="true" {{ hendelse.getOppmoteFor != 0 or hendelse.getOppmoteDelay != 0 ? 'selected' }}>Ja</option>
+								<option value="false" {{ hendelse.getOppmoteFor == 0 and hendelse.getOppmoteDelay == 0 ? 'selected' }}>Nei</option>
 							</select>
 						</div>
 					</div>
@@ -200,7 +210,8 @@
 									<optgroup label="{{ time }} timer">
 								{% endif %}
 								{% for min in range(0,55,5) %}
-									<option value="{{ ( time * 60) + min }}">
+									{% set value = ( time * 60) + min %}
+									<option value="{{ value }}" {{ value == hendelse.getOppmoteFor() ? 'selected' }}>
 										{% if time == 1 %}
 											1 time, 
 										{% elseif time > 1 %}
@@ -218,9 +229,9 @@
 					<div class="form-group">
 						<label>Deretter, hvor stor tidsforskyving skal det være per innslag?
 						<select class="form-control" name="oppmote_forskyving">
-							<option value="0" selected>Alle møter samtidig</option>
+							<option value="0">Alle møter samtidig</option>
 							{% for i in 1..30 %}
-								<option value="{{ i }}">{{ i }} min etter forrige</option>
+								<option value="{{ i }}" {{ i == hendelse.getOppmoteDelay() ? 'selected' }}>{{ i }} min etter forrige</option>
 							{% endfor %}
 						</select>
 					</div>
@@ -231,12 +242,12 @@
 						<label>Skal oppmøtetiden vises i programmet?</label>
 						<br />
 						<label class="normal">
-							<input type="radio" class="form-control" name="oppmote_synlig" value="ja" />
+							<input type="radio" class="form-control" name="oppmote_synlig" value="true" {{ hendelse.getSynligOppmotetid() ? 'checked' }} />
 							Ja (helst ikke)
 						</label>
 						<br />
 						<label class="normal">
-							<input type="radio" class="form-control" name="oppmote_synlig" value="nei" checked />
+							<input type="radio" class="form-control" name="oppmote_synlig" value="false" {{ not hendelse.getSynligOppmotetid() ? 'checked' }} />
 							Nei
 						</label>
 					</div>
@@ -258,12 +269,12 @@
 						<label>Skal hendelsen vises?</label>
 						<br />
 						<label class="normal">
-							<input type="radio" class="form-control" name="synlig_ramme" value="ja" checked />
+							<input type="radio" class="form-control" name="synlig_ramme" value="true" {{ hendelse.getSynligRammeprogram() ? 'checked' }} />
 							😃 Ja, denne kan vises allerede nå.
 						</label>
 						<br />
 						<label class="normal">
-							<input type="radio" class="form-control" name="synlig_ramme" value="nei" />
+							<input type="radio" class="form-control" name="synlig_ramme" value="false" {{ not hendelse.getSynligRammeprogram() ? 'checked' }} />
 							☹️ Nei, dette er en kladd.
 						</label>
 					</div>
@@ -274,12 +285,12 @@
 						<label>Skal innholdet i hendelsen vises?</label>
 						<br />
 						<label class="normal">
-							<input type="radio" class="form-control" name="synlig_detalj" value="ja" checked />
+							<input type="radio" class="form-control" name="synlig_detalj" value="true" {{ hendelse.getSynligDetaljprogram() ? 'checked' }} />
 							🙉 Ja, alt er klart.
 						</label>
 						<br />
 						<label class="normal">
-							<input type="radio" class="form-control" name="synlig_detalj" value="nei" />
+							<input type="radio" class="form-control" name="synlig_detalj" value="false" {{ not hendelse.getSynligDetaljprogram() ? 'checked' }} />
 							🔓 Nei, hold detaljene hemmelig.
 						</label>
 						<p class="help text-muted">
