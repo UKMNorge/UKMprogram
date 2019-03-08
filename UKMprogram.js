@@ -88,3 +88,14 @@ $(document).ready(()=>{
 	$('input[name="type"]').change();
 	$('#angi_oppmote').change();
 });
+
+/* GROVSORTERING */
+$(document).on('click', '#startSort', function(){
+	var hendelser = [];
+
+	$('input[name="hendelser"]:checked').each( function(e) {
+		hendelser.push( $(this).val() );
+	} );
+
+	window.location.href = window.location.href + '&hendelser='+ hendelser.join('-');
+});
