@@ -17,6 +17,21 @@ if( !isset( $_GET['hendelser'] ) ) {
 	// at man ikke ønsker å jobbe med alle disse på en gang.
 	if( sizeof( $hendelser ) > 6 ) {
 		UKMprogram::setAction('grovsort/select');
+	} else {
+		UKMprogram::setAction('grovsort/sorter');
+
+		$typer = [];
+		$innslag_typer = innslag_typer::getAllTyper();
+		foreach( $innslag_typer as $type ) {
+			if( $type->getKey() == 'scene' ) {
+				foreach( innslag_typer::getAllScene() as $subtype ) {
+					$typer[] = $subtype;
+				}
+			} else {
+				$typer[] = $type;
+			}
+		}
+		UKMprogram::addViewData('innslag_typer', $typer);
 	}
 } else {
 	$hendelser = explode('-', $_GET['hendelser'] );

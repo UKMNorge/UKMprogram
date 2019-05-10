@@ -13,6 +13,7 @@
 		</div>
 	</a>
 
+	{#
 	<a href="?page={{ GET('page') }}&action=grovsort" {{ GET('action') == 'grovsort' ? 'class="active"' }}>
 		<div>
 			<span class="tab_header">Grovsortering</span>
@@ -20,12 +21,13 @@
 			<span class="tab_description">Første runde innslag-fordeling</span>
 		</div>
 	</a>
+	#}
 
-	<a href="?page={{ GET('page') }}&action=finsort" {{ GET('action') == 'finsort' ? 'class="active"' }}>
+	<a href="?page={{ GET('page') }}&action=grovsort" {{ GET('action') == 'grovsort' ? 'class="active"' }}>
 		<div>
-			<span class="tab_header">Finsortering</span>
+			<span class="tab_header">Detaljprogram</span>
 			<img src="//ico.ukm.no/abacus-48.png" width="25"  border="0" /><br />
-			<span class="tab_description">Kraftige filter-verktøy for fordeling</span>
+			<span class="tab_description">Fordel innslag i hendelser</span>
 		</div>
 	</a>
 </div>
