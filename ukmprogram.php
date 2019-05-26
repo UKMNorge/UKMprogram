@@ -24,7 +24,7 @@ class UKMprogram extends UKMWPmodul {
      */
     public static function hook() {
 		add_action(
-			'wp_ajax_UKMprogram_ajax', 
+			'wp_ajax_UKMprogramV2_ajax', 
 			['UKMprogram','ajax']
 		);
 
@@ -45,8 +45,8 @@ class UKMprogram extends UKMWPmodul {
     public static function meny() {		
 		UKM_add_menu_page(
 			'monstring',
-			'Program', 
-			'Program', 
+			'Program V2', 
+			'Program V2', 
 			'editor', 
 			'UKMprogram', 
 			['UKMprogram', 'renderAdmin'], 

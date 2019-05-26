@@ -25,7 +25,7 @@ jQuery(document).on('click', '.toggleState', function () {
 	jQuery.post(
 		ajaxurl,
 		{
-			action: 'UKMprogram_ajax',
+			action: 'UKMprogramV2_ajax',
 			controller: 'save',
 			save: jQuery(this).attr('data-controller'),
 			state: new_state_on,
