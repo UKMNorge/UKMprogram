@@ -14,6 +14,11 @@ $hendelse->setStart( $start );
 $hendelse->setIntern( $_POST['intern'] == 'true' );
 $hendelse->setType( $_POST['type'] );
 
+// HVIS HENDELSEN HAR BESKRIVELSE
+if( isset( $_POST['beskrivelse'] ) ) {
+	$hendelse->setBeskrivelse( $_POST['beskrivelse'] );
+}
+
 // HVIS TYPE:POST
 if( isset( $_POST['post_id'] ) ) {
 	$hendelse->setTypePostId( $_POST['post_id'] );
