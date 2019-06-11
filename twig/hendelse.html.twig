@@ -82,6 +82,7 @@
 
 
 			{% if true or site_type == 'land' %}
+	
 			<div class="row">
 				<div class="col-12 col-sm-12 mb-0">
 					<div class="form-group">
@@ -96,6 +97,18 @@
 				</div>
 			</div>
 			{% endif %}
+
+			<div class="row">
+				{% if site_type == 'land' %}
+				<div class="col-12 col-sm-6">
+					<div class="form-group">
+						<label>Farge</label>
+						<input type="text" class="form-control" name="color" value="{{ hendelse.getColor() }}" />
+						<p class="help text-muted">Dette definerer fargen på boksen til hendelsen i oversikten.</p>
+					</div>
+				</div>
+			{% endif %}
+			</div>
 
 			{% if true or site_type != 'kommune' %}
 			<div class="row">

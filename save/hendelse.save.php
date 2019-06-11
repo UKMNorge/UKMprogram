@@ -28,6 +28,11 @@ if (isset($_POST['category_id'])) {
 	$hendelse->setTypeCategoryId($_POST['category_id']);
 }
 
+// HVIS ANGITT FARGE
+if (isset($_POST['color'])) {
+	$hendelse->setColor($_POST['color']);
+}
+
 // EVT ANGI OPPMØTETID
 if (isset($_POST['angi_oppmote']) && $_POST['angi_oppmote'] == 'true') {
 	$hendelse->setOppmoteFor($_POST['oppmote_for']);
