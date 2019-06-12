@@ -81,7 +81,7 @@
 			</div>
 
 
-			{% if true or site_type == 'land' %}
+			{% if site_type == 'land' %}
 	
 			<div class="row">
 				<div class="col-12 col-sm-12 mb-0">
@@ -110,7 +110,7 @@
 			{% endif %}
 			</div>
 
-			{% if true or site_type != 'kommune' %}
+			{% if site_type != 'kommune' %}
 			<div class="row">
 				<div class="col-12 col-sm-12" style="margin-top: 2em;">
 					<h3>Innhold i hendelsen</h3>
@@ -121,7 +121,7 @@
 			
 			{# INTERN / OFFENTLIG #}
 			<div class="row">
-				{% if true or site_type == 'land' %}
+				{% if site_type == 'land' %}
 					<div class="col-12 col-sm-6">
 						<div class="form-group">
 							<label>Er dette en offentlig eller intern hendelse?</label>
@@ -144,7 +144,7 @@
 
 
 			{# TYPE HENDELSE #}
-			{% if true or site_type != 'kommune' %}
+			{% if site_type != 'kommune' %}
 				<div class="row">
 					<div class="col-12 col-sm-6">
 						<div class="form-group">
@@ -325,7 +325,7 @@
 						<p class="help text-muted">
 							Hvis du holder detaljene hemmelig, kan ingen se hvilken
 							rekkefølge innslagene skal opptre i.
-							{% if true or site_type != 'kommune' %}
+							{% if site_type != 'kommune' %}
 							<br />
 							Innlegg betraktes også som detaljer.
 							{% endif %}
