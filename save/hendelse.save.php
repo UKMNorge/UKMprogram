@@ -29,8 +29,8 @@ if (isset($_POST['category_id'])) {
 }
 
 // HVIS ANGITT FARGE
-if (isset($_POST['color'])) {
-	$hendelse->setColor($_POST['color']);
+if (isset($_POST['farge'])) {
+	$hendelse->setFarge($_POST['farge']);
 }
 
 // EVT ANGI OPPMØTETID
