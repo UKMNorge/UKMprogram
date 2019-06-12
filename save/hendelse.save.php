@@ -33,6 +33,11 @@ if (isset($_POST['farge'])) {
 	$hendelse->setFarge($_POST['farge']);
 }
 
+// HVIS ANGITT FREMHEVET
+if( isset($_POST['fremhevet'])) {
+	$hendelse->setFremhevet($_POST['fremhevet']=='true');
+}
+
 // EVT ANGI OPPMØTETID
 if (isset($_POST['angi_oppmote']) && $_POST['angi_oppmote'] == 'true') {
 	$hendelse->setOppmoteFor($_POST['oppmote_for']);

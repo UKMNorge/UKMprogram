@@ -137,6 +137,25 @@
 							</label>
 						</div>
 					</div>
+
+					<div class="col-12 col-sm-6">
+						<div class="form-group">
+							<label>Skal hendelsen fremheves ekstra?</label>
+							<br />
+							<label class="normal">
+								<input type="radio" class="form-control" name="fremhevet" value="false" {{ not hendelse.erFremhevet() ? 'checked' }} />
+								🐕 Nei, ikke fremhev ekstra
+							</label>
+							<br />
+							<label class="normal">
+								<input type="radio" class="form-control" name="fremhevet" value="true" {{ hendelse.erFremhevet() ? 'checked' }} />
+								🐩 Ja, fremhev
+							</label>
+							<p class="help text-muted">
+								Fremhevet er anbefalt for hovedforestillignene.
+							</p>
+						</div>
+					</div>
 				{% else %}
 					<input type="hidden" value="false" name="intern" />
 				{% endif %}
