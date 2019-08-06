@@ -29,13 +29,9 @@ class UKMprogram extends UKMWPmodul {
 		);
 
         add_action(
-			'UKM_admin_menu', 
+			'admin_menu', 
 			['UKMprogram', 'meny'],
 			200
-		);
-		add_filter(
-			'UKM_admin_menu_conditions', 
-			['UKMprogram', 'meny_conditions']
 		);
     }
 
@@ -43,19 +39,17 @@ class UKMprogram extends UKMWPmodul {
      * Add menu
      */
     public static function meny() {		
-		UKM_add_menu_page(
-			'monstring',
-			'Program V2', 
-			'Program V2', 
+		$page = add_submenu_page(
+			'UKMmonstring',
+			'Program', 
+			'Program', 
 			'editor', 
 			'UKMprogram', 
-			['UKMprogram', 'renderAdmin'], 
-			'//ico.ukm.no/chart-menu.png',
-			10
+			['UKMprogram', 'renderAdmin']
 		);
 
-		UKM_add_scripts_and_styles(
-			'UKMprogram_renderAdmin',
+		add_action(
+			'admin_print_styles-' . $page,
 			['UKMprogram', 'scripts_and_styles']
 		);
 	}
