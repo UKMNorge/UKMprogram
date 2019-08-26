@@ -33,8 +33,8 @@ for($i=0;$i<60;$i+=5)
 		</div>
 		<div class="clearfix"></div>
 		<div class="group">
-			<input type="hidden" id="datepicker_start" value="<?=date('d.m.Y',$m->g('pl_start'))?>" />
-			<input type="hidden" id="datepicker_stop" value="<?=date('d.m.Y',$m->g('pl_stop'))?>" />
+			<input type="hidden" id="datepicker_start" value="<?=date('d.m.Y',$m->g('old_pl_start'))?>" />
+			<input type="hidden" id="datepicker_stop" value="<?=date('d.m.Y',$m->g('old_pl_stop'))?>" />
 			<label class="dato_label" for="c_start">Dato <span class="red_text">*</span></label>
 			<input class="datepicker" type="text" name="c_start_datepicker" value="<?=date('d.m.Y',$c->g('c_start'))?>" />
 			<input type="hidden" name="log_current_value_c_start" value="<?=$c->g('c_start')?>" />
