@@ -1,6 +1,11 @@
 <?php
 
-$monstring = new monstring_v2( get_option('pl_id') );
+use UKMNorge\Arrangement\Arrangement;
+use UKMNorge\Innslag\Typer;
+
+require_once('UKM/Autoloader.php');
+
+$monstring = new Arrangement( get_option('pl_id') );
 
 // MULIGENS VIS VALG AV HENDELSER
 if( !isset( $_GET['hendelser'] ) ) {
@@ -21,10 +26,10 @@ if( !isset( $_GET['hendelser'] ) ) {
 		UKMprogram::setAction('grovsort/sorter');
 
 		$typer = [];
-		$innslag_typer = innslag_typer::getAllTyper();
+		$innslag_typer = Typer::getAllTyper();
 		foreach( $innslag_typer as $type ) {
 			if( $type->getKey() == 'scene' ) {
-				foreach( innslag_typer::getAllScene() as $subtype ) {
+				foreach( Typer::getAllScene() as $subtype ) {
 					$typer[] = $subtype;
 				}
 			} else {
