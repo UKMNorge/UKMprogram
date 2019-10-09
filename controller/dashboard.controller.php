@@ -1,10 +1,12 @@
 <?php
 
-require_once('UKM/monstring.class.php');
-require_once('UKM/forestillinger.collection.php');
+use UKMNorge\Arrangement\Arrangement;
+use UKMNorge\Arrangement\Program\Hendelser;
 
-$monstring = new monstring_v2( get_option('pl_id') );
-$program = program::sorterPerDag( 
+require_once('UKM/Autoloader.php');
+
+$monstring = new Arrangement( get_option('pl_id') );
+$program = Hendelser::sorterPerDag( 
 	$monstring->getProgram()->getAbsoluteAll()
 );
 
