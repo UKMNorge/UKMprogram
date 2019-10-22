@@ -1,0 +1,67 @@
+{% extends "Layout/base.html.twig" %}
+
+
+{% block content %}
+	<h3>
+		Fordel innslag <small>(Trekk de over til en hendelse)</small>
+	</h3>
+	<p>
+		Viser 
+		<select>
+			<option value="">alle innslag</option>
+			{% for innslag_type in innslag_typer %}
+				<option value="{{ innslag_type.getId() }}">{{ innslag_type.getId() == 1 ? ' - ' }}{{ innslag_type.getNavn() }}</option>
+			{% endfor %}
+		</select>
+		som 
+		<select>
+			<option value="antall_ingen" selected="selected">ikke deltar i noen hendelse</option>
+			<option value="antall_uavhengig">deltar i ingen, en eller flere hendelser</option>
+			<option value="antall_1">deltar i én hendelse</option><option value="antall_2">deltar i to hendelser</option>
+			<option value="antall_3">deltar i tre hendelser</option>
+		</select>
+
+		<button class="btn btn-primary btn-sm">Oppdater filter</button>
+
+		
+	</p>
+	<div class="grovsortering">
+		<div class="alle">
+			<ol class="list-inline" id="innslagliste" style="min-height: 55px;">
+			{% for innslag in monstring.getInnslag().getAll() %}
+				{% include "innslag.html.twig" %}
+			{% endfor %}
+			</ol>
+		</div>
+
+		<table class="program">
+			<tbody>
+				<tr>
+					{% for hendelse in monstring.getProgram().getAll() if hendelse.getId() in show %}
+						<td class="kolonne tot-{{ monstring.getAntallDager() }}">					
+							<div class="hendelse panel panel-{{ hendelse.erSynligRammeprogram() ? 'success' : 'danger' }}" data-id="{{ hendelse.getId() }}">
+								<div class="panel-heading">
+									<h3 class="panel-title">
+										{{ hendelse.getNavn() }}
+									</h3>
+								</div>
+
+								<div class="panel-body">
+									<ol class="list-unstyled line-sep detaljprogram" style="min-height: 55px;">
+										{% for innslag in hendelse.getInnslag().getAll() %}
+											{% include "innslag.html.twig" %}
+										{% else %}
+											<li class="text-danger" style="border-bottom: none;">
+												Hendelsen har ingen innslag enda
+											</li>
+										{% endfor %}
+									</ol>
+								</div>
+							</div>
+						</td>
+					{% endfor %}
+				</tr>
+			</tbody>
+		</table>
+	</div>
+{% endblock %}

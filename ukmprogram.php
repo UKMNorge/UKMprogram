@@ -4,348 +4,84 @@ Plugin Name: UKM Program
 Plugin URI: http://www.ukm-norge.no
 Description: UKM Norge admin
 Author: UKM Norge / M Mandal 
-Version: 1.0 
+Version: 2.0 
 Author URI: http://www.ukm-norge.no
 */
 
-function UKMdeltakere_ajax_handler() {
-	if(isset($_POST['c'])&&isset($_POST['v'])&&isset($_POST['i'])) {
-		require_once('ajax/control/'.$_POST['c'].'.c.php');
-		require_once('ajax/view/'.$_POST['v'].'.v.php');
 
-		die(UKMdeltakere_ajax_view(UKMdeltakere_ajax_controller($_POST['i'])));	
+// TODO
+#do_action('UKMprogram_save', 'lagre', $_POST['c_id']); @ hendelse save
+
+
+require_once('UKM/wp_modul.class.php');
+
+class UKMprogram extends UKMWPmodul {
+    public static $action = 'snart';
+    public static $path_plugin = null;
+
+    /**
+     * Register hooks
+     */
+    public static function hook() {
+		add_action(
+			'wp_ajax_UKMprogramV2_ajax', 
+			['UKMprogram','ajax']
+		);
+
+        add_action(
+			'admin_menu', 
+			['UKMprogram', 'meny'],
+			200
+		);
+    }
+
+    /**
+     * Add menu
+     */
+    public static function meny() {		
+		$page = add_submenu_page(
+			'UKMmonstring',
+			'Program', 
+			'Program', 
+			'editor', 
+			'UKMprogram', 
+			['UKMprogram', 'renderAdmin']
+		);
+
+		add_action(
+			'admin_print_styles-' . $page,
+			['UKMprogram', 'scripts_and_styles']
+		);
 	}
 	
-	if(isset($_POST['save'])) {
-		require_once('ajax/save/'.$_POST['save'].'.save.php');
-		UKMdeltakere_save();
-	}
-}
 
-
-if(is_admin()) {
-	
-	add_action('wp_ajax_UKMdeltakere_gui', 'UKMdeltakere_ajax_handler');
-
-	global $blog_id;
-	if( in_array( get_option('site_type'), array('kommune','fylke','land')) ) {
-		add_action('UKM_admin_menu', 'UKMprogram_menu',200);
-		add_filter('UKM_admin_menu_conditions', 'UKMprogram_menu_conditions');
-		add_action('UKMWPDASH_shortcuts', 'UKMMprogram_dash_shortcut', 40);
-	}
-	require_once('program.ajax.php');
-	
-	if(isset($_POST['save']) && strpos($_POST['action'],'UKMprogram_')!==false) {
-		require_once('UKM/inc/toolkit.inc.php');
-
-		require_once('ajax/save/'.$_POST['save'].'.save.php');
+	public static function meny_conditions( $_CONDITIONS ) {
+		return array_merge( $_CONDITIONS, 
+			['UKMprogram_renderAdmin' => 'monstring_er_registrert']
+		);
 	}
 
-	add_action('wp_ajax_UKMprogram_ajax', 'UKMprogram_ajax');
-}
-
-## CREATE A MENU
-function UKMprogram_menu_conditions( $_CONDITIONS ) {
-	return array_merge( $_CONDITIONS, 
-		['UKMprogram_admin' => 'monstring_er_registrert']
-	);
-}
-
-function UKMprogram_menu() {
-	UKM_add_menu_page('monstring','Program', 'Program', 'editor', 'UKMprogram_admin', 'UKMprogram_admin', '//ico.ukm.no/chart-menu.png',10);    
-
-	UKM_add_scripts_and_styles('UKMprogram_admin', 'UKMprogram_scriptsandstyles' );
-}
-function UKMMprogram_dash_shortcut( $shortcuts ) {	
-	$shortcut = new stdClass();
-	$shortcut->url = 'admin.php?page=UKMprogram_admin';
-	$shortcut->title = 'Program';
-	$shortcut->icon = '//ico.ukm.no/chart-menu.png';
-	$shortcuts[] = $shortcut;
-	
-	return $shortcuts;
-}
-
-## INCLUDE SCRIPTS
-function UKMprogram_scriptsandstyles() {
-	wp_enqueue_style( 'jquery-ui-style', WP_PLUGIN_URL .'/UKMNorge/js/css/jquery-ui-1.7.3.custom.css');
-	wp_enqueue_style( 'UKMdeltakere_program_style', WP_PLUGIN_URL .'/UKMprogram/deltakere.style.css');
-	wp_enqueue_style( 'UKMprogram_program', WP_PLUGIN_URL .'/UKMprogram/program.style.css');
-	wp_enqueue_style('WPbootstrap3_css');
-
-	wp_enqueue_script('jquery');
-	wp_enqueue_script('jqueryGoogleUI', '//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js');
-
-/*
-	wp_enqueue_script('jquery-ui-core');
-	wp_enqueue_script('jquery-ui-sortable');
-	wp_enqueue_script('jquery-ui-effects-core');
-	wp_enqueue_script('jquery-ui-effects', '/wp-content/plugins/project_manager/scripts/ui.effects.js');
-	wp_enqueue_script( 'jquery-ui-datepicker' );
-*/
-
-	wp_enqueue_script('UKMdeltakere_script', WP_PLUGIN_URL . '/UKMprogram/deltakere.script.js' );
-#	wp_enqueue_script('UKMdeltakere_script_modernizer', WP_PLUGIN_URL . '/UKMdeltakere/modernizr.input.js');
-	wp_enqueue_script('UKMdeltakere_script_temp', WP_PLUGIN_URL . '/UKMdeltakere/temp.script.js' );
-
-	wp_enqueue_script('UKMprogram_script', WP_PLUGIN_URL . '/UKMprogram/program.script.js' );
-
-}
-
-## SHOW STATS OF PLACES
-function UKMprogram_admin() {
-	global $UKMN, $lang;
-	
-	require_once('program_active.php');
-
-	require_once('UKM/form.class.php');
-	require_once('UKM/inc/toolkit.inc.php');
-	require_once('UKM/forestilling.class.php');
-	require_once('program.gui.php');
-
-	
-	echo '<div class="wrap">'.UKMprogram_list().'</div>';	
-
-}
-
-
-
-if(isset($_POST['veiviser_submit'])) {
-	UKMP_veiviser_save();
-}
-
-
-/// HJELPERE VEIVISER LAGRING OG KALENDERTING
-
-
-function UKMP_veiviser_save(){
-	$m = new monstring(get_option('pl_id'));
-	$monstringsstart = explode('.',str_replace(array(' kl. ',':'),'.',$m->starter()));
-			
-	$forestillinger = (int)$_POST['forestillinger'];
-	if( is_array( $_POST['hendelser_fordeling'] ) ) {
-		$fordelte_forestillinger = sizeof($_POST['hendelser_fordeling']);
-	} else {
-		$fordelte_forestillinger = 0;
-	}
-			
-	if($forestillinger > $fordelte_forestillinger)
-		$ekstra_forestillinger = $forestillinger - $fordelte_forestillinger;
-	else 
-		$ekstra_forestillinger = 0;
-
-	$counter_per_forestilling = 0;
-	$counter_nr_forestilling = 0;
-	
-	$fordeling = array();
-	
-
-	$pameldte = $m->innslag_btid();
-	if($_POST['fordel_innslag'] == 'alfabetisk')
-	foreach($pameldte as $btid => $innslag_i_bt) {
-		foreach($innslag_i_bt as $i => $innslag) {
-			switch($btid) {
-				case 1:
-					$counter_per_forestilling++;
-					$fordeling['forestilling'][$counter_nr_forestilling][] = $innslag['b_id'];
-					if($counter_per_forestilling >= $_POST['antall_per_sceneforestilling'] && $counter_nr_forestilling < (int)$_POST['forestillinger']-1){
-						$counter_nr_forestilling++;
-						$counter_per_forestilling = 0;
-					}
-				break;					
-				case 2:
-					if($_POST['tell_film_som_scene']) {
-						$counter_per_forestilling++;
-						$fordeling['forestilling'][$counter_nr_forestilling][] = $innslag['b_id'];
-						if($counter_per_forestilling >= $_POST['antall_per_sceneforestilling'] && $counter_nr_forestilling < (int)$_POST['forestillinger']-1){
-							$counter_nr_forestilling++;
-							$counter_per_forestilling = 0;
-						}
-					} else {
-						$fordeling['filmforestilling'][] = $innslag['b_id'];
-					}
-				break;
-				case 3:
-					$fordeling['kunstutstilling'][] = $innslag['b_id'];
-				break;
-			}
-		}
+    public static function scripts_and_styles() {
+		wp_enqueue_script('WPbootstrap3_js');
+		wp_enqueue_style('WPbootstrap3_css');
+		wp_enqueue_script('jqueryGoogleUI', '//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js');
+        wp_enqueue_style('UKMprogram_css', plugin_dir_url( __FILE__ ) .'UKMprogram.css' );
+        wp_enqueue_script('UKMprogram_js', plugin_dir_url( __FILE__ ) .'UKMprogram.js' );
 	}
 	
-	#echo '<pre>'. var_export($fordeling,true).'</pre>';
-	#die();
-					
-	if(is_array($_POST['hendelser_fordeling'])) {
-		foreach($_POST['hendelser_fordeling'] as $i => $tid) {
-			$forestillingstart = explode('.',$tid);
-			$start = mktime($forestillingstart[2],0,0,$forestillingstart[1],$forestillingstart[0],$monstringsstart[2]);
-			$forestilling[] = UKMP_save_create_forestilling('Forestilling '. ($i+1), $start);
-		}
-		for($j=0; $j<$ekstra_forestillinger; $j++) {
-			$i++;
-			$start = mktime($monstringsstart[3],0,0,$monstringsstart[1],$monstringsstart[0],$monstringsstart[2]);		
-			$forestilling[] = UKMP_save_create_forestilling('Forestilling '. ($i+1), $start);
-		}
-	} else {
-		for($k=0; $k<$forestillinger; $k++) {
-			$start = mktime($monstringsstart[3],0,0,$monstringsstart[1],$monstringsstart[0],$monstringsstart[2]);		
-			$forestilling[] = UKMP_save_create_forestilling('Forestilling '. ($k+1), $start);
-		}
-	}
-	$start = mktime($monstringsstart[3],0,0,$monstringsstart[1],$monstringsstart[0],$monstringsstart[2]);
-	if(isset($_POST['kunstutstilling']))
-		$kunstutstilling = UKMP_save_create_forestilling('Kunstutstilling', $start);
-	if(isset($_POST['filmforestilling']))
-		$filmforestilling = UKMP_save_create_forestilling('Filmforestilling', $start);
-		
-		
-	foreach($forestilling as $teller => $c_id) {
-		if(is_array($fordeling['forestilling'][$teller]))
-		foreach($fordeling['forestilling'][$teller] as $teller2 => $b_id)
-			UKMP_save_rel_b_c($b_id, $c_id, $teller2+1);
-	}
-	if(isset($_POST['kunstutstilling']))
-		if(is_array($fordeling['kunstutstilling']))
-		foreach($fordeling['kunstutstilling'] as $teller2 => $b_id)
-			UKMP_save_rel_b_c($b_id, $kunstutstilling, $teller2+1);
-	if(isset($_POST['filmforestilling']))
-		if(is_array($fordeling['filmforestilling']))
-		foreach($fordeling['filmforestilling'] as $teller2 => $b_id)
-			UKMP_save_rel_b_c($b_id, $filmforestilling, $teller2+1);
-	
-}
-
-function UKMP_save_rel_b_c($b_id, $c_id, $order){ 
-	$qry = new SQLins('smartukm_rel_b_c');
-	$qry->add('b_id', $b_id);
-	$qry->add('c_id', $c_id);
-	$qry->add('order',$order);
-	$qry->run();
-}
-
-function UKMP_save_create_forestilling($name, $start) {
-	$qry = new SQLins('smartukm_concert');
-	$qry->add('c_name', $name);
-	$qry->add('pl_id', get_option('pl_id'));
-	$qry->add('c_start', $start);
-	$qry->add('c_visible_program','false');
-	$qry->run();
-	
-	return $qry->insid();
-}
-
-
-function UKMp_dager($m) {
-#	return array('ar'=>2012,'maned'=>6,'dager'=>array('22.06'=>5));
-	$start = explode('.', date('d.m.Y.H.i', $m->g('pl_start')));
-	$stop = explode('.', date('d.m.Y.H.i', $m->g('pl_stop')));
-	
-	$maned = $start[1];
-	$ar	   = $start[2];
-	
-	if($stop[0] >= $start[0]) {
-		for($i=$start[0]-1; $i<$stop[0]; $i++)
-			$days[($i+1).'.'.$maned] = date('N', mktime(0,0,0,$maned, $i+1, $ar));
-			
-		return array('ar'=>$ar, 'maned'=>$maned, 'dager'=>$days);		
-	## Sluttdato er mindre enn startdato, ergo er sluttdato neste måned!
-	} else {
-		for($i=$start[0]-1; $i<cal_days_in_month(CAL_GREGORIAN, $maned, $ar); $i++)
-			$days[($i+1).'.'.$maned] = date('N', mktime(0,0,0,$maned, $i+1, $ar));
-		for($i=0; $i<$stop[0]; $i++) 
-			$days[($i+1).'.'.$maned+1] = date('N', mktime(0,0,0,$maned+1, $i+1, $ar));
-			
-		return array('ar'=>$ar, 'maned'=>$maned, 'dager'=>$days);		
-	}
-}
-
-function UKMprog_tabs($c) {
-?>
-<h1><?= $c->g('c_name')?></h1>
-<div class="ukmdeltakere_tabs">
-
-	<a href="?page=<?=$_GET['page']?>&c_id=<?=$_GET['c_id']?>&tab=1" <?=((!isset($_GET['tab'])||$_GET['tab']=='1')?' class="active"':'')?>>
-		<div>
-			<span class="tab_header">Tid, sted og info</span><img src="//ico.ukm.no/info-sirkel-256.png" width="20" /><br>
-		</div>
-	</a>
-	<a href="?page=<?=$_GET['page']?>&c_id=<?=$_GET['c_id']?>&tab=2" <?=($_GET['tab']=='2'?' class="active"':'')?>>
-		<div>
-			<span class="tab_header">Rekkefølge forestilling</span><img src="//ico.ukm.no/clipboard-256.png" width="20" /><br>
-		</div>
-	</a>
-<?php /*	<a href="?page=<?=$_GET['page']?>&c_id=<?=$_GET['c_id']?>&tab=3" <?=($_GET['tab']=='3'?' class="active"':'')?>>
-		<div>
-			<span class="tab_header">Rekkefølge teknisk prøve</span><?= UKMN_icoAlt('settings', "", 20) ?><br>
-		</div>
-	</a>
-	*/ ?>
-</div>
-<div class="ukmdeltakere_tabs_desc">
-	<span>
-		<?php
-		switch( $_GET['tab'] ) {
-			case '8':
-				echo 'Stat8';
-				break;
-			case '5-6':
-				echo 'Stat5-6';
-				break;
-			case '1-4':
-				echo 'Stat1-4';
+	public static function save( $case ) {
+		switch( $case ) {
+			case 'hendelse':
+				if( $_POST['id'] == 'new' ) {
+					self::require('save/ny_hendelse.save.php');
+				} else {
+					self::require('save/hendelse.save.php');
+				}
 				break;
 		}
-		?>
-	</span>
-</div><?php
-}
-
-
-function UKMdeltakere_tittelgui($btid,$kategori) {
-	$felter['musikk']	= array('tittel'=>'Tittel',
-								'melodi_av'=>'Melodi av',
-								'tekst_av'=>'Tekst av',
-								'varighet'=>'Varighet');
-	$felter['annet']	= array('tittel'=>'Tittel',
-								'melodi_av'=>'Evt melodi',
-								'tekst_av'=>'Evt tekst',
-								'varighet'=>'Varighet');
-	$felter['dans']		= array('tittel'=>'Tittel',
-								'koreografi'=>'Koreografi',
-								'varighet'=>'Varighet');
-	$felter['teater']	= array('tittel'=>'Tittel',
-								'melodi_av'=>'Komponist',
-								'tekst_av'=>'Forfatter',
-								'varighet'=>'Varighet');
-	$felter['litteratur']=array('tittel'=>'Tittel',
-								'melodi_av'=>'Evt komponist',
-								'tekst_av'=>'Evt medforfatter',
-								'varighet'=>'Varighet');
-	$felter[6]			= array('tittel'=>'Navn på gruppen/artisten',
-								'beskrivelse'=>'Beskrivelse');
-	$felter[3]			= array('tittel'=>'Tittel',
-								'beskrivelse'=>'Beskrivelse',
-								'teknikk'=>'Teknikk',
-								'type'=>'Type');
-	$felter[2]			= array('tittel'=>'Tittel',
-								'format'=>'Format',
-								'varighet'=>'Varighet');
-	switch($btid) {
-		case 1:
-			switch(strtolower($kategori)){
-				case 'musikk':		return $felter['musikk'];
-				case 'dans':		return $felter['dans'];
-				case 'teater':		return $felter['teater'];
-				case 'litteratur':	return $felter['litteratur'];
-				default: 		return $felter['annet'];
-			}
-			break;
-		case 2:
-		case 3:
-		case 6:
-			return $felter[$btid];
 	}
-	return array();
 }
 
-?>
+## HOOK MENU AND SCRIPTS
+UKMprogram::init( __DIR__ );
+UKMprogram::hook();

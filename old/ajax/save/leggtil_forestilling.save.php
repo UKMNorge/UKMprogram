@@ -2,12 +2,15 @@
 function UKMprogram_save($info) {
 	require_once('UKM/monstring.class.php');
 	
-	$m = new monstring(get_option('pl_id'));
-	
+	$m = new monstring_v2(get_option('pl_id'));
+    
+    $start = $m->getStart();
+    $start->modify('+1 hour');
+
 	$sql = new SQLins('smartukm_concert');
 	$sql->add('c_name','Ny hendelse');
 	$sql->add('pl_id',get_option('pl_id'));
-	$sql->add('c_start', $m->g('pl_start')+3600);
+	$sql->add('c_start', $start->getTimestamp());
 	$sql->run();
 	
 	do_action('UKMprogram_save', 'leggtil_forestilling', $sql->insid());

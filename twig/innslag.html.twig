@@ -1,0 +1,24 @@
+<li class="innslag" data-id="{{ innslag.getId() }}" style="cursor: move;">
+	<div class="infos">
+		<abbr title="{{ innslag.getPersoner().getAntall() }} personer">
+			{{ innslag.getPersoner().getAntall() }}p
+		</abbr> | 
+		{% if innslag.getType().harTitler() %}
+			{% if innslag.getType().harTid() %}
+				{{ innslag.getVarighet().getCompact() }}<br />
+			{% else %}
+				- <br />
+			{% endif %}
+		{% endif %}
+		
+		<small>
+			{{ monstring.getType() == 'land' ? innslag.getFylke() : innslag.getKommune() }}
+		</small>
+	</div>
+	<div class="navn">{{ innslag.getNavn()|upper }}</div>
+	<small>
+		<span class="label label-kat-{{ innslag.getType().getKey() }}">{{ innslag.getType()|upper }}</span>
+		{{ innslag.getSjanger() }}
+	</small>
+	<div class="clearfix"></div>
+</li>

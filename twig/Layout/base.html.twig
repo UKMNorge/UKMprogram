@@ -1,0 +1,51 @@
+<h1>Program for {{ monstring.getNavn() }}</h1>
+
+<div class="pull-right float-right" style="margin-top: -1em; margin-right: 1em;">
+{% block forklaring %}{% endblock %}
+</div>
+
+<div class="UKM_tabs">
+	<a href="?page={{ GET('page') }}" {{ not GET('action') or GET('action') == 'dashboard' ? 'class="active"' }}>
+		<div>
+			<span class="tab_header">Programoversikt</span>
+			<img src="//ico.ukm.no/chart-256.png" width="25"  border="0" /><br />
+			<span class="tab_description">Alle hendelser på mønstringen</span>
+		</div>
+	</a>
+
+	{#
+	<a href="?page={{ GET('page') }}&action=grovsort" {{ GET('action') == 'grovsort' ? 'class="active"' }}>
+		<div>
+			<span class="tab_header">Grovsortering</span>
+			<img src="//ico.ukm.no/delivery-48.png" width="25"  border="0" /><br />
+			<span class="tab_description">Første runde innslag-fordeling</span>
+		</div>
+	</a>
+	#}
+
+	<a href="?page={{ GET('page') }}&action=grovsort" {{ GET('action') == 'grovsort' ? 'class="active"' }}>
+		<div>
+			<span class="tab_header">Detaljprogram</span>
+			<img src="//ico.ukm.no/abacus-48.png" width="25"  border="0" /><br />
+			<span class="tab_description">Fordel innslag i hendelser</span>
+		</div>
+	</a>
+</div>
+<div class="UKM_tabs_desc">
+	<span></span>
+</div>
+<div class="UKM_content_wrapper">
+	<div class="flashbag">
+		{% if flashbag.needtospeak() %}
+			{% for message in flashbag.getAll() %}
+				<div class="message alert alert-{{ message.level }}" style="margin-top: 1em;">
+					{{ message.text }}
+				</div>
+			{% endfor %}
+		{% endif %}
+	</div>
+
+	{% block content %}
+
+	{% endblock %}
+</div>
