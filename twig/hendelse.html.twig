@@ -81,7 +81,7 @@
 			</div>
 
 
-			{% if site_type == 'land' %}
+			{% if monstring.getType() == 'land' %}
 	
 			<div class="row">
 				<div class="col-12 col-sm-12 mb-0">
@@ -99,7 +99,7 @@
 			{% endif %}
 
 			<div class="row">
-				{% if site_type == 'land' %}
+				{% if monstring.getType() == 'land' %}
 				<div class="col-12 col-sm-6">
 					<div class="form-group">
 						<label>Farge</label>
@@ -110,7 +110,7 @@
 			{% endif %}
 			</div>
 
-			{% if site_type != 'kommune' %}
+			{% if monstring.getType() != 'kommune' %}
 			<div class="row">
 				<div class="col-12 col-sm-12" style="margin-top: 2em;">
 					<h3>Innhold i hendelsen</h3>
@@ -121,7 +121,7 @@
 			
 			{# INTERN / OFFENTLIG #}
 			<div class="row">
-				{% if site_type == 'land' %}
+				{% if monstring.getType() == 'land' %}
 					<div class="col-12 col-sm-6">
 						<div class="form-group">
 							<label>Er dette en offentlig eller intern hendelse?</label>
@@ -163,7 +163,7 @@
 
 
 			{# TYPE HENDELSE #}
-			{% if site_type != 'kommune' %}
+			{% if monstring.getType() != 'kommune' %}
 				<div class="row">
 					<div class="col-12 col-sm-6">
 						<div class="form-group">
@@ -307,7 +307,7 @@
 			{# SYNLIGHET #}
 			<div class="row">
 				<div class="col-12 col-sm-12" style="margin-top: 2em;">
-					<h3>Synlighet på UKM.no {% if site_type != 'kommune' %}og i appen{% endif %}</h3>
+					<h3>Synlighet på UKM.no</h3>
 				</div>
 			</div>
 
@@ -344,7 +344,7 @@
 						<p class="help text-muted">
 							Hvis du holder detaljene hemmelig, kan ingen se hvilken
 							rekkefølge innslagene skal opptre i.
-							{% if site_type != 'kommune' %}
+							{% if monstring.getType() != 'kommune' %}
 							<br />
 							Innlegg betraktes også som detaljer.
 							{% endif %}

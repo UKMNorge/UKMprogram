@@ -28,8 +28,6 @@ if( true || $monstring->getType() != 'kommune' ) {
 	);
 }
 
-UKMprogram::addViewData('site_type', get_option('site_type'));
-
 UKMprogram::addViewData('monstring', $monstring);
 if( $_GET['id'] !== 'new' ) {
 	$hendelse = $monstring->getProgram()->get( $_GET['id'] );
