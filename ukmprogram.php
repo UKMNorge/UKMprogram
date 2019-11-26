@@ -16,7 +16,7 @@ Author URI: http://www.ukm-norge.no
 require_once('UKM/wp_modul.class.php');
 
 class UKMprogram extends UKMWPmodul {
-    public static $action = 'snart';
+    public static $action = 'dashboard';
     public static $path_plugin = null;
 
     /**
