@@ -8,14 +8,14 @@ Version: 2.0
 Author URI: http://www.ukm-norge.no
 */
 
+use UKMNorge\Wordpress\Modul;
 
 // TODO
 #do_action('UKMprogram_save', 'lagre', $_POST['c_id']); @ hendelse save
 
+require_once('UKM/Autoloader.php');
 
-require_once('UKM/wp_modul.class.php');
-
-class UKMprogram extends UKMWPmodul {
+class UKMprogram extends Modul {
     public static $action = 'dashboard';
     public static $path_plugin = null;
 

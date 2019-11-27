@@ -75,7 +75,7 @@
 					<p class="help text-muted">
 						Finner du ikke riktig dag? 
 						Listen viser kun dager mellom mønstringens start og slutt. 
-						Rediger dager fra <a href="?page=UKMMonstring">mønstring</a> og returner hit.
+						Rediger dager under <a href="?page=UKMmonstring">arrangement</a> og returner hit.
 					</p>
 				</div>
 			</div>
@@ -128,12 +128,12 @@
 							<br />
 							<label class="normal">
 								<input type="radio" class="form-control" name="intern" value="false" {{ not hendelse.erIntern() ? 'checked' }} />
-								🔓 Offentlig hendelse som er åpen for alle.
+								<span class="dashicons dashicons-tickets"></span> Offentlig hendelse som er åpen for alle.
 							</label>
 							<br />
 							<label class="normal">
 								<input type="radio" class="form-control" name="intern" value="true" {{ hendelse.erIntern() ? 'checked' }} />
-								🔐 Intern hendelse kun for deltakere.
+								<span class="dashicons dashicons-nametag"></span> Intern hendelse kun for deltakere.
 							</label>
 						</div>
 					</div>
@@ -318,12 +318,12 @@
 						<br />
 						<label class="normal">
 							<input type="radio" class="form-control" name="synlig_ramme" value="true" {{ hendelse.getSynligRammeprogram() ? 'checked' }} />
-							😃 Ja, denne kan vises allerede nå.
+							<span class="dashicons dashicons-visibility"></span> Ja, denne kan vises allerede nå.
 						</label>
 						<br />
 						<label class="normal">
 							<input type="radio" class="form-control" name="synlig_ramme" value="false" {{ not hendelse.getSynligRammeprogram() ? 'checked' }} />
-							☹️ Nei, dette er en kladd.
+							<span class="dashicons dashicons-hidden"></span> Nei, dette er en kladd.
 						</label>
 					</div>
 				</div>
@@ -334,12 +334,12 @@
 						<br />
 						<label class="normal">
 							<input type="radio" class="form-control" name="synlig_detalj" value="true" {{ hendelse.getSynligDetaljprogram() ? 'checked' }} />
-							🙉 Ja, alt er klart.
+							<span class="dashicons dashicons-unlock"></span> Ja, alt er klart.
 						</label>
 						<br />
 						<label class="normal">
 							<input type="radio" class="form-control" name="synlig_detalj" value="false" {{ not hendelse.getSynligDetaljprogram() ? 'checked' }} />
-							🔓 Nei, hold detaljene hemmelig.
+							<span class="dashicons dashicons-lock"></span> Nei, hold detaljene hemmelig.
 						</label>
 						<p class="help text-muted">
 							Hvis du holder detaljene hemmelig, kan ingen se hvilken

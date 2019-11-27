@@ -4,16 +4,18 @@
 	<div class="small">
 		<b>Tegnforklaring:</b>
 		<br />
-		🔓 / 🔐 Offentlig / intern hendelse
+		<span class="dashicons dashicons-tickets"></span> / <span class="dashicons dashicons-nametag"></span>
+        Offentlig / intern hendelse
 		<br />
-		😃 / ☹️ Synlig / skjult fra rammeprogram
+		<span class="dashicons dashicons-visibility"></span> / <span class="dashicons dashicons-hidden"></span>
+        Synlig / skjult fra rammeprogram
 		<br />
-		🙉 / 🙈 Synlig / skjulte detaljer for hendelsen
+		<span class="dashicons dashicons-unlock"></span> / <span class="dashicons dashicons-lock"></span>
+        Synlig / skjulte detaljer for hendelsen
 	</div>
 {% endblock %}
 
 {% block content %}
-
 	<div class="pull-right" style="margin-right: 1em;">
 		<p>
 			<a href="?page={{ GET('page') }}&action=hendelse&id=new" class="btn btn-success">Legg til hendelse</a>
@@ -23,7 +25,7 @@
 	<table class="program">
 		<thead>
 			<tr>
-				{% for dag in monstring.getDager() %}
+				{% for dag in arrangement.getDager() %}
 					<th>
 						{{ dag|dato('D j. M') }}
 					</th>
@@ -32,8 +34,8 @@
 		</thead>
 		<tbody>
 			<tr>
-				{% for dag in monstring.getDager() %}
-					<td class="kolonne tot-{{ monstring.getAntallDager() }}">					
+				{% for dag in arrangement.getDager() %}
+					<td class="kolonne tot-{{ arrangement.getAntallDager() }}">					
 						{% for hendelse in program[ dag|dato('d_m') ].forestillinger %}
 							<div class="hendelse panel panel-{{ hendelse.erSynligRammeprogram() ? 'success' : 'danger' }}" data-id="{{ hendelse.getId() }}">
 								<div class="panel-heading">
@@ -43,17 +45,17 @@
 									</div>
 									#}
 									<div class="icon toggleState" data-controller="erIntern" data-state="{{ hendelse.erIntern() ? 'on' : 'off' }}">
-										<div class="state-on" {{ not hendelse.erIntern() ? 'style="display:none;"' }} title="Intern hendelse">🔐</div>
-										<div class="state-off" {{ hendelse.erIntern() ? 'style="display:none;"' }} title="Synlig i offentlig program">🔓</div>
+										<div class="state-on" {{ not hendelse.erIntern() ? 'style="display:none;"' }} title="Intern hendelse"><span class="dashicons dashicons-nametag"></span></div>
+										<div class="state-off" {{ hendelse.erIntern() ? 'style="display:none;"' }} title="Synlig i offentlig program"><span class="dashicons dashicons-tickets"></span></div>
 									</div>
 									<div class="icon toggleState" data-controller="synligDetaljprogram" data-state="{{ hendelse.harSynligDetaljprogram() ? 'on' : 'off' }}">
-										<div class="state-on" {{ not hendelse.harSynligDetaljprogram() ? 'style="display:none;"' }} title="Detaljprogrammet er synlig">🙉</div>
-										<div class="state-off" {{ hendelse.harSynligDetaljprogram() ? 'style="display:none;"' }} title="Detaljprogrammet er skjult">🙈</div>
+										<div class="state-on" {{ not hendelse.harSynligDetaljprogram() ? 'style="display:none;"' }} title="Detaljprogrammet er synlig"><span class="dashicons dashicons-unlock"></span></div>
+										<div class="state-off" {{ hendelse.harSynligDetaljprogram() ? 'style="display:none;"' }} title="Detaljprogrammet er skjult"><span class="dashicons dashicons-lock"></span></div>
 									</div>
 									
 									<div class="icon toggleState toggleSynlig" data-controller="synligRammeprogram" data-state="{{ hendelse.erSynligRammeprogram() ? 'on' : 'off' }}">
-										<div class="state-on" {{ not hendelse.erSynligRammeprogram() ? 'style="display:none;"' }} title="Vises i programmet">😃</div>
-										<div class="state-off" {{ hendelse.erSynligRammeprogram() ? 'style="display:none;"' }} title="Vises ikke i programmet">☹️</div>
+										<div class="state-on" {{ not hendelse.erSynligRammeprogram() ? 'style="display:none;"' }} title="Vises i programmet"><span class="dashicons dashicons-visibility"></span></div>
+										<div class="state-off" {{ hendelse.erSynligRammeprogram() ? 'style="display:none;"' }} title="Vises ikke i programmet"><span class="dashicons dashicons-hidden"></span></div>
 									</div>
 
 									<h3 class="panel-title">
@@ -78,9 +80,7 @@
 						{% else %}
 							<div class="panel">
 								<div class="panel-heading">
-									<h3 class="panel-title">Ingen hendelser {{ dag|dato('l j') }}.</h3>
-								</div>
-								<div class="panel-body">
+									<p class="panel-title"><span class="text-muted">Ingen hendelser {{ dag|dato('l j') }}.</span></p>
 								</div>
 							</div>
 						{% endfor %}

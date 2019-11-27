@@ -1,87 +1,113 @@
 /* BASE */
 
 .flashbag {
-	max-width: 768px;
+    max-width: 768px;
 }
+
 
 /* DASHBOARD */
 
 .program .caron {
-	font-size: 3em;
-	line-height: 1.1em;
-	font-weight: lighter;
-	margin-right: 0px;
-	float:right;
-}
-.program .icon {
-	float: right;
-	margin-right: 1em;
-	cursor: pointer;
+    font-size: 3em;
+    line-height: 1.1em;
+    font-weight: lighter;
+    margin-right: 0px;
+    float: right;
 }
 
+.program .icon {
+    float: right;
+    margin-left: .3em;
+    cursor: pointer;
+}
 
 .program {
-	width: 100%;
-}
-.program th, 
-.program td {
-	padding: 6px;
-}
-.program th {
-	text-transform: uppercase;
-}
-.program td {
-	vertical-align: top;
+    width: 100%;
 }
 
+.program th,
+.program td {
+    padding: 6px;
+}
+
+.program th {
+    text-transform: uppercase;
+}
+
+.program td {
+    vertical-align: top;
+}
+
+.panel-title {
+    font-size: 1em;
+}
+
+.panel-heading {
+    padding: .5em .8em;
+    min-height: 2.4em;
+}
+
+.panel-heading .icon .dashicons {
+    font-size: 1.4em;
+}
+
+
 /* HENDELSE */
-input.form-control + p.help {
+
+input.form-control+p.help {
     margin-top: -.7em;
 }
 
 label.normal {
-	font-weight: normal;
+    font-weight: normal;
 }
 
+
 /* GROVSORTERING */
+
 .grovsortering abbr {
-	border: none;
+    border: none;
     text-decoration: none;
 }
 
 li.innslag {
-	font-size: .8em;
-	padding: .3em;
+    font-size: .8em;
+    padding: .3em;
 }
-.list-inline > li.innslag:first-child {
-	padding-left: .3em;
+
+.list-inline>li.innslag:first-child {
+    padding-left: .3em;
 }
 
 li.innslag .navn {
-	line-height: 1.15em;
+    line-height: 1.15em;
 }
 
 .grovsortering .alle ol {
-	display: flex;
+    display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     width: 100%;
 }
+
 .grovsortering .alle li.innslag {
-	width: 20rem;
-	border: 1px solid #ccc;
-	background: #fff;
-	display: block;
-	margin: .3em;
+    width: 20rem;
+    border: 1px solid #ccc;
+    background: #fff;
+    display: block;
+    margin: .3em;
 }
+
 .grovsortering li.innslag .infos {
-	text-align: right;
-	margin-left: 1em;
-	float:right;
+    text-align: right;
+    margin-left: 1em;
+    float: right;
 }
+
 .line-sep {
-	margin: -.5em;	
+    margin: -.5em;
 }
+
 .line-sep li {
     border-bottom: 1px solid #ccc;
     padding-bottom: .3em;
@@ -89,55 +115,62 @@ li.innslag .navn {
     margin: 0px;
     line-height: 1.5em;
 }
+
 .line-sep li .label {
-	margin-top: -.1em;
+    margin-top: -.1em;
 }
 
+
 /* KATEOGIR-LABELS */
+
 .label-kat-musikk {
-	background: #2195F2;
+    background: #2195F2;
 }
 
 .label-kat-dans {
-	background: #4BAF4F;
+    background: #4BAF4F;
 }
 
 .label-kat-scene {
-	background: #CCDB38;
+    background: #CCDB38;
 }
 
 .label-kat-teater {
-	background: #FF9700;
+    background: #FF9700;
 }
 
 .label-kat-litteratur {
-	background: #9B26B2;
+    background: #9B26B2;
 }
 
 .label-kat-video {
-	background: #029587;;
+    background: #029587;
+    ;
 }
 
 .label-kat-utstilling {
-	background: #5F7B8F;
+    background: #5F7B8F;
 }
 
 .label-kat-konferansier {
-	background: #E91D62;
+    background: #E91D62;
 }
 
 .label-kat-matkultur {
-	background: #ff0000;
+    background: #ff0000;
 }
 
 
 /* rød */
+
 .label-kat-ressurs {
-	background: #6C131C;
+    background: #6C131C;
 }
+
 .label-kat-nettredaksjon {
-	background: #A21C2A;
+    background: #A21C2A;
 }
+
 .label-kat-arrangor {
-	background: #D45E6A;
+    background: #D45E6A;
 }
