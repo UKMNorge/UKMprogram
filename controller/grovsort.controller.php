@@ -43,5 +43,4 @@ if( !isset( $_GET['hendelser'] ) ) {
 }
 
 UKMprogram::addViewData('show', $hendelser);
-
 UKMprogram::addViewData('monstring', $monstring);

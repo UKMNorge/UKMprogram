@@ -5,18 +5,18 @@
 
 
 <script>
-    $(document).ready(function() {
+    jQuery(document).ready(function() {
         UKMresources.optionCard.on('antall', function(valgt) {
             if (valgt == 'flere') {
-                $('#velgFordeling').slideUp();
-                $('#viSkillerUtUtstilling').slideUp();
+                jQuery('#velgFordeling').slideUp();
+                jQuery('#viSkillerUtUtstilling').slideUp();
             } else {
                 if( valgt == 'to' ) {
-                    $('#viSkillerUtUtstilling').slideDown();
+                    jQuery('#viSkillerUtUtstilling').slideDown();
                 } else {
-                    $('#viSkillerUtUtstilling').slideUp();
+                    jQuery('#viSkillerUtUtstilling').slideUp();
                 }
-                $('#velgFordeling').slideDown();
+                jQuery('#velgFordeling').slideDown();
             }
         });
         UKMresources.optionCard.pullStatus('antall');
