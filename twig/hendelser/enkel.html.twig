@@ -1,0 +1,108 @@
+<div class="pull-right float-right" style="margin-top: 1em; margin-right: 2em; margin-bottom: 1em;">
+	<a href="#" class="btn btn-ukm btn-sm">Bytt til avansert visning</a>
+</div>
+<h3>
+	Program
+	<small style="font-size: .6em; margin-left: 1em;">
+		<a href="#" class="btn btn-ukm btn-xs btn-success" style="margin-top: -.6em;">Legg til ny hendelse</a>
+	</small>
+</h3>
+<div class="clearfix" style="margin-bottom: 1em;"></div>
+
+<div style="width: 98%" class="program sortering">
+	<div class="row">
+		<div class="col-xs-6 col-sm-4 float-right pull-right">
+
+			<div class="panel panel-danger supplyContainer" data-supply="delete" id="supplyDelete">
+				<div class="panel-heading">
+					<div class="icon">
+						<a href="#">
+							<span class="dashicons dashicons-trash text-danger"></span>
+						</a>
+					</div>
+
+					<h3 class="panel-title">Fjern innslag fra hendelse</h3>
+				</div>
+				<div class="panel-body">
+					<p class="text-muted small" style="margin-top:-.5em">
+						Slipp innslaget her for å fjerne det fra hendelsen.
+					</p>
+					<ol class="list-unstyled supplyList" style="min-height: 55px;">
+						<li class="trash"></li>
+					</ol>
+				</div>
+			</div>
+
+			<div class="panel panel-warning supplyContainer" data-supply="fordeling" id="supplyFordeling">
+				<div class="panel-heading">
+					<div class="icon">
+						<a href="#" onclick="alert('Dra innslagene fra denne listen og over i en hendelse');">
+							<span class="dashicons dashicons-info text-warning"></span>
+						</a>
+					</div>
+
+					<h3 class="panel-title">Innslag som ikke er fordelt</h3>
+				</div>
+				<div class="panel-body">
+					<p class="text-muted small helper harInnslag" style="margin-top:-.5em">
+						Innslag som er i denne listen når arrangementet starter,
+						                        er ikke med i programmet. Dra og slipp for å legge de til i en hendelse.
+					</p>
+                    <p class="text-muted small helper ingenInnslag" style="margin-top:-.5em;" style="display:none;">
+                        Alle dine påmeldte er med i minst én hendelse. Bra jobba! 🥳
+                    </p>
+					<ol class="list-unstyled supplyList" style="min-height: 55px;">
+						{% for innslag in arrangement.getInnslag().getAll()|slice(0,3) %}
+							{% include "innslag.html.twig" %}
+						{% endfor %}
+					</ol>
+				</div>
+			</div>
+
+			<div class="panel panel-primary supplyContainer" data-supply="alle" id="supplyAlle">
+				<div class="panel-heading">
+					<div class="icon">
+						<a href="#" onclick="alert('Hvis innslaget skal være med i flere hendelser, kan du trekke det inn fra denne listen.');">
+							<span class="dashicons dashicons-info" style="color:#fff;"></span>
+						</a>
+					</div>
+
+					<h3 class="panel-title">Alle innslag på ditt arrangement</h3>
+				</div>
+				<div class="panel-body">
+					<p class="text-muted small helper harInnslag" style="margin-top:-.5em">
+						Her vises alle innslag, uansett om de er med i en hendelse eller ikke.
+						                        Dra og slipp herfra hvis det skal være med i flere hendelser.
+					</p>
+					<ol class="list-unstyled supplyList innslagListe" style="min-height: 55px;">
+						{% for innslag in arrangement.getInnslag().getAll()|slice(0,3) %}
+							{% include "innslag.html.twig" %}
+						{% endfor %}
+					</ol>
+				</div>
+			</div>
+		</div>
+		{% if arrangement.getProgram().getAbsoluteAll()|length > 2 %}
+			<div class="col-xs-6 col-sm-4">
+				{% for hendelse in arrangement.getProgram().getAbsoluteAll()|slice(0, (arrangement.getProgram().getAbsoluteAll()|length / 2)|round ) %}
+					{% include "hendelser/panel.html.twig" with { visInnslag: true } %}
+				{% endfor %}
+			</div>
+			<div class="col-xs-6 col-sm-4">
+				{% for hendelse in arrangement.getProgram().getAbsoluteAll()|slice((arrangement.getProgram().getAbsoluteAll()|length / 2)|round ) %}
+					{% include "hendelser/panel.html.twig" with { visInnslag: true } %}
+				{% endfor %}
+			</div>
+		{% else %}
+			<div class="col-xs-6 col-sm-8">
+				{% for hendelse in arrangement.getProgram().getAbsoluteAll() %}
+					{% include "hendelser/panel.html.twig" with { visInnslag: true } %}
+				{% endfor %}
+			</div>
+		{% endif %}
+		<div class="col-xs-6 col-sm-6 float-left pull-left">
+			{% include "Layout/tegnforklaring.html.twig" %}
+		</div>
+	</div>
+	<div class="row"></div>
+</div>

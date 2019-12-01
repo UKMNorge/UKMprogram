@@ -1,0 +1,64 @@
+<div class="hendelse panel panel-{{ hendelse.erSynligRammeprogram() ? 'success' : 'danger' }}" id="hendelse_{{hendelse.getId()}}" data-id="{{ hendelse.getId() }}">
+	<div class="panel-heading">
+		<div class="icon toggleState" data-controller="erIntern" data-state="{{ hendelse.erIntern() ? 'on' : 'off' }}">
+			<div class="state-on" {{ not hendelse.erIntern() ? 'style="display:none;"' }} title="Intern hendelse">
+				<span class="dashicons dashicons-nametag"></span>
+			</div>
+			<div class="state-off" {{ hendelse.erIntern() ? 'style="display:none;"' }} title="Synlig i offentlig program">
+				<span class="dashicons dashicons-tickets"></span>
+			</div>
+		</div>
+		<div class="icon toggleState" data-controller="synligDetaljprogram" data-state="{{ hendelse.harSynligDetaljprogram() ? 'on' : 'off' }}">
+			<div class="state-on" {{ not hendelse.harSynligDetaljprogram() ? 'style="display:none;"' }} title="Detaljprogrammet er synlig">
+				<span class="dashicons dashicons-unlock"></span>
+			</div>
+			<div class="state-off" {{ hendelse.harSynligDetaljprogram() ? 'style="display:none;"' }} title="Detaljprogrammet er skjult">
+				<span class="dashicons dashicons-lock"></span>
+			</div>
+		</div>
+
+		<div class="icon toggleState toggleSynlig" data-controller="synligRammeprogram" data-state="{{ hendelse.erSynligRammeprogram() ? 'on' : 'off' }}">
+			<div class="state-on" {{ not hendelse.erSynligRammeprogram() ? 'style="display:none;"' }} title="Vises i programmet">
+				<span class="dashicons dashicons-visibility"></span>
+			</div>
+			<div class="state-off" {{ hendelse.erSynligRammeprogram() ? 'style="display:none;"' }} title="Vises ikke i programmet">
+				<span class="dashicons dashicons-hidden"></span>
+			</div>
+		</div>
+
+		<h3 class="panel-title">
+			{{ hendelse.getStart()|dato('H:i') }}
+			<a href="?page={{ GET('page') }}&action=hendelse&id={{ hendelse.getId() }}">{{ hendelse.getNavn() }}</a>
+		</h3>
+	</div>
+
+	<div class="panel-body">
+        {% if hendelse.getType() == 'default' and visInnslag is defined and visInnslag %}
+            <ol class="list-unstyled detaljprogram" style="min-height: 55px;">
+                {% for innslag in hendelse.getInnslag().getAll() %}
+                    {% include "innslag.html.twig" %}
+                {% else %}
+                    <li class="ingeninnslag text-muted" style="cursor: move;">
+                        Start med å trekke det første innslaget hit.
+                    </li>
+                {% endfor %}
+            </ol>
+            <p class="totals" style="display:none;">
+                Totalt 
+                <span class="antall_innslag"></span> innslag, 
+                <span class="varighet">x min og y sek</span>
+            </p>
+		{% elseif hendelse.getType() == 'default' %}
+			{{ hendelse.getInnslag().getAntall() }}
+			innslag
+													Ukjent tid
+		{% elseif hendelse.getType() == 'post' %}
+			Viser et innlegg
+		{% elseif hendelse.getType() == 'category' %}
+			Viser innlegg fra en kategori
+		{% else %}
+			En feil har oppstått.
+			{{ hendelse.getType() }}
+		{% endif %}
+	</div>
+</div>

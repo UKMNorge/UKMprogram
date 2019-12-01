@@ -13,7 +13,16 @@ $program = Hendelser::sorterPerDag(
 UKMprogram::addViewData('arrangement', $arrangement);
 UKMprogram::addViewData('program', $program);
 
+// Inntil vi har forestillinger, vis veiviser
 if( sizeof($program) == 0 ) {
     UKMprogram::setAction('veiviser');
     UKMprogram::includeActionController();
+}
+// Vi har forestillinger, og jobber med enkel setup
+elseif( $arrangement->getMetaValue('program_editor') == 'enkel' ) {
+    UKMprogram::setAction('hendelser/enkel');
+}
+// Vi har forestillinger, og jobber med avansert setup
+else {
+    UKMprogram::setAction('hendelser/avansert');
 }

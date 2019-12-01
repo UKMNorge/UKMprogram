@@ -65,14 +65,16 @@ label.normal {
 
 /* GROVSORTERING */
 
-.grovsortering abbr {
+.sortering abbr {
     border: none;
     text-decoration: none;
 }
 
 li.innslag {
     font-size: .8em;
-    padding: .3em;
+    padding: .5em;
+    border-radius: 5px;
+    border-color: #e9e9e9;
 }
 
 .list-inline>li.innslag:first-child {
@@ -81,16 +83,17 @@ li.innslag {
 
 li.innslag .navn {
     line-height: 1.15em;
+    font-weight: bold;
 }
 
-.grovsortering .alle ol {
+.sortering .supplyList ol {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     width: 100%;
 }
 
-.grovsortering .alle li.innslag {
+.sortering .supplyList li.innslag {
     width: 20rem;
     border: 1px solid #ccc;
     background: #fff;
@@ -98,10 +101,15 @@ li.innslag .navn {
     margin: .3em;
 }
 
-.grovsortering li.innslag .infos {
+.sortering li.innslag .infos {
     text-align: right;
     margin-left: 1em;
     float: right;
+    line-height: 1.4em;
+}
+
+.sortering .supplyList li.innslag .navn {
+    font-weight: normal;
 }
 
 .line-sep {
@@ -118,6 +126,31 @@ li.innslag .navn {
 
 .line-sep li .label {
     margin-top: -.1em;
+}
+
+
+/* REKKEFØLGE I HENDELSE */
+
+ol.detaljprogram {
+    counter-reset: my-awesome-counter;
+}
+
+ol.detaljprogram li.innslag {
+    counter-increment: my-awesome-counter;
+}
+
+ol.detaljprogram li.innslag::before {
+    content: counter(my-awesome-counter) ". ";
+    float: left;
+    height: 100%;
+    font-size: 1.8em;
+    line-height: 1.35em;
+    margin-left: -.6em;
+    margin-right: .5em;
+    margin-top: -.3em;
+    color: #3c763d;
+    min-width: 1.4em;
+    text-align: right;
 }
 
 

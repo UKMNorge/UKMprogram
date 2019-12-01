@@ -1,0 +1,49 @@
+{% extends "Layout/base.html.twig" %}
+
+{% block forklaring %}
+	{% include "Layout/tegnforklaring.html.twig" %}
+{% endblock %}
+
+{% block content %}
+	<div class="pull-right" style="margin-right: 1em;">
+		<p>
+			<a href="?page={{ GET('page') }}&action=hendelse&id=new" class="btn btn-success">Legg til hendelse</a>
+		</p>
+	</div>	
+
+	<table class="program">
+		<thead>
+			<tr>
+				{% for dag in arrangement.getDager() %}
+					<th>
+						{{ dag|dato('D j. M') }}
+					</th>
+				{% endfor %}
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				{% for dag in arrangement.getDager() %}
+					<td class="kolonne tot-{{ arrangement.getAntallDager() }}">					
+						{% for hendelse in program[ dag|dato('d_m') ].forestillinger %}
+							{% include "hendelser/panel.html.twig" %}
+						{% else %}
+							<div class="panel">
+								<div class="panel-heading">
+									<p class="panel-title"><span class="text-muted">Ingen hendelser {{ dag|dato('l j') }}.</span></p>
+								</div>
+							</div>
+						{% endfor %}
+
+						{#
+						<p class="mt-3">
+							<a href="?page={{ GET('page') }}&action=create">Legg til hendelse</a>
+						</p>
+						#}
+
+					</td>
+				{% endfor %}
+			</tr>
+		</tbody>
+	</table>
+{% endblock %}

@@ -3,7 +3,6 @@
 	{{ arrangement.getNavn() }}
 </h2>
 
-
 <script>
     jQuery(document).ready(function() {
         UKMresources.optionCard.on('antall', function(valgt) {
@@ -38,28 +37,28 @@
                     <p>
                         Hvis alle dine påmeldte opptrer i en forestilling,
                         velger du denne.
-                        Velg "flere hendelser" hvis du skal ha en pause midtveis.
+                        <br />&nbsp;
                     </p>
                 </div>
             </div>
             <div class="col-xs-6 col-sm-4 col-lg-3">
-                <div class="optionCard card selected" data-group="antall" data-value="to">
+                <div class="optionCard card {{ arrangement.getInnslag().getAntall() <= 20 ? 'selected' }}" data-group="antall" data-value="to">
                     <div class="dashicons dashicons-star-half"></div>
                     <div class="header">Én hendelse + utstilling</div>
                     <p>
-                        Hvis alle dine påmeldte opptrer i en forestilling,
-                        men du vil ha en egen utstilling i tillegg.
+                        Alle påmeldte opptrer i en forestilling,
+                        men du vil ha en utstilling i tillegg.
+                        <br />&nbsp;
                     </p>
                 </div>
             </div>
             <div class="col-xs-6 col-sm-4 col-lg-3">
-                <div class="optionCard card" data-group="antall" data-value="flere">
+                <div class="optionCard card {{ arrangement.getInnslag().getAntall() > 20 ? 'selected' }}" data-group="antall" data-value="flere">
                     <div class="dashicons dashicons-star-filled"></div>
                     <div class="header">Flere hendelser</div>
                     <p>
-                        Hvis du skal ha en pause midtveis, eller
-                        vil fordele innslagene dine i flere bolker, dager, ulike tema osv;
-                        full frihet.
+                        For deg som har mange innslag som skal fordeles i flere forestillinger
+                        eller vil fordele de i ulike dager, tema osv.
                     </p>
                 </div>
             </div>
