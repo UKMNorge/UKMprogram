@@ -13,7 +13,7 @@
 	<div class="row">
 		<div class="col-xs-6 col-sm-4 float-right pull-right">
 
-			<div class="panel panel-danger supplyContainer" data-supply="delete" id="supplyDelete">
+			<div class="panel panel-danger supplyContainer" data-supply="delete" id="supplyDelete" style="display:none;">
 				<div class="panel-heading">
 					<div class="icon">
 						<a href="#">
@@ -28,10 +28,11 @@
 						Slipp innslaget her for å fjerne det fra hendelsen.
 					</p>
 					<ol class="list-unstyled supplyList" style="min-height: 55px;">
-						<li class="trash"></li>
+						<li class="innslag">Slipp innslaget her for å fjerne det fra hendelsen.</li>
 					</ol>
 				</div>
 			</div>
+            <div class="clearfix"></div>
 
 			<div class="panel panel-warning supplyContainer" data-supply="fordeling" id="supplyFordeling">
 				<div class="panel-heading">
@@ -49,7 +50,7 @@
 						                        er ikke med i programmet. Dra og slipp for å legge de til i en hendelse.
 					</p>
                     <p class="text-muted small helper ingenInnslag" style="margin-top:-.5em;" style="display:none;">
-                        Alle dine påmeldte er med i minst én hendelse. Bra jobba! 🥳
+                        Alle dine påmeldte er med i minst én hendelse 🥳
                     </p>
 					<ol class="list-unstyled supplyList" style="min-height: 55px;">
 						{% for innslag in arrangement.getInnslag().getAll()|slice(0,3) %}
@@ -75,7 +76,7 @@
 						                        Dra og slipp herfra hvis det skal være med i flere hendelser.
 					</p>
 					<ol class="list-unstyled supplyList innslagListe" style="min-height: 55px;">
-						{% for innslag in arrangement.getInnslag().getAll()|slice(0,3) %}
+						{% for innslag in arrangement.getInnslag().getAll() %}
 							{% include "innslag.html.twig" %}
 						{% endfor %}
 					</ol>

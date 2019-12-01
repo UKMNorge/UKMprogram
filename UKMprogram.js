@@ -100,12 +100,13 @@ var supply = function($) {
                     jQuery(this).remove();
                     emitter.emit('change', null);
                 });
+                emitter.emit('change', null);
             },
             lost: function(item) {
-                emitter.emit('change');
+                emitter.emit('change', null);
             },
             getInnslag: function() {
-                return self.object().find('li.innslag:visible');
+                return self.object().find('li.innslag');
             },
             bind: function() {
                 emitter.on('change', self.handle);
@@ -124,11 +125,13 @@ var supply = function($) {
                 }
                 helper.toggle(self.getInnslag().length);
             },
-
             object: function() {
                 console.log('getObject: ' + jQuerySelector);
                 return $(jQuerySelector);
             },
+            type: function() {
+                return 'supply';
+            }
         };
 
         self.init();
@@ -319,6 +322,9 @@ var hendelse = function($) {
             object: function() {
                 return $(jQuerySelector);
             },
+            type: function() {
+                return 'hendelse';
+            }
         };
 
         // INITIATE
@@ -415,6 +421,12 @@ jQuery(document).ready(function() {
             item = ui.item;
             newList = ui.item.parent();
             oldList = ui.item.parent();
+
+            if (hendelser.hasFromSortableList(oldList)) {
+                if (hendelser.getFromSortableList(oldList).type() == 'hendelse') {
+                    jQuery('#supplyDelete').slideDown(200);
+                }
+            }
         },
         stop: function(event, ui) {
             // oldList er satt i start()
@@ -422,12 +434,14 @@ jQuery(document).ready(function() {
             if (hendelser.hasFromSortableList(oldList)) {
                 hendelser.getFromSortableList(oldList).lost(item);
             }
+            jQuery('#supplyDelete').slideUp(150);
         },
         change: function(event, ui) {
             if (ui.sender) {
                 newList = ui.placeholder.parent();
             }
         },
+        out: function(event, ui) {},
         receive: function(event, ui) {
             var success = false;
             // Prøv å sende innslaget til lista
@@ -451,6 +465,33 @@ jQuery(document).ready(function() {
                     hendelser.get('supplyFordeling').remove(jQuery(item).attr('data-id'));
                 }
             }
+
+
+
+
+
+
+
+
+
+
+            // TODO:
+            // 1. Hvis avsender er alle_innslag: clone, og legg tilbake
+            // 2. Håndter fjern innslag
+            // 3. Håndter at et innslag gjør comback i fordelingslisten
+            // 4. Håndter save
+
+
+
+
+
+
+
+
+
+
+
+
 
 
             /*
