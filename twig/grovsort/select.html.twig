@@ -7,7 +7,7 @@
 	<h3>Velg hvilke hendelser du vil jobbe med</h3>
 
 	<ul class="list-group" style="max-width: 768px;">
-		{% for hendelse in monstring.getProgram().getAll() if hendelse.getType() == 'default' %}
+		{% for hendelse in monstring.getProgram().getAll()|filter( hendelse => hendelse.getType() == 'default' ) %}
 			<li class="list-group-item">
 				<label>
 					<input type="checkbox" name="hendelser" value="{{ hendelse.getId() }}" {{ 'forestilling' in hendelse.getNavn()|lower ? 'checked' }} />

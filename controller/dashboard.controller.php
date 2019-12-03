@@ -26,3 +26,5 @@ elseif( $arrangement->getMetaValue('program_editor') == 'enkel' ) {
 else {
     UKMprogram::setAction('hendelser/avansert');
 }
+
+UKMprogram::setAction('hendelser/avansert');

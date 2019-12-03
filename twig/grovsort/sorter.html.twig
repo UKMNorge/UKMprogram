@@ -37,7 +37,7 @@
 		<table class="program">
 			<tbody>
 				<tr>
-					{% for hendelse in monstring.getProgram().getAll() if hendelse.getId() in show %}
+					{% for hendelse in monstring.getProgram().getAll()|filter(hendelse => hendelse.getId() in show) %}
 						<td class="kolonne tot-{{ monstring.getAntallDager() }}">					
 							<div class="hendelse panel panel-{{ hendelse.erSynligRammeprogram() ? 'success' : 'danger' }}" data-id="{{ hendelse.getId() }}">
 								<div class="panel-heading">

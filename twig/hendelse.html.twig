@@ -192,7 +192,7 @@
 							<label>Velg hvilket innlegg eller hvilken side som skal vises</label>
 							<select name="post_id" class="form-control">
 								<optgroup label="Innlegg">
-									{% for post in posts if post.post_type == 'post' %}
+									{% for post in posts|filter(post => post.post_type == 'post') %}
 										<option value="{{ post.ID }}" {{ hendelse.getTypePostId() == post.ID ? 'selected' }}>{{ post.post_title }} ({{post.post_type == 'post' ? 'innlegg' : 'side'}})</option>
 									{% else %}
 										<option value="false" disabled>Du må ha minst ett innlegg før du kan gjøre dette</option>
@@ -200,7 +200,7 @@
 								</optgroup>
 
 								<optgroup label="Sider">
-									{% for post in posts if post.post_type != 'post' %}
+									{% for post in posts|filter( post => post.post_type != 'post') %}
 										<option value="{{ post.ID }}" {{ hendelse.getTypePostId() == post.ID ? 'selected' }}>{{ post.post_title }} ({{post.post_type == 'post' ? 'innlegg' : 'side'}})</option>
 									{% else %}
 										<option value="false" disabled selected>Du må ha minst en side før du kan gjøre dette</option>
