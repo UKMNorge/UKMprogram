@@ -317,7 +317,8 @@ var hendelse = function($) {
                         action: 'UKMprogramV2_ajax',
                         controller: 'save',
                         save: 'rekkefolge',
-                        hendelse: self.object().attr('data-id')
+                        hendelse: self.object().attr('data-id'),
+                        innslag: rekkefolge.join(',')
                     },
                     function(response) {
                         /* HANDLING GJENNOMFØRT. HÅNDTER RESPONS */
