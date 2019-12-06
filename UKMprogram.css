@@ -62,6 +62,10 @@ label.normal {
     font-weight: normal;
 }
 
+.saveStatus {
+    font-size: .7em;
+}
+
 
 /* GROVSORTERING */
 
@@ -151,6 +155,38 @@ ol.detaljprogram li.innslag::before {
     color: #3c763d;
     min-width: 1.4em;
     text-align: right;
+}
+
+
+/* FJERN INNSLAG */
+
+.supplyContainer.over #dropToDelete {
+    background: rgba(169, 68, 66, 0.8);
+}
+
+.supplyContainer.over #dropToDelete::before {
+    color: #f2dede;
+}
+
+#dropToDelete {
+    min-height: 8em;
+    background: #f2dede;
+    border-radius: 5px;
+    border: 2px solid rgba(169, 68, 66, 0.8);
+}
+
+#dropToDelete::before {
+    color: rgba(169, 68, 66, 0.8);
+    content: "Slipp innslaget her for å fjerne det fra hendelsen.";
+    white-space: pre-wrap;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 3em;
+    margin-bottom: 3em;
+    width: 100%;
+    display: block;
+    z-index: -20;
+    clear: both;
 }
 
 

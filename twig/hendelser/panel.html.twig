@@ -28,7 +28,11 @@
 
 		<h3 class="panel-title">
 			{{ hendelse.getStart()|dato('H:i') }}
-			<a href="?page={{ GET('page') }}&action=hendelse&id={{ hendelse.getId() }}">{{ hendelse.getNavn() }}</a>
+			<a href="?page={{ GET('page') }}&action=hendelse&id={{ hendelse.getId() }}" class="hendelseNavn">{{ hendelse.getNavn() }}</a>
+            <span class="saveSpinner" style="display:none;">
+                <img src="/wp-includes/images/spinner.gif" style="height: 1.2em;"/>
+            </span>
+            <span class="saveStatus" style="display:none;">Rekkefølge lagret</span>
 		</h3>
 	</div>
 

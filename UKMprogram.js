@@ -47,21 +47,6 @@ jQuery(document).on('click', '#startSort', function() {
     window.location.href = window.location.href + '&hendelser=' + hendelser.join('-');
 });
 
-
-function oppdaterListe(liste) {
-    console.warn('SAVE LIST');
-}
-
-
-function toggleIngenInnslag(item) {
-    var liste = item.parents('.detaljprogram');
-
-}
-
-function receive_hidden(item) {
-    console.warn('Receive hidden');
-}
-
 var supply = function($) {
     return function(id) {
         var emitter = new UKMresources.emitter(id);
@@ -69,12 +54,14 @@ var supply = function($) {
 
         var helper = {
             toggle: function(antall_innslag) {
-                console.log('toggleHelpers for ' + id + ': ' + antall_innslag);
-                console.log(self.object());
+                //console.log('toggleHelpers for ' + id + ': ' + antall_innslag);
+                //console.log(self.object());
                 if (antall_innslag == 0) {
                     self.object().find('.helper.harInnslag').hide();
                     self.object().find('.helper.ingenInnslag').fadeIn();
-                    self.object().find('ol.ui-sortable').hide();
+                    if (self.getSupplyType() != 'delete') {
+                        self.object().find('ol.ui-sortable').hide();
+                    }
                 } else {
                     self.object().find('.helper.ingenInnslag').hide();
                     self.object().find('.helper.harInnslag').fadeIn();
@@ -84,18 +71,29 @@ var supply = function($) {
         }
 
         var self = {
+            supplyType: null,
             init: function() {
-                console.info('Initier supplylist ' + id);
+                //console.info('Initier supplylist ' + id);
+                self.supplyType = $(jQuerySelector).attr('data-supply');
                 self.bind();
             },
-            receive: function(item) {
-                console.group(id + ' mottok:');
-                console.log(item);
-                console.groupEnd();
+            add: function(item) {
+                self.object().find('.ui-sortable').append(item);
                 emitter.emit('change', item);
             },
+            receive: function(item) {
+                //console.group(id + ' mottok:');
+                //console.log(item);
+                //console.groupEnd();
+                if (self.getSupplyType() == 'delete') {
+                    //console.log('Delete item');
+                    item.remove();
+                    return true;
+                }
+                return false;
+            },
             remove: function(innslag_id) {
-                console.log(id + ' fjern:' + innslag_id);
+                //console.log(id + ' fjern:' + innslag_id);
                 self.object().find('.innslag[data-id="' + innslag_id + '"]').slideUp(200, function() {
                     jQuery(this).remove();
                     emitter.emit('change', null);
@@ -115,7 +113,7 @@ var supply = function($) {
                 });
             },
             handle: function(item) {
-                console.warn('HANDLE supplyList: ' + id);
+                //console.warn('HANDLE supplyList: ' + id);
                 if (self.getInnslag().length == 0) {
                     self.object().removeClass('panel-warning').addClass('panel-success');
                     self.object().find('.icon .dashicons').removeClass('text-warning').addClass('text-success');
@@ -126,11 +124,20 @@ var supply = function($) {
                 helper.toggle(self.getInnslag().length);
             },
             object: function() {
-                console.log('getObject: ' + jQuerySelector);
+                //console.log('getObject: ' + jQuerySelector);
                 return $(jQuerySelector);
             },
             type: function() {
                 return 'supply';
+            },
+            getType: function() {
+                return self.type();
+            },
+            getSupplyType: function() {
+                return self.supplyType;
+            },
+            getId: function() {
+                return id;
             }
         };
 
@@ -161,7 +168,7 @@ var hendelse = function($) {
             },
 
             update: function() {
-                console.log('counter(' + id + ').update()');
+                //console.log('counter(' + id + ').update()');
                 var innslag = self.getInnslag();
                 counter.innslag = innslag.length;
 
@@ -178,24 +185,24 @@ var hendelse = function($) {
                 } else {
                     counter.show();
                 }
-                console.log('counter(' + id + ').render()');
+                //console.log('counter(' + id + ').render()');
                 counter.find('.antall_innslag').html(counter.innslag);
                 counter.find('.varighet').html(UKMresources.tid(counter.duration).useMilitary().render());
             },
             object: function() {
-                console.log('counter(' + id + ').object() => jQuery(' + counter.jQuerySelector + ')');
+                //console.log('counter(' + id + ').object() => jQuery(' + counter.jQuerySelector + ')');
                 return $(counter.jQuerySelector);
             },
             find: function(selector) {
-                console.log('counter(' + counter.jQuerySelector + ').find(' + selector + ')');
+                //console.log('counter(' + counter.jQuerySelector + ').find(' + selector + ')');
                 return counter.object().find(selector);
             },
             hide: function() {
-                console.log('counter(' + id + ').hide()');
+                //console.log('counter(' + id + ').hide()');
                 counter.object().slideUp();
             },
             show: function() {
-                console.log('counter(' + id + ').show()');
+                //console.log('counter(' + id + ').show()');
                 counter.object().fadeIn();
             }
         };
@@ -209,7 +216,7 @@ var hendelse = function($) {
                 emitter.on('change', helper.toggle);
             },
             object: function() {
-                console.log('helper(' + id + ').object() => jQuery(' + helper.jQuerySelector + ')');
+                //console.log('helper(' + id + ').object() => jQuery(' + helper.jQuerySelector + ')');
                 return $(helper.jQuerySelector);
             },
             toggle: function() {
@@ -220,11 +227,11 @@ var hendelse = function($) {
                 }
             },
             hide: function() {
-                console.log('helper(' + id + ').hide()');
+                //console.log('helper(' + id + ').hide()');
                 helper.object().slideUp(200);
             },
             show: function() {
-                console.log('helper(' + id + ').show()');
+                //console.log('helper(' + id + ').show()');
                 helper.object().fadeIn();
             }
         }
@@ -283,38 +290,108 @@ var hendelse = function($) {
             }
         }
 
+        var saver = {
+            lastSave: [],
+            save: function() {
+                if (saver.timer) {
+                    clearTimeout(saver.timer);
+                    saver.reset();
+                }
+                var rekkefolge = [];
+                self.object().find('.ui-sortable li.innslag').each(function() {
+                    if (jQuery(this).attr('data-id')) {
+                        rekkefolge.push(jQuery(this).attr('data-id'));
+                    }
+                });
+
+                if (saver.lastSave == JSON.stringify(rekkefolge)) {
+                    //console.info('Lagrer ikke' + id);
+                    return true;
+                }
+
+                saver.lastSave = JSON.stringify(rekkefolge);
+
+                self.object().find('.saveSpinner').fadeIn();
+                $.post(
+                    ajaxurl, {
+                        action: 'UKMprogramV2_ajax',
+                        controller: 'save',
+                        save: 'rekkefolge',
+                        hendelse: self.object().attr('data-id')
+                    },
+                    function(response) {
+                        /* HANDLING GJENNOMFØRT. HÅNDTER RESPONS */
+                        if (response !== null && response.success) {
+                            saver.done();
+                        } else {
+                            saver.failed();
+                        }
+                    }
+                ).fail(function(response) {
+                    saver.failed();
+                });
+            },
+            done: function() {
+                self.object().find('.saveSpinner').hide();
+                self.object().find('.saveStatus').fadeIn();
+                saver.timer = setTimeout(
+                    saver.complete,
+                    1500
+                );
+            },
+            complete: function() {
+                self.object().find('.saveSpinner').hide();
+                self.object().find('.saveStatus').fadeOut();
+            },
+            reset: function() {
+                self.object().find('.saveSpinner').hide();
+                self.object().find('.saveStatus').hide();
+            },
+            failed: function() {
+                saver.reset();
+                alert('Beklager, klarte ikke å lagre rekkefølgen for ' + self.object().find('.hendelseNavn').html());
+            }
+        }
+
         /**
          * PUBLIC FUNCTIONS
          */
         var self = {
             init: function() {
-                console.info('Initier ' + id);
+                //console.info('Initier ' + id);
                 self.bind();
             },
             receive: function(item) {
-                var innslag_id = $(item).attr('data-id');
+                var innslag_id = self.getIdFromItem(item);
                 if (innslag.includes(innslag_id)) {
-                    console.log('Innslag ' + innslag_id + ' already in list ' + id);
+                    //console.log('Innslag ' + innslag_id + ' already in list ' + id);
                     return false;
                 }
                 innslag.push(innslag_id);
-                console.group(id + ' mottok: ' + innslag_id);
-                console.log(item);
-                console.groupEnd();
+                //console.group(id + ' mottok: ' + innslag_id);
+                //console.log(item);
+                //console.groupEnd();
                 emitter.emit('change');
                 return true;
             },
             lost: function(item) {
+                innslag.splice(innslag.indexOf(self.getIdFromItem(item)), 1);
+                //console.log(id + ' lost: ')
+                //console.log(item);
                 emitter.emit('change');
+            },
+            getIdFromItem: function(item) {
+                return $(item).attr('data-id');
             },
             getInnslag: function() {
                 return $(jQuerySelector).find('li.innslag');
             },
             bind: function() {
-                emitter.on('change', self.save);
+                //emitter.on('change', self.save);
+                // save triggered by sortable.stop()
             },
             save: function() {
-                console.warn('SAVE ' + id);
+                saver.save();
             },
             toggle: function(property, state, item) {
                 states.toggle(property, state, item);
@@ -324,6 +401,15 @@ var hendelse = function($) {
             },
             type: function() {
                 return 'hendelse';
+            },
+            getType: function() {
+                return self.type();
+            },
+            getSupplyType: function() {
+                return false;
+            },
+            getId: function() {
+                return id;
             }
         };
 
@@ -348,12 +434,12 @@ var hendelseContainer = function($) {
                 return collection.has(id);
             },
             get: function(id) {
-                console.log('hendelser:get(' + id + ')')
+                //console.log('hendelser:get(' + id + ')')
                 if (!collection.has(id)) {
                     console.error('Fant ikke hendelse/supply:' + id);
                     return false;
                 }
-                console.log(collection.get(id));
+                //console.log(collection.get(id));
                 return collection.get(id);
             },
             hasFromSortableList: function(list) {
@@ -366,14 +452,14 @@ var hendelseContainer = function($) {
                 return self.getParentContainer(list).attr('id');
             },
             getParentContainer: function(list) {
-                return $(list).parents($(list).hasClass('.supplyList') ? '.supplyContainer' : '.hendelse');
+                return $(list).parents($(list).hasClass('supplyList') ? '.supplyContainer' : '.hendelse');
             },
             createSupply: function(id) {
-                console.log('REGISTER SUPPLY');
+                //console.log('REGISTER SUPPLY');
                 collection.set(id, new supply(id));
             },
             createHendelse: function(id) {
-                console.log('REGISTER HENDELSE');
+                //console.log('REGISTER HENDELSE');
                 collection.set(id, new hendelse(id));
             },
             bind: function() {
@@ -391,8 +477,8 @@ var hendelseContainer = function($) {
             init: function() {
                 $(selector).each(function() {
                     if (!$(this).attr('id')) {
-                        console.error('Kan ikke registrere hendelse/supply uten ID');
-                        console.log($(this));
+                        //console.error('Kan ikke registrere hendelse/supply uten ID');
+                        //console.log($(this));
                     } else {
                         if ($(this).hasClass('supplyContainer') || $(this).hasClass('supplyList')) {
                             self.createSupply($(this).attr('id'));
@@ -413,130 +499,216 @@ var hendelseContainer = function($) {
 jQuery(document).ready(function() {
     var hendelser = hendelseContainer('.hendelse, .supplyContainer');
     /* SORTERING */
-    jQuery('.detaljprogram, .supplyList').sortable({
+    var trans = {
         connectWith: '.detaljprogram, .supplyList',
         tolerance: 'pointer',
         items: 'li',
+        dropOnEmpty: true,
+        delay: 100,
+        /**
+         * Start av sortering
+         * 
+         * Resetter array med hendelser som skal lagres når
+         * sorteringen er helt ferdig
+         * 
+         * @param {*} event 
+         * @param {*} ui 
+         */
         start: function(event, ui) {
-            item = ui.item;
-            newList = ui.item.parent();
-            oldList = ui.item.parent();
-
-            if (hendelser.hasFromSortableList(oldList)) {
-                if (hendelser.getFromSortableList(oldList).type() == 'hendelse') {
-                    jQuery('#supplyDelete').slideDown(200);
+            trans.resetSave();
+        },
+        /**
+         * Innslaget holdes over en liste
+         * 
+         * Brukes for å markere at slette-listen registrere hover-event
+         * da slette-listen er litt ustabil på init
+         * 
+         * @param {*} event 
+         * @param {*} ui 
+         */
+        over: function(event, ui) {
+            if (hendelser.hasFromSortableList(jQuery(event.target))) {
+                if (hendelser.getFromSortableList(jQuery(event.target)).getSupplyType() == 'delete') {
+                    hendelser.getFromSortableList(jQuery(event.target)).object().addClass('over');
                 }
             }
         },
+        /**
+         * Innslaget er trukket ut av en liste (men ikke sluppet)
+         * 
+         * Fjern hover-klassen på slette-listen
+         * Vis slette-listen hvis innslaget dras ut av en hendelse-liste
+         * 
+         * @param {*} event 
+         * @param {*} ui 
+         */
+        out: function(event, ui) {
+            trans.setCurrent(event, ui);
+            hendelser.get('supplyDelete').object().removeClass('over');
+
+            if (hendelser.getFromSortableList(trans.getSender()).getType() == 'hendelse') {
+                hendelser.get('supplyDelete').object().show(
+                    0,
+                    function() {
+                        jQuery(this).find('.supplyList').sortable('enable');
+                    }
+                );
+            }
+        },
+        /**
+         * Stop sortering
+         * 
+         * Endringen er gjennomført, og alle innslag er på riktig sted.
+         * Gjennomfør lagring
+         * 
+         * @param {*} event 
+         * @param {*} ui 
+         */
         stop: function(event, ui) {
-            // oldList er satt i start()
-            // newList er oppdatert i change()
-            if (hendelser.hasFromSortableList(oldList)) {
-                hendelser.getFromSortableList(oldList).lost(item);
-            }
-            jQuery('#supplyDelete').slideUp(150);
+            // Skjul slett-boksen
+            jQuery('#supplyDelete').slideUp(200);
+            trans.doSave();
         },
-        change: function(event, ui) {
-            if (ui.sender) {
-                newList = ui.placeholder.parent();
-            }
-        },
-        out: function(event, ui) {},
-        receive: function(event, ui) {
-            var success = false;
-            // Prøv å sende innslaget til lista
-            if (hendelser.hasFromSortableList(newList)) {
-                success = hendelser.getFromSortableList(newList).receive(item);
-            }
-
-            var innslagSelector = '.innslag[data-id="' + item.attr('data-id') + '"]';
-
-            // Hvis lista nekter, shake it off.
-            if (!success) {
-                jQuery(ui.sender).sortable('cancel');
-                hendelser.getFromSortableList(newList).object().find(innslagSelector).effect('shake');
-                jQuery(item).effect('shake');
-                return false;
-            }
-
-            // Når et innslag legges til i en hendelse, må det ut av "innslag som ikke er fordelt"
-            if (hendelser.has('supplyFordeling')) {
-                if (hendelser.get('supplyFordeling').object().find(innslagSelector)) {
-                    hendelser.get('supplyFordeling').remove(jQuery(item).attr('data-id'));
+        /**
+         * Før vi stopper, lagre påvirkede hendelser
+         * 
+         * For å sikre at alle innslag er i listen de skal før lagring
+         * trigges, lager denne en liste med påvirkede hendelser, som
+         * stop() går gjennom og faktisk lagrer.
+         * 
+         * I beforeStop har vi tilgang på getSender() og getRecipient() 
+         * med riktig data, mens i stop() vet vi at alle innslag er
+         * mottatt, og eventuelt returnert riktig.
+         * 
+         * @param {*} event 
+         * @param {*} ui 
+         */
+        beforeStop: function(event, ui) {
+            // Hvis avsender finnes og er hendelse. Legg til for lagring
+            if (hendelser.hasFromSortableList(trans.getSender())) {
+                var avsender = trans.getHendelse(trans.getSender());
+                if (avsender.getType() == 'hendelse') {
+                    trans.save(avsender);
                 }
             }
 
-
-
-
-
-
-
-
-
-
-            // TODO:
-            // 1. Hvis avsender er alle_innslag: clone, og legg tilbake
-            // 2. Håndter fjern innslag
-            // 3. Håndter at et innslag gjør comback i fordelingslisten
-            // 4. Håndter save
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            /*
-            // mottaker av objektet er alle innslag (= fjern)
-            if (jQuery(this).attr('id') == 'dash_alle') {
-            	// Hvis objektet nå kun finnes i suppleringslisten (alle innslag) må det også legges til i "nye påmeldinger"
-            	i_hendelse = new Array();
-            	jQuery('ul.dash_forestilling li.dash_innslag').each(function () {
-            		i_hendelse.push(jQuery(this).attr('id'));
-            	});
-
-            	// Innslaget er ikke i noen hendelse, legg til i nye
-            	if (jQuery.inArray(jQuery(ui.item).attr('id'), i_hendelse) == -1) {
-            		jQuery('#dash_supplering').append(ui.item.clone());
-            	}
-
-            	// Objektet finnes alltid i listen alle innslag, fjern derfor dropped
-            	ui.item.remove();
-            } else {
-            	i_liste = new Array();
-            	i_liste_cancel = false;
-            	// Loop alle elementer i mottaker i tilfelle den allerede er der
-            	jQuery(this).find('li').each(function () {
-            		// Elementet finnes ?
-            		if (jQuery.inArray(jQuery(this).attr('id'), i_liste) != -1) {
-            			jQuery(this).parent().find('#' + jQuery(this).attr('id')).effect('pulsate', { times: 5 }, 200);
-            			i_liste_cancel = true;
-            		}
-            		// Legg til elementet i listen
-            		i_liste.push(jQuery(this).attr('id'));
-            	});
-            	visTeller = false;
-            	// Hvis funnet, avbryt mottak
-            	if (i_liste_cancel) {
-            		jQuery(ui.sender).sortable('cancel');
-            		// Elementet ble ikke funnet, og avsender er listen "alle innslag"
-            	} else if (ui.sender.attr('id') == 'dash_alle') {
-            		visTeller = true;
-            		jQuery(ui.sender).append(ui.item.clone());
-            	} else {
-            		visTeller = true;
-            	}
+            // Hvis mottaker finnes og er hendelse. Legg til for lagring
+            if (hendelser.hasFromSortableList(trans.getRecipient())) {
+                var mottaker = trans.getHendelse(trans.getRecipient());
+                if (avsender.getId() != mottaker.getId() && mottaker.getType() == 'hendelse') {
+                    trans.save(mottaker);
+                }
             }
-            receive_hidden(jQuery(this).attr('id'));
-            */
+        },
+        /**
+         * Innslaget er på vei inn i en liste
+         * 
+         * Prøver, feiler og håndterer
+         * 
+         * @param {*} event 
+         * @param {*} ui 
+         */
+        receive: function(event, ui) {
+            var addToFordeling = false;
+            trans.setCurrent(event, ui);
+
+            var innslagSelector = '.innslag[data-id="' + trans.getItemId() + '"]';
+
+            // Supply-lister er forskjellig fra hendelser
+            if (trans.getHendelse(trans.getRecipient()).getType() == 'supply') {
+                // Slett-listen tar i mot og sletter alle innslag fra hendelser
+                if (trans.getHendelse(trans.getRecipient()).getSupplyType() == 'delete' && trans.getHendelse(trans.getSender()).getType() == 'hendelse') {
+                    // jQuery(innslagSelector).length: 2 == 1, som vil si at innslaget ikke er med i en hendelse
+                    // Hvis innslaget ikke er med i en hendelse, må det legges til i fordelingslisten
+                    if (jQuery(innslagSelector).length == 2) {
+                        addToFordeling = true;
+                    }
+                }
+                // Det er ikke mulig å trekke et innslag inn til en supply-liste
+                else {
+                    trans.cancel();
+                    return false;
+                }
+            }
+
+            // Prøv å sende innslaget
+            var result = trans.getHendelse(trans.getRecipient()).receive(trans.getItem());
+
+            // Mottaker godtok ikke innslaget (sannsynligvis allerede i lista)
+            if (!result) {
+                // cache mottaker, fordi cancel() endrer alt
+                var realRecipient = trans.getRecipient();
+                trans.cancel();
+
+                // Shake begge innslag
+                trans.getItem().effect('shake'); // dragged item
+                trans.getHendelse(realRecipient).object().find(innslagSelector).effect('shake'); // item in target
+
+                return true;
+            }
+
+            // Hvis innslaget eksisterer i ikke fordelt-listen er det på tide å fjerne den nå
+            if (hendelser.get('supplyFordeling').object().find(trans.getItemId())) {
+                hendelser.get('supplyFordeling').remove(trans.getItemId());
+            }
+
+            // Hvis avsender er supply-list::alle, klon innslaget, så det ikke forsvinner
+            // fra supply-listen
+            if (trans.getHendelse(trans.getSender()).getSupplyType() == 'alle') {
+                trans.getItem().clone().insertAfter(trans.getItem());
+                trans.getSender().sortable('cancel');
+                return trans.getItem();
+            }
+
+            // Oppdater hendelse-objektet som mistet ett innslag
+            trans.getHendelse(trans.getSender()).lost(trans.getItem());
+
+            // Innslaget har blitt fjernet, og skal legges til fordelingslisten igjen
+            if (addToFordeling) {
+                hendelser.get('supplyFordeling').add(trans.getItem());
+            }
+        },
+        getItemId: function() {
+            return trans.getItem().attr('data-id');
+        },
+        getItem: function() {
+            return trans.getCurrentUI().item;
+        },
+        getRecipient: function() {
+            return trans.getItem().parents('ol');
+        },
+        getSender: function() {
+            return trans.sender;
+        },
+        setCurrent: function(event, ui) {
+            trans.currentEvent = event;
+            trans.currentUI = ui;
+            trans.sender = jQuery(trans.getCurrentUI().sender);
+        },
+        getCurrentEvent: function() {
+            return trans.currentEvent;
+        },
+        getCurrentUI: function() {
+            return trans.currentUI;
+        },
+        getHendelse: function(sortable) {
+            return hendelser.getFromSortableList(sortable);
+        },
+        cancel: function() {
+            trans.getSender().sortable('cancel');
+        },
+        save: function(hendelse) {
+            trans.saveHendelser.push(hendelse);
+        },
+        doSave: function() {
+            for (i = 0; i < trans.saveHendelser.length; i++) {
+                trans.saveHendelser[i].save();
+            }
+        },
+        resetSave: function() {
+            trans.saveHendelser = [];
         }
-    }).disableSelection();
+
+    };
+    jQuery('.detaljprogram, .supplyList').sortable(trans).disableSelection();
 })
