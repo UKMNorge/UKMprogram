@@ -16,6 +16,8 @@ $hendelse->setNavn($_POST['navn']);
 $hendelse->setSted($_POST['sted']);
 $hendelse->setStart($start);
 $hendelse->setIntern($_POST['intern'] == 'true');
+$hendelse->setSynligRammeprogram($_POST['synlig_ramme'] == 'true');
+$hendelse->setSynligDetaljprogram($_POST['synlig_detalj'] == 'true');
 $hendelse->setType($_POST['type']);
 
 // HVIS HENDELSEN HAR BESKRIVELSE
@@ -25,6 +27,7 @@ if (isset($_POST['beskrivelse'])) {
 
 // HVIS TYPE:POST
 if (isset($_POST['post_id'])) {
+    die('TODO: opprett side');
 	$hendelse->setTypePostId($_POST['post_id']);
 }
 // HVIS TYPE:KATEGORI
@@ -53,9 +56,6 @@ if (isset($_POST['angi_oppmote']) && $_POST['angi_oppmote'] == 'true') {
 	$hendelse->setSynligOppmotetid(false);
 }
 
-// SYNLIGHET
-$hendelse->setSynligRammeprogram($_POST['synlig_ramme'] == 'true');
-$hendelse->setSynligDetaljprogram($_POST['synlig_detalj'] == 'true');
 
 Write::save($hendelse);
 

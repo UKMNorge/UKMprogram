@@ -1,13 +1,21 @@
-<div class="pull-right float-right" style="margin-top: 1em; margin-right: 2em; margin-bottom: 1em;">
-	<a href="#" class="btn btn-ukm btn-sm">Bytt til avansert visning</a>
-</div>
+{% if arrangement.getProgram().getAbsoluteAll()|length > 6 %}
+    <div class="pull-right float-right" style="margin-top: 1em; margin-right: 2em; margin-bottom: 1em;">
+        <a href="?page={{GET('page')}}&do=changeView&to=avansert" class="btn btn-ukm btn-sm">Bytt til avansert visning</a>
+    </div>
+{% endif %}
 <h3>
 	Program
 	<small style="font-size: .6em; margin-left: 1em;">
-		<a href="#" class="btn btn-ukm btn-xs btn-success" style="margin-top: -.6em;">Legg til ny hendelse</a>
+		<a href="?page={{ GET('page') }}&action=hendelse&id=new" class="btn btn-ukm btn-xs btn-success" style="margin-top: -.6em;">Legg til ny hendelse</a>
 	</small>
 </h3>
 <div class="clearfix" style="margin-bottom: 1em;"></div>
+
+<h1>TODO: filtrer ut innslag som ikke er med i en hendelse</h1>
+<h1>TODO: håndter lagring av hendelser</h1>
+<h1>TODO: avansert-modus</h1>
+<h1>TODO: issues for avanserte festival-funksjoner</h1>
+
 
 <div style="width: 98%" class="program sortering">
 	<div class="row">

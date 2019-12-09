@@ -1,0 +1,70 @@
+<div class="row">
+	<div class="col-12 col-sm-12" style="margin-top: 2em;">
+		<h3>Synlighet på UKM.no</h3>
+	</div>
+</div>
+
+<script>
+    UKMresources.optionCard.on('type', function(valgt) {
+        jQuery('.vis_detaljer_infos').hide();
+        jQuery('.vis_detaljer_'+ valgt).show();
+    });
+    UKMresources.optionCard.on('synlig_ramme', function(valgt){
+        if( valgt == 'true' ) {
+            jQuery('#visDetaljer').slideDown();
+        } else {
+            jQuery('#visDetaljer').slideUp();
+        }
+    });
+</script>
+
+<div class="row">
+	<div class="col-xs-6 col-6 col-sm-4 col-lg-3">
+        <div class="optionCard card {{ hendelse.erSynligRammeprogram() ? 'selected' }}" data-group="synlig_ramme" data-value="true">
+            <div class="dashicons dashicons-visibility"></div>
+            <div class="header">Vis denne på UKM.no</div>
+            <p>
+                Vis denne i program-oversikten
+            </p>
+        </div>
+    </div>
+
+	<div class="col-xs-6 col-6 col-sm-4 col-lg-3">
+        <div class="optionCard card {{ not hendelse.erSynligRammeprogram() ? 'selected' }}" data-group="synlig_ramme" data-value="false">
+            <div class="dashicons dashicons-hidden"></div>
+            <div class="header">Skjul fra UKM.no</div>
+            <p>
+                Dette er bare en kladd / skal ikke vises for andre.
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4" id="visDetaljer">
+	<div class="col-xs-6 col-6 col-sm-4 col-lg-3">
+        <div class="optionCard card {{ hendelse.getSynligDetaljprogram() ? 'selected' }}" data-group="synlig_detalj" data-value="true">
+            <div class="dashicons dashicons-unlock"></div>
+            <div class="header">Vis detaljer</div>
+            <p>
+                Gjør den klikkbar i program-oversikten, slik at alle kan se
+                <span class="vis_detaljer_infos vis_detaljer_default">rekkefølgen på innslagene</span>
+                <span class="vis_detaljer_infos vis_detaljer_post">informasjonsteksten</span>
+                <span class="vis_detaljer_infos vis_detaljer_category">innleggene i kategorien</span>
+            </p>
+        </div>
+    </div>
+
+	<div class="col-xs-6 col-6 col-sm-4 col-lg-3">
+        <div class="optionCard card {{ not hendelse.getSynligDetaljprogram() ? 'selected' }}" data-group="synlig_detalj" data-value="false">
+            <div class="dashicons dashicons-unlock"></div>
+            <div class="header">Skjul detaljer</div>
+            <p>
+                Holder 
+                <span class="vis_detaljer_infos vis_detaljer_default">rekkefølgen på innslagene</span>
+                <span class="vis_detaljer_infos vis_detaljer_post">informasjonsteksten</span>
+                <span class="vis_detaljer_infos vis_detaljer_category">innleggene i kategorien</span>
+                hemmelig.
+            </p>
+        </div>
+    </div>
+</div>

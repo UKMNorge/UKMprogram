@@ -2,6 +2,7 @@
 
 use UKMNorge\Arrangement\Arrangement;
 use UKMNorge\Arrangement\Program\Hendelser;
+use UKMNorge\Meta\Write as WriteMeta;
 
 require_once('UKM/Autoloader.php');
 
@@ -9,6 +10,11 @@ $arrangement = new Arrangement( get_option('pl_id') );
 $program = Hendelser::sorterPerDag( 
 	$arrangement->getProgram()->getAbsoluteAll()
 );
+
+if( isset($_GET['do']) && $_GET['do'] == 'changeView' && isset($_GET['to'])) {
+    $setup = $arrangement->getMeta('program_editor')->set( $_GET['to'] );
+    WriteMeta::set($setup);
+}
 
 UKMprogram::addViewData('arrangement', $arrangement);
 UKMprogram::addViewData('program', $program);

@@ -1,0 +1,101 @@
+<h3>Hva består detaljprogrammet av?</h3>
+<div class="row">
+	<div class="col-xs-6 col-6 col-sm-4 col-lg-3">
+		<div class="optionCard card {{ not hendelse is defined or hendelse.getType() == 'default' ? 'selected' }}" data-group="type" data-value="default">
+			<div class="dashicons dashicons-buddicons-buddypress-logo"></div>
+			<div class="header">Påmeldte innslag</div>
+			<p>
+				Sett opp et program med innslag påmeldt arrangementet ditt.
+			</p>
+		</div>
+	</div>
+
+	<div class="col-xs-6 col-6 col-sm-4 col-lg-3">
+		<div class="optionCard card {{ hendelse.getType() == 'post' ? 'selected' }}" data-group="type" data-value="post">
+			<div class="dashicons dashicons-info"></div>
+			<div class="header">Informasjonstekst</div>
+			<p>
+				Skriv en informasjonstekst (litt om ordføreren som åpner, hva som selges i kiosken osv)
+			</p>
+		</div>
+	</div>
+
+	{% if arrangement.getEierType() == 'land' %}
+	    <div class="col-xs-6 col-6 col-sm-4 col-lg-3">
+			<div class="optionCard card {{ hendelse.getType() == 'category' ? 'selected' }}" data-group="type" data-value="category">
+				<div class="dashicons dashicons-list-view"></div>
+				<div class="header">Innlegg fra kategori</div>
+				<p>
+					For eksempel workshops i en gitt bolk.
+				</p>
+			</div>
+		</div>
+	{% endif %}
+</div>
+
+
+{% if arrangement.getEierType() == 'land' %}
+    <div class="row mt-5">
+        <div class="col-12 col-sm-6" id="posts" style="display:none">
+            <div class="form-group">
+                <label>Velg hvilket innlegg eller hvilken side som skal vises</label>
+                <select name="post_id" class="form-control">
+                    <optgroup label="Sider">
+                        <option value="createpage">Opprett en ny side</option>
+                        {% for post in posts|filter( post => post.post_type != 'post') %}
+                            <option value="{{ post.ID }}" {{ hendelse.getTypePostId() == post.ID ? 'selected' }}>{{ post.post_title }}
+                                ({{post.post_type == 'post' ? 'innlegg' : 'side'}})</option>
+                        {% else %}
+                            <option value="false" disabled selected>Du må ha minst en side før du kan gjøre dette</option>
+                        {% endfor %}
+                    </optgroup>
+
+                    <optgroup label="Innlegg">
+                        {% for post in posts|filter(post => post.post_type == 'post') %}
+                            <option value="{{ post.ID }}" {{ hendelse.getTypePostId() == post.ID ? 'selected' }}>{{ post.post_title }}
+                                ({{post.post_type == 'post' ? 'innlegg' : 'side'}})</option>
+                        {% else %}
+                            <option value="false" disabled>Du må ha minst ett innlegg før du kan gjøre dette</option>
+                        {% endfor %}
+                    </optgroup>
+
+                </select>
+            </div>
+        </div>
+
+        {# SUB-SELECT: CATEGORIES #}
+        <div class="col-12 col-sm-6" id="categories" style="display:none">
+            <div class="form-group">
+                <label>Velg hvilken kategori som skal vises</label>
+                <select name="category_id" class="form-control">
+                    {% for category in categories %}
+                        <option value="{{ category.term_id }}" {{ hendelse.getTypeCategoryId == category.term_id ? 'selected' }}>{{ category.name }}</option>
+                    {% else %}
+                        <option value="false" disabled>Du må ha minst en kategori før du kan gjøre dette</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+{% else %}
+	<input type="hidden" value="createpage" name="post_id"/>
+{% endif %}
+
+
+<script>
+    jQuery(document).ready(function() {
+        UKMresources.optionCard.on('type', function(valgt) {
+            if (valgt == 'post') {
+                jQuery('#categories').hide();
+                jQuery('#posts').slideDown();
+            } else if( valgt == 'category' ) {
+                jQuery('#posts').hide();
+                jQuery('#categories').slideDown();
+            } else {
+                jQuery('#categories').slideUp();
+                jQuery('#posts').slideUp();
+            }
+        });
+        UKMresources.optionCard.pullStatus('type');
+    });
+</script>

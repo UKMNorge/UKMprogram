@@ -4,6 +4,11 @@
     max-width: 768px;
 }
 
+select.form-control {
+    max-width: 100%;
+    border-color: #cccccc;
+}
+
 
 /* DASHBOARD */
 
