@@ -82,11 +82,7 @@ var supply = function($) {
                 emitter.emit('change', item);
             },
             receive: function(item) {
-                //console.group(id + ' mottok:');
-                //console.log(item);
-                //console.groupEnd();
                 if (self.getSupplyType() == 'delete') {
-                    //console.log('Delete item');
                     item.remove();
                     return true;
                 }
@@ -361,6 +357,12 @@ var hendelse = function($) {
             init: function() {
                 //console.info('Initier ' + id);
                 self.bind();
+                // Registrere innslag i listen
+                self.object().find('li.innslag').each(function() {
+                    if ($(this).attr('data-id')) {
+                        self.register($(this));
+                    }
+                });
             },
             receive: function(item) {
                 var innslag_id = self.getIdFromItem(item);
@@ -374,6 +376,9 @@ var hendelse = function($) {
                 //console.groupEnd();
                 emitter.emit('change');
                 return true;
+            },
+            register: function(item) {
+                innslag.push(self.getIdFromItem(item));
             },
             lost: function(item) {
                 innslag.splice(innslag.indexOf(self.getIdFromItem(item)), 1);
@@ -516,6 +521,7 @@ jQuery(document).ready(function() {
          * @param {*} ui 
          */
         start: function(event, ui) {
+            trans.setCurrent(event, ui);
             trans.resetSave();
         },
         /**
@@ -585,9 +591,10 @@ jQuery(document).ready(function() {
          * @param {*} ui 
          */
         beforeStop: function(event, ui) {
+            var avsender = false;
             // Hvis avsender finnes og er hendelse. Legg til for lagring
             if (hendelser.hasFromSortableList(trans.getSender())) {
-                var avsender = trans.getHendelse(trans.getSender());
+                avsender = trans.getHendelse(trans.getSender());
                 if (avsender.getType() == 'hendelse') {
                     trans.save(avsender);
                 }
@@ -596,7 +603,7 @@ jQuery(document).ready(function() {
             // Hvis mottaker finnes og er hendelse. Legg til for lagring
             if (hendelser.hasFromSortableList(trans.getRecipient())) {
                 var mottaker = trans.getHendelse(trans.getRecipient());
-                if (avsender.getId() != mottaker.getId() && mottaker.getType() == 'hendelse') {
+                if (mottaker.getType() == 'hendelse' && (!avsender || (avsender.getId() != mottaker.getId()))) {
                     trans.save(mottaker);
                 }
             }
@@ -712,4 +719,5 @@ jQuery(document).ready(function() {
 
     };
     jQuery('.detaljprogram, .supplyList').sortable(trans).disableSelection();
-})
+    jQuery('.detaljprogram, .supplyList').sortable('refresh');
+});
