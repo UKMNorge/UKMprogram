@@ -4,20 +4,6 @@
 	</div>
 </div>
 
-<script>
-    UKMresources.optionCard.on('type', function(valgt) {
-        jQuery('.vis_detaljer_infos').hide();
-        jQuery('.vis_detaljer_'+ valgt).show();
-    });
-    UKMresources.optionCard.on('synlig_ramme', function(valgt){
-        if( valgt == 'true' ) {
-            jQuery('#visDetaljer').slideDown();
-        } else {
-            jQuery('#visDetaljer').slideUp();
-        }
-    });
-</script>
-
 <div class="row">
 	<div class="col-xs-6 col-6 col-sm-4 col-lg-3">
         <div class="optionCard card {{ hendelse.erSynligRammeprogram() ? 'selected' }}" data-group="synlig_ramme" data-value="true">
@@ -37,6 +23,45 @@
                 Dette er bare en kladd / skal ikke vises for andre.
             </p>
         </div>
+    </div>
+</div>
+
+<div class="row" id="visIntern">
+	<div class="col-xs-6 col-6 col-sm-4 col-lg-3">
+        <div class="optionCard card {{ not hendelse.erIntern() ? 'selected' }}" data-group="intern" data-value="false">
+            <div class="dashicons dashicons-tickets"></div>
+            <div class="header">Vis i offentlig program</div>
+            <p>
+                Offentlig program vises i menyen på din lokalside, 
+                så alle kan finne det.
+            </p>
+        </div>
+    </div>
+
+	<div class="col-xs-6 col-6 col-sm-4 col-lg-3">
+        <div class="optionCard card {{ hendelse.erIntern() ? 'selected' }}" data-group="intern" data-value="true">
+            <div class="dashicons dashicons-nametag"></div>
+            <div class="header">Vis kun i deltakerprogram</div>
+            <p>
+                Deltakerprogrammet er ikke synlig i menyen,
+                og kan sendes (f.eks. på sms) til dine deltakere.
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4" id="deltakerprogram" style="display:none;">
+    <div class="col-12 col-12 col-sm-8 col-lg-6">
+        <ol class="list-group">
+            <li class="list-group-item">
+                Adressen til ditt 
+                <a href="{{arrangement.getLink()}}deltakerprogram/" target="_blank">deltakerprogram</a>
+                er:
+                <code>
+                    {{ arrangement.getLink() }}deltakerprogram/
+                </code>
+            </li>
+        </ol>
     </div>
 </div>
 
@@ -68,3 +93,33 @@
         </div>
     </div>
 </div>
+{% if arrangement.getEierType() == 'land' %}
+    {% include "hendelse/avansert.html.twig" %}
+{% endif %}
+
+
+<script>
+    UKMresources.optionCard.on('type', function(valgt) {
+        jQuery('.vis_detaljer_infos').hide();
+        jQuery('.vis_detaljer_'+ valgt).show();
+    });
+    UKMresources.optionCard.on('synlig_ramme', function(valgt){
+        if( valgt == 'true' ) {
+            jQuery('#visDetaljer, #visIntern').slideDown();
+            if( UKMresources.optionCard.status('intern') == 'true' ) {
+                jQuery('#deltakerprogram').fadeIn();
+            }
+        } else {
+            jQuery('#visDetaljer, #visIntern').slideUp();
+            jQuery('#deltakerprogram').hide();
+        }
+    });
+    UKMresources.optionCard.on('intern', function(valgt) {
+        if( valgt == 'true' && UKMresources.optionCard.status('synlig_ramme') == 'true') {
+            jQuery('#deltakerprogram').slideDown();
+        } else {
+            jQuery('#deltakerprogram').slideUp();
+        }
+    });
+    UKMresources.optionCard.pullStatus('intern');
+</script>

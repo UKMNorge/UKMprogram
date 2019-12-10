@@ -18,6 +18,4 @@ $hendelse = Write::create(
 
 $_POST['id'] = $hendelse->getId();
 
-die('TODO: opprett side');
-
 require_once('hendelse.save.php');

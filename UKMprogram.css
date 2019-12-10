@@ -1,5 +1,10 @@
 /* BASE */
 
+.form-group.mb-0,
+.form-control.mb-0 {
+    margin-bottom: 0;
+}
+
 .flashbag {
     max-width: 768px;
 }

@@ -3,6 +3,7 @@
 use UKMNorge\Arrangement\Arrangement;
 use UKMNorge\Arrangement\Program\Hendelser;
 use UKMNorge\Meta\Write as WriteMeta;
+use UKMNorge\Wordpress\Blog;
 
 require_once('UKM/Autoloader.php');
 
@@ -10,6 +11,17 @@ $arrangement = new Arrangement( get_option('pl_id') );
 $program = Hendelser::sorterPerDag( 
 	$arrangement->getProgram()->getAbsoluteAll()
 );
+
+// Opprett deltakerprogram-siden, hvis denne ikke eksisterer
+$blog_id = Blog::getIdByPath( $arrangement->getPath() );
+if( !Blog::harSide($blog_id,'deltakerprogram')) {
+    Blog::opprettSide(
+        $blog_id,
+        'deltakerprogram',
+        'Deltakerprogram',
+        'deltakerprogram'
+    );
+}
 
 if( isset($_GET['do']) && $_GET['do'] == 'changeView' && isset($_GET['to'])) {
     $setup = $arrangement->getMeta('program_editor')->set( $_GET['to'] );

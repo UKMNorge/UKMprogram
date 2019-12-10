@@ -28,7 +28,10 @@
 
 		<h3 class="panel-title">
 			{{ hendelse.getStart()|dato('H:i') }}
-			<a href="?page={{ GET('page') }}&action=hendelse&id={{ hendelse.getId() }}" class="hendelseNavn">{{ hendelse.getNavn() }}</a>
+			<a href="?page={{ GET('page') }}&action=hendelse&id={{ hendelse.getId() }}" class="hendelseNavn">
+                {{ hendelse.getNavn() }}
+        	    <span class="dashicons dashicons-edit" style="font-size: 1em; margin-top:.1em"></span>
+            </a>
             <span class="saveSpinner" style="display:none;">
                 <img src="/wp-includes/images/spinner.gif" style="height: 1.2em;"/>
             </span>
@@ -54,10 +57,13 @@
             </p>
 		{% elseif hendelse.getType() == 'default' %}
 			{{ hendelse.getInnslag().getAntall() }}
-			innslag
-													Ukjent tid
+			innslag -
+            {{ hendelse.getTid() }}
 		{% elseif hendelse.getType() == 'post' %}
-			Viser et innlegg
+            <div class="pull-right">
+                <a href="post.php?post={{ hendelse.getTypePostId() }}&action=edit" target="_blank" class="btn btn-ukm btn-xs">Rediger teksten</a>
+            </div>
+			Dette er en informasjonsside.
 		{% elseif hendelse.getType() == 'category' %}
 			Viser innlegg fra en kategori
 		{% else %}

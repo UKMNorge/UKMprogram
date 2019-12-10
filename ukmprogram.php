@@ -66,7 +66,9 @@ class UKMprogram extends Modul {
 		wp_enqueue_style('WPbootstrap3_css');
 		wp_enqueue_script('jqueryGoogleUI', '//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js');
         wp_enqueue_style('UKMprogram_css', plugin_dir_url( __FILE__ ) .'UKMprogram.css' );
-        wp_enqueue_script('UKMprogram_js', plugin_dir_url( __FILE__ ) .'UKMprogram.js' );
+        wp_enqueue_script('UKMprogram_js', plugin_dir_url( __FILE__ ) .'UKMprogram.js', array( 'wp-color-picker' ));
+
+        wp_enqueue_style( 'wp-color-picker' );
 	}
 	
 	public static function save( $case ) {

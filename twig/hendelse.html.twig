@@ -30,3 +30,8 @@
 	</div>
 
 </form>
+
+{% if arrangement.getEierType() == 'land' %}
+    {# bottom-spacer for å håndtere color-picker #}
+    <div style="min-height: 300px; display:block;"></div>
+{% endif %}

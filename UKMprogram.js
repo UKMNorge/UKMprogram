@@ -1,41 +1,3 @@
-/* HENDELSE */
-jQuery(document).on('change', 'input[name="type"]', function() {
-
-    var current = jQuery('input[name="type"]:checked').val();
-
-    if (current == 'post') {
-        jQuery('#posts').slideDown();
-    } else {
-        jQuery('#posts').slideUp()
-    }
-
-    if (current == 'category') {
-        jQuery('#categories').slideDown();
-    } else {
-        jQuery('#categories').slideUp();
-    }
-
-    if (current == 'default') {
-        jQuery('#oppmote').slideDown();
-    } else {
-        jQuery('#oppmote').slideUp();
-    }
-});
-
-
-jQuery(document).on('change', '#angi_oppmote', function() {
-    if (jQuery(this).val() == 'true') {
-        jQuery('#oppmote_detaljer').slideDown();
-    } else {
-        jQuery('#oppmote_detaljer').slideUp();
-    }
-});
-
-jQuery(document).ready(() => {
-    jQuery('input[name="type"]').change();
-    jQuery('#angi_oppmote').change();
-});
-
 /* GROVSORTERING */
 jQuery(document).on('click', '#startSort', function() {
     var hendelser = [];
@@ -363,6 +325,7 @@ var hendelse = function($) {
                         self.register($(this));
                     }
                 });
+                counter.update();
             },
             receive: function(item) {
                 var innslag_id = self.getIdFromItem(item);
