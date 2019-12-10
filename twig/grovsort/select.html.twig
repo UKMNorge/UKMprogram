@@ -1,10 +1,10 @@
-{% extends "Layout/base.html.twig" %}
-
 {% set hideButton = false %}
-
-{% block content %}
-
-	<h3>Velg hvilke hendelser du vil jobbe med</h3>
+	<h3>
+        Velg hvilke hendelser du vil jobbe med
+        <small style="font-size: .6em; margin-left: 1em;">
+            <a href="?page={{ GET('page') }}" class="btn btn-ukm btn-xs" style="margin-top: -.6em;">Tilbake til oversikten</a>
+        </small>
+    </h3>
 
 	<ul class="list-group" style="max-width: 768px;">
 		{% for hendelse in monstring.getProgram().getAll()|filter( hendelse => hendelse.getType() == 'default' ) %}
@@ -29,4 +29,3 @@
 			<button type="button" class="btn btn-success" id="startSort">Start sortering</button>
 		</p>
 	{% endif %}
-{% endblock %}

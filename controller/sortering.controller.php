@@ -6,10 +6,10 @@ use UKMNorge\Innslag\Typer\Typer;
 require_once('UKM/Autoloader.php');
 
 $monstring = new Arrangement( get_option('pl_id') );
+UKMprogram::setAction('grovsort/sorter');
 
 // MULIGENS VIS VALG AV HENDELSER
 if( !isset( $_GET['hendelser'] ) ) {
-
 	$hendelser = [];
 	foreach( $monstring->getProgram()->getAll() as $hendelse ) {
 		if( $hendelse->getType() == 'default' ) {
@@ -23,8 +23,6 @@ if( !isset( $_GET['hendelser'] ) ) {
 	if( sizeof( $hendelser ) > 6 ) {
 		UKMprogram::setAction('grovsort/select');
 	} else {
-		UKMprogram::setAction('grovsort/sorter');
-
 		$typer = [];
 		$innslag_typer = Typer::getAllTyper();
 		foreach( $innslag_typer as $type ) {
@@ -37,7 +35,8 @@ if( !isset( $_GET['hendelser'] ) ) {
 			}
 		}
 		UKMprogram::addViewData('innslag_typer', $typer);
-	}
+    }
+    UKMprogram::addViewData('numHendelser', sizeof($hendelser));
 } else {
 	$hendelser = explode('-', $_GET['hendelser'] );
 }
