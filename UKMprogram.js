@@ -619,7 +619,7 @@ jQuery(document).ready(function() {
             }
 
             // Hvis innslaget eksisterer i ikke fordelt-listen er det på tide å fjerne den nå
-            if (hendelser.get('supplyFordeling').object().find(trans.getItemId())) {
+            if (hendelser.has('supplyFordeling') && hendelser.get('supplyFordeling').object().find(trans.getItemId())) {
                 hendelser.get('supplyFordeling').remove(trans.getItemId());
             }
 
@@ -635,7 +635,7 @@ jQuery(document).ready(function() {
             trans.getHendelse(trans.getSender()).lost(trans.getItem());
 
             // Innslaget har blitt fjernet, og skal legges til fordelingslisten igjen
-            if (addToFordeling) {
+            if (hendelser.has('supplyFordeling') && addToFordeling) {
                 hendelser.get('supplyFordeling').add(trans.getItem());
             }
         },

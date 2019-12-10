@@ -1,0 +1,42 @@
+<div class="panel panel-primary supplyContainer" data-supply="alle" id="supplyAlle">
+	<div class="panel-heading">
+		<div class="icon">
+			<a href="#" onclick="alert('Hvis innslaget skal være med i flere hendelser, kan du trekke det inn fra denne listen.');">
+				<span class="dashicons dashicons-info" style="color:#fff;"></span>
+			</a>
+		</div>
+		<h3 class="panel-title">Alle innslag på ditt arrangement</h3>
+	</div>
+	<div class="panel-body">
+		{% if visFilter is defined and visFilter %}
+            <p>
+                Viser <br />
+                <select>
+                    <option value="">alle innslag</option>
+                    {% for innslag_type in innslag_typer %}
+                        <option value="{{ innslag_type.getId() }}">{{ innslag_type.getId() == 1 ? ' - ' }}{{ innslag_type.getNavn() }}</option>
+                    {% endfor %}
+                </select>
+                <br />som<br />
+                <select>
+                    <option value="antall_ingen" selected="selected">ikke deltar i noen hendelse</option>
+                    <option value="antall_uavhengig">deltar i ingen, en eller flere hendelser</option>
+                    <option value="antall_1">deltar i én hendelse</option><option value="antall_2">deltar i to hendelser</option>
+                    <option value="antall_3">deltar i tre hendelser</option>
+                </select>
+                <br />
+                <button class="btn btn-primary btn-sm">Oppdater filter</button>  
+            </p>
+        {% else %}
+            <p class="text-muted small helper harInnslag" style="margin-top:-.5em">
+                Her vises alle innslag, uansett om de er med i en hendelse eller ikke.
+                Dra og slipp herfra hvis det skal være med i flere hendelser.
+            </p>
+        {% endif %}
+		<ol class="list-unstyled supplyList innslagListe" style="min-height: 55px;">
+			{% for innslag in arrangement.getInnslag().getAll() %}
+				{% include "innslag.html.twig" %}
+			{% endfor %}
+		</ol>
+	</div>
+</div>
