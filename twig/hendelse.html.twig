@@ -16,6 +16,9 @@
     {% endif %}
     <small style="font-size:.6em; margin-left: 1em;">
         <a class="btn btn-ukm btn-xs" href="?page={{GET('page')}}" style="margin-top: -.6em;">avbryt, tilbake til oversikten</a>
+        {% if GET('id') != 'new' %}
+            <a class="btn btn-ukm btn-xs btn-danger" href="?page={{GET('page')}}&delete=hendelse&c_id={{hendelse.getId()}}" onclick="return confirm('Er du sikker på at du vil slette denne?');" style="margin-top: -.6em;">slett denne hendelsen</a>
+        {% endif %}
     </small>
 </h3>
 <div class="clearfix clear clear-fix"></div>

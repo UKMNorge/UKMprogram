@@ -7,6 +7,10 @@ use UKMNorge\Wordpress\Blog;
 
 require_once('UKM/Autoloader.php');
 
+if( isset($_GET['delete'] ) && $_GET['delete'] == 'hendelse') {
+    require_once( UKMprogram::getPluginPath() .'delete/hendelse.delete.php');
+}
+
 $arrangement = new Arrangement( get_option('pl_id') );
 $program = Hendelser::sorterPerDag( 
 	$arrangement->getProgram()->getAbsoluteAll()
