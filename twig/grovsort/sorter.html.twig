@@ -1,11 +1,12 @@
 <div class="pull-right float-right" style="margin-top: 1em; margin-right: 2em; margin-bottom: 1em;">
-    {% if numHendelser > 6 or GET('hendelser') is not empty %}
-        <a href="?page={{GET('page')}}&action=sortering" class="btn btn-ukm btn-sm">Velg andre hendelser</a>
-    {% endif %}
-    <a href="?page={{GET('page')}}" class="btn btn-ukm btn-sm">Tilbake til oversikten</a>
+	{% if numHendelser > 6 or GET('hendelser') is not empty %}
+		<a href="?page={{GET('page')}}&action=sortering" class="btn btn-ukm btn-sm">Velg andre hendelser</a>
+	{% endif %}
+	<a href="?page={{GET('page')}}" class="btn btn-ukm btn-sm">Tilbake til oversikten</a>
 </div>
 <h3>
-    Fordel innslag <small>(Trekk de over til en hendelse)</small>
+	Fordel innslag
+	<small>(Trekk de over til en hendelse)</small>
 </h3>
 
 <div class="clearfix"></div>
@@ -13,33 +14,9 @@
 	<div class="row">
 		<div class="col-xs-6 col-sm-4 col-lg-3 col-xl-2 float-right pull-right">
 			{% include "supply/delete.html.twig" %}
-            {% include "supply/alle.html.twig" with {visFilter: true} %}
+			{% include "supply/alle.html.twig" with {visFilter: true} %}
 		</div>
-        
-		{% if show|length < 4 %}
-            {% set maxcol = show|length %}
-            {% set percol = 1 %}
-        {% else %}
-            {% if show|length is divisible by(3) %}
-                {% set maxcol = 3 %}
-            {% else %}
-                {% set maxcol = 4 %}
-            {% endif %}
-            {% set percol = (show|length / maxcol)|round(0,'ceil') %}
-            {% set modi = (show|length % maxcol) %}
-        {% endif %}
 
-        {% for col in 1..4 %}
-            {% set start = col * percol %}
-            {% set stop = percol %}
-            {% if loop.last %}
-                {% set stop = show|length %}
-            {% endif %}
-            <div class="col-xs-6 col-sm-4 col-md-{{ ( 8 / maxcol )|round }}">
-                {% for hendelse in arrangement.getProgram().getAbsoluteAll()|filter(hendelse => hendelse.getId() in show)|slice(start - percol,stop) %}
-                    {% include "hendelser/panel.html.twig" with { visInnslag: true } %}
-                {% endfor %}
-            </div>
-        {% endfor %}
+		{% include "hendelser/liste.html.twig" %}
 	</div>
 </div>

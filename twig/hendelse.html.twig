@@ -7,14 +7,17 @@
 {% endif %}
 
 
-<h2>
+<h3>
     {% if GET('id') == 'new' %}
         Opprett hendelse
     {% else %}
         Rediger
         {{ hendelse.getNavn() }}
     {% endif %}
-</h2>
+    <small style="font-size:.6em; margin-left: 1em;">
+        <a class="btn btn-ukm btn-xs" href="?page={{GET('page')}}" style="margin-top: -.6em;">avbryt, tilbake til oversikten</a>
+    </small>
+</h3>
 <div class="clearfix clear clear-fix"></div>
 
 <form method="POST" action="?page=UKMprogram&save=hendelse">

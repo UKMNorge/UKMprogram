@@ -66,6 +66,11 @@ class UKMprogram extends Modul {
 		wp_enqueue_style('WPbootstrap3_css');
 		wp_enqueue_script('jqueryGoogleUI', '//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js');
         wp_enqueue_style('UKMprogram_css', plugin_dir_url( __FILE__ ) .'UKMprogram.css' );
+        wp_enqueue_script('UKMprogram_js_supply', plugin_dir_url( __FILE__ ) .'js/supply.js');
+        wp_enqueue_script('UKMprogram_js_hendelse', plugin_dir_url( __FILE__ ) .'js/hendelse.js');
+        wp_enqueue_script('UKMprogram_js_hendelser', plugin_dir_url( __FILE__ ) .'js/hendelser.js');
+        wp_enqueue_script('UKMprogram_js_innslag', plugin_dir_url( __FILE__ ) .'js/innslag.js');
+        wp_enqueue_script('UKMprogram_js_filter', plugin_dir_url( __FILE__ ) .'js/filter.js');
         wp_enqueue_script('UKMprogram_js', plugin_dir_url( __FILE__ ) .'UKMprogram.js', array( 'wp-color-picker' ));
 
         wp_enqueue_style( 'wp-color-picker' );

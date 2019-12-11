@@ -1,4 +1,4 @@
-<li class="innslag" data-id="{{ innslag.getId() }}" style="cursor: move;" data-duration="{{ innslag.getType().harTid() ? innslag.getVarighet().getSekunder() : '0' }}">
+<li class="innslag" data-id="{{ innslag.getId() }}" style="cursor: move;" data-duration="{{ innslag.getType().harTid() ? innslag.getVarighet().getSekunder() : '0' }}" data-type="{{innslag.getType().getKey()}}" data-hendelser="{% for hendelse in innslag.getProgram().getAbsoluteAll() %}{{ hendelse.getId() }}{{ not loop.last ? ','}}{% endfor %}">
 	<div class="infos">
 		{% if innslag.getType().harTitler() %}
 			{% if innslag.getType().harTid() %}

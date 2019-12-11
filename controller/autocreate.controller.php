@@ -6,7 +6,10 @@ use UKMNorge\Meta\Write as WriteMeta;
 
 $arrangement = new Arrangement( get_option('pl_id') );
 
-if( $_SERVER['request_method'] == 'POST' ) {
+
+if( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
+    UKMprogram::setAction('dashboard');
+
     $setup = $arrangement->getMeta('program_editor')->set( in_array($_POST['antall'],['en','to']) ? 'enkel' : 'avansert' );
     WriteMeta::set($setup);
 
@@ -25,6 +28,10 @@ if( $_SERVER['request_method'] == 'POST' ) {
                 'Forestilling',
                 $arrangement->getStart()
             );
+        break;
+        default:
+            $_GET['id'] = 'new';
+            UKMprogram::setAction('hendelse');
         break;
     }
 
@@ -45,7 +52,7 @@ if( $_SERVER['request_method'] == 'POST' ) {
             }
         }
     }
+} else {
+    UKMprogram::setAction('dashboard');
 }
-
-UKMprogram::setAction('dashboard');
 UKMprogram::includeActionController();

@@ -1,7 +1,7 @@
 {% if arrangement.getProgram().getAbsoluteAll()|length > 6 %}
-    <div class="pull-right float-right" style="margin-top: 1em; margin-right: 2em; margin-bottom: 1em;">
-        <a href="?page={{GET('page')}}&do=changeView&to=avansert" class="btn btn-ukm btn-sm">Bytt til avansert visning</a>
-    </div>
+	<div class="pull-right float-right" style="margin-top: 1em; margin-right: 2em; margin-bottom: 1em;">
+		<a href="?page={{GET('page')}}&do=changeView&to=avansert" class="btn btn-ukm btn-sm">Bytt til avansert visning</a>
+	</div>
 {% endif %}
 <h3>
 	Program
@@ -14,31 +14,17 @@
 
 <div style="width: 98%" class="program sortering">
 	<div class="row">
-		<div class="col-xs-6 col-sm-4 float-right pull-right">
+		<div class="col-xs-6 col-sm-4 col-lg-3 col-xl-2 float-right pull-right">
 			{% include "supply/delete.html.twig" %}
-            {% include "supply/fordeling.html.twig" %}
-            {% include "supply/alle.html.twig" %}
+			{% include "supply/fordeling.html.twig" %}
+			{% include "supply/alle.html.twig" %}
 		</div>
-		{% if arrangement.getProgram().getAbsoluteAll()|length > 2 %}
-			<div class="col-xs-6 col-sm-4">
-				{% for hendelse in arrangement.getProgram().getAbsoluteAll()|slice(0, (arrangement.getProgram().getAbsoluteAll()|length / 2)|round ) %}
-					{% include "hendelser/panel.html.twig" with { visInnslag: true } %}
-				{% endfor %}
-			</div>
-			<div class="col-xs-6 col-sm-4">
-				{% for hendelse in arrangement.getProgram().getAbsoluteAll()|slice((arrangement.getProgram().getAbsoluteAll()|length / 2)|round ) %}
-					{% include "hendelser/panel.html.twig" with { visInnslag: true } %}
-				{% endfor %}
-			</div>
-		{% else %}
-			<div class="col-xs-6 col-sm-8">
-				{% for hendelse in arrangement.getProgram().getAbsoluteAll() %}
-					{% include "hendelser/panel.html.twig" with { visInnslag: true } %}
-				{% endfor %}
-			</div>
-		{% endif %}
+
+        {% set show = arrangement.getProgram().getAbsoluteAll() %}
+		{% include "hendelser/liste.html.twig" with {visAlle:true} %}
+
 		<div class="col-xs-6 col-sm-6 float-left pull-left">
-			{% include "Layout/tegnforklaring.html.twig" %}
+			{% include "tegnforklaring.html.twig" %}
 		</div>
 	</div>
 	<div class="row"></div>
