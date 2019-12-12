@@ -1,0 +1,31 @@
+{% if arrangement.getProgram().getAbsoluteAll()|length > 6 %}
+	<div class="pull-right float-right" style="margin-top: 1em; margin-right: 2em; margin-bottom: 1em;">
+		<a href="?page={{GET('page')}}&do=changeView&to=avansert" class="btn btn-ukm btn-sm">Bytt til avansert visning</a>
+	</div>
+{% endif %}
+<h3>
+	Program
+	<small style="font-size: .6em; margin-left: 1em;">
+		<a href="?page={{ GET('page') }}&action=hendelse&id=new" class="btn btn-ukm btn-xs btn-success" style="margin-top: -.6em;">Legg til ny hendelse</a>
+	</small>
+</h3>
+<div class="clearfix" style="margin-bottom: 1em;"></div>
+{% include "wp_modul.flashbag.html.twig" %}
+
+<div style="width: 98%" class="program sortering">
+	<div class="row">
+		<div class="col-xs-6 col-sm-4 col-lg-3 col-xl-2 float-right pull-right">
+			{% include "supply/delete.html.twig" %}
+			{% include "supply/fordeling.html.twig" %}
+			{% include "supply/alle.html.twig" %}
+		</div>
+
+        {% set show = arrangement.getProgram().getAbsoluteAll() %}
+		{% include "hendelser/liste.html.twig" with {visAlle:true} %}
+
+		<div class="col-xs-6 col-sm-6 float-left pull-left">
+			{% include "tegnforklaring.html.twig" %}
+		</div>
+	</div>
+	<div class="row"></div>
+</div>

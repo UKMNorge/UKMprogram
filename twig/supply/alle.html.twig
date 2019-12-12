@@ -1,0 +1,61 @@
+<div class="panel panel-primary supplyContainer" data-supply="alle" id="supplyAlle">
+	<div class="panel-heading">
+		<div class="icon">
+			<a href="#" onclick="alert('Hvis innslaget skal være med i flere hendelser, kan du trekke det inn fra denne listen.');">
+				<span class="dashicons dashicons-info" style="color:#fff;"></span>
+			</a>
+		</div>
+		<h3 class="panel-title">Alle innslag på ditt arrangement</h3>
+	</div>
+	<div class="panel-body">
+		{% if visFilter is defined and visFilter %}
+            <div class="filterSelector">
+                Viser <br />
+                <select name="filter_type">
+                    <option value="false">alle innslag</option>
+                    {% for innslag_type in arrangement.getInnslagTyper().getAll() %}
+                        <option value="{{ innslag_type.getKey() }}">{{ innslag_type.getNavn() }}</option>
+                    {% endfor %}
+                </select>
+                <br />som<br />
+                <select name="filter_hendelser">
+                    <option value="antall_anything">er påmeldt ditt arrangement</option>
+                    <optgroup label="I et antall hendelser">
+                        <option value="antall_0" selected="selected">ikke deltar i noen hendelse</option>
+                        <option value="antall_1">deltar i én hendelse</option>
+                        <option value="antall_2">deltar i to hendelser</option>
+                        <option value="antall_3">deltar i tre hendelser</option>
+                    </optgroup>
+                    <optgroup label="I en hendelse">
+                    {% for hendelse in arrangement.getProgram().getAbsoluteAll() %}
+                        <option value="hendelse_{{hendelse.getId()}}">{{hendelse.getNavn()}}</option>
+                    {% endfor %}
+                    </optgroup>
+                </select>
+                <br />
+                <button class="btn btn-primary btn-sm mt-2 mb-4 doFilter">Oppdater filter</button>  
+                <div class="clearfix"></div>
+                <p>&nbsp;</p>
+            </div>
+        {% else %}
+            <p class="text-muted small helper harInnslag" style="margin-top:-.5em">
+                Her vises alle innslag, uansett om de er med i en hendelse eller ikke.
+                Dra og slipp herfra hvis det skal være med i flere hendelser.
+            </p>
+        {% endif %}
+		<ol class="list-unstyled supplyList innslagListe" style="min-height: 55px;">
+			{% for innslag in arrangement.getInnslag().getAll() %}
+				{% include "innslag.html.twig" with { visFilter: visFilter } %}
+			{% endfor %}
+		</ol>
+	</div>
+</div>
+
+{% if visFilter is defined and visFilter %}
+    <script>
+        jQuery(document).ready(function(){
+            innslagFilter('supplyAlle', alleInnslag).filter();
+            
+        });
+    </script>
+{% endif %}

@@ -1,0 +1,61 @@
+{# NAVN OG STED #}
+<div class="row">
+	<div class="col-12 col-sm-6 col-lg-4">
+		<div class="form-group">
+			<label>Navn på hendelsen</label>
+			<input type="text" class="form-control" name="navn" value="{{ hendelse.getNavn() }}" required/>
+			<p class="help text-muted">F.eks Forestilling A, Kirkekonsert</p>
+		</div>
+	</div>
+
+	<div class="col-12 col-sm-6 col-lg-4">
+		<div class="form-group">
+			<label>Sted</label>
+			<input type="text" class="form-control" name="sted" value="{{ hendelse.getSted() }}" required/>
+			<p class="help text-muted">F.eks Ibsenhuset, Kulturhuset, Volda ungdomsskole</p>
+		</div>
+	</div>
+</div>
+
+{# TIDSPUNKT #}
+<div class="row">
+	<div class="col-12 col-sm-6 col-lg-4">
+		<div class="form-group mb-0">
+			<label>Når starter hendelsen</label>
+			<select class="form-control mb-0" name="start_date" required>
+				{% for dag in arrangement.getDager() %}
+					<option value="{{ dag|dato('d.m.Y') }}" {{ currentStartDate == dag|dato('d.m.Y') ? 'selected' }}>{{ dag|dato('D d.M')|capitalize }}</option>
+				{% endfor %}
+			</select>
+		</div>
+	</div>
+
+	<div class="col-12 col-sm-6 col-lg-4">
+		<div class="form-group mb-0">
+			<label class="hidden-xs">&nbsp;</label>
+			<div class="input-group">
+				<span class="input-group-addon">kl.
+				</span>
+				<select class="form-control mb-0" name="start_time" required>
+					{% for hour in 7..23 %}
+						{% set pad_hour = hour < 10 ? '0' ~ hour : hour %}
+
+						{% for min in range(0,55,5) %}
+							{% set pad_min = min < 10 ? '0' ~ min : min %}
+							<option value="{{ pad_hour }}:{{ pad_min }}" {{ currentStartTime == pad_hour~':'~pad_min ? 'selected' }}>{{ pad_hour }}:{{ pad_min }}</option>
+						{% endfor %}
+					{% endfor %}
+				</select>
+			</div>
+		</div>
+	</div>
+	<div class="col-12 col-sm-12 mt-2">
+		<p class="help text-muted">
+			Finner du ikke riktig dag? 
+			                    Listen viser  dager fra mønstringens start til slutt. 
+			                    Rediger dager under
+			<a href="?page=UKMmonstring">arrangement</a>
+			og returner hit.
+		</p>
+	</div>
+</div>

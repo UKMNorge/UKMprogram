@@ -1,32 +1,31 @@
-{% extends "Layout/base.html.twig" %}
-
 {% set hideButton = false %}
+<h3>
+    Velg hvilke hendelser du vil jobbe med
+    <small style="font-size: .6em; margin-left: 1em;">
+        <a href="?page={{ GET('page') }}" class="btn btn-ukm btn-xs" style="margin-top: -.6em;">Tilbake til oversikten</a>
+    </small>
+</h3>
 
-{% block content %}
+<ul class="list-group" style="max-width: 768px;">
+    {% for hendelse in arrangement.getProgram().getAbsoluteAll()|filter( hendelse => hendelse.getType() == 'default' ) %}
+        <li class="list-group-item">
+            <label>
+                <input type="checkbox" name="hendelser" value="{{ hendelse.getId() }}" {{ 'forestilling' in hendelse.getNavn()|lower ? 'checked' }} />
+                {{ hendelse.getNavn() }}
+            </label>
+        </li>
+    {% else %}
+        {% set hideButton = true %}
+        <li class="list-group-item text-danger">
+            Kan ikke starte grovsortering da du ikke har noen hendelser som kan ta i mot innslag.
+            <br />
+            <a href="?page={{ GET('page') }}&action=hendelse&id=new">Opprett en hendelse</a>, hvor du velger at detaljprogrammet består av innslag.
+        </li>
+    {% endfor %}
+</ul>
 
-	<h3>Velg hvilke hendelser du vil jobbe med</h3>
-
-	<ul class="list-group" style="max-width: 768px;">
-		{% for hendelse in monstring.getProgram().getAll() if hendelse.getType() == 'default' %}
-			<li class="list-group-item">
-				<label>
-					<input type="checkbox" name="hendelser" value="{{ hendelse.getId() }}" {{ 'forestilling' in hendelse.getNavn()|lower ? 'checked' }} />
-					{{ hendelse.getNavn() }}
-				</label>
-			</li>
-		{% else %}
-			{% set hideButton = true %}
-			<li class="list-group-item text-danger">
-				Kan ikke starte grovsortering da du ikke har noen hendelser som kan ta i mot innslag.
-				<br />
-				<a href="?page={{ GET('page') }}&action=hendelse&id=new">Opprett en hendelse</a>, hvor du velger at detaljprogrammet består av innslag.
-			</li>
-		{% endfor %}
-	</ul>
-
-	{% if not hideButton %}
-		<p>
-			<button type="button" class="btn btn-success" id="startSort">Start sortering</button>
-		</p>
-	{% endif %}
-{% endblock %}
+{% if not hideButton %}
+    <p>
+        <button type="button" class="btn btn-success" id="startSort">Start sortering</button>
+    </p>
+{% endif %}

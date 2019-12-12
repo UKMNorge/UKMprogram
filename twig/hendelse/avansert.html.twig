@@ -1,0 +1,74 @@
+<div id="avansert">
+    {# BESKRIVELSE PÅ PROGRAM-SIDEN #}
+    <div class="row mt-5" id="description">
+        <div class="col-12 col-xs-12 col-sm-8 col-lg-6">
+            <div class="form-group mb-0">
+                <label>
+                    Offentlig beskrivelse av hendelsen
+                    <span class="text-muted small" style="font-weight:normal;">(valgfritt)</span>
+                </label>
+                <textarea class="form-control mb-0" name="beskrivelse">{{ hendelse.getBeskrivelse() }}</textarea>
+            </div>
+            <p class="help text-muted mt-1">
+                Det du skriver i dette feltet vises på programsiden for hendelsen (når man trykker seg inn på det).
+            </p>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12 col-sm-8 col-lg-6">
+            <div class="form-group">
+                <label>Skal hendelsen fremheves ekstra?</label>
+                <div class="btn-group pull-right radioButtons" data-name="fremhevet" id="radioButton_fremhevet">
+                    <button type="button" class="btn btn-default {{ hendelse.erFremhevet() ? 'selected' }}" value="true">
+                        &nbsp; Ja &nbsp;</button>
+                    <button type="button" class="btn btn-default {{ not hendelse.erFremhevet() ? 'selected' }}" value="false">
+                        &nbsp; Nei &nbsp;</button>
+                </div>
+                <p class="help text-muted">
+                    Anbefalt for hovedforestillinger. Gir annen bakgrunnsfarge og synlighet.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4" id="myColor">
+        <div class="col-12 col-sm-8 col-lg-6">
+            <div class="form-group">
+                <label>
+                    Farge
+                    <span class="text-muted small" style="font-weight:normal;">(valgfritt)</span>
+                </label>
+                <div class="clearfix"></div>
+                <input type="text" class="form-control colorpicker" name="farge" value="{{ hendelse.getFarge() }}"/>
+                <p class="help text-muted">Angi fargen på "boksen" til hendelsen i oversikten.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    UKMresources.optionCard.on('synlig_ramme', function(valgt) {
+        if( valgt == 'true' ) {
+            jQuery('#avansert').slideDown();
+        } else {
+            jQuery('#avansert').slideUp();
+        }
+    });
+
+    jQuery(document).ready(function(){
+        jQuery('.colorpicker').wpColorPicker();
+    });
+
+    jQuery(document).on('change', '#radioButtonValue_fremhevet', function(e) {
+        if (jQuery(e.target).val() == 'true') {
+            jQuery('#myColor').slideUp(
+                function(){
+                    jQuery('#myColor input.colorpicker').val('').change();
+                }
+            );
+        } else {
+            jQuery('#myColor').slideDown();
+            jQuery('#myColor .colorpicker').wpColorPicker();
+        }
+    });
+</script>

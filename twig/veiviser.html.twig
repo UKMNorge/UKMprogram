@@ -1,0 +1,97 @@
+<h2>
+    Program for
+	{{ arrangement.getNavn() }}
+</h2>
+
+<script>
+    jQuery(document).ready(function() {
+        UKMresources.optionCard.on('antall', function(valgt) {
+            if (valgt == 'flere') {
+                jQuery('#velgFordeling').slideUp();
+                jQuery('#viSkillerUtUtstilling').slideUp();
+            } else {
+                if( valgt == 'to' ) {
+                    jQuery('#viSkillerUtUtstilling').slideDown();
+                } else {
+                    jQuery('#viSkillerUtUtstilling').slideUp();
+                }
+                jQuery('#velgFordeling').slideDown();
+            }
+        });
+        UKMresources.optionCard.pullStatus('antall');
+    });
+</script>
+
+<form action="?page={{ GET('page') }}&action=autocreate" id="formContainer" method="POST">
+    <div style="width: 98%" id="arrangement-add">
+        {% include "wp_modul.flashbag.html.twig" %}
+        <h4>Hvor mange arrangement tenker du å opprette?</h4>
+        <p class="text-muted" style="margin-top:0;margin-bottom:0;">
+            Frykt ikke, du kan endre dette når som helst.
+        </p>
+        <div class="row">
+            <div class="col-xs-6 col-sm-4 col-lg-3">
+                <div class="optionCard card" data-group="antall" data-value="en">
+                    <div class="dashicons dashicons-star-empty"></div>
+                    <div class="header">Én hendelse</div>
+                    <p>
+                        Hvis alle dine påmeldte opptrer i en forestilling,
+                        velger du denne.
+                        <br />&nbsp;
+                    </p>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-4 col-lg-3">
+                <div class="optionCard card {{ arrangement.getInnslag().getAntall() <= 20 ? 'selected' }}" data-group="antall" data-value="to">
+                    <div class="dashicons dashicons-star-half"></div>
+                    <div class="header">Én hendelse + utstilling</div>
+                    <p>
+                        Alle påmeldte opptrer i en forestilling,
+                        men du vil ha en utstilling i tillegg.
+                        <br />&nbsp;
+                    </p>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-4 col-lg-3">
+                <div class="optionCard card {{ arrangement.getInnslag().getAntall() > 20 ? 'selected' }}" data-group="antall" data-value="flere">
+                    <div class="dashicons dashicons-star-filled"></div>
+                    <div class="header">Flere hendelser</div>
+                    <p>
+                        For deg som har mange innslag som skal fordeles i flere forestillinger
+                        eller vil fordele de i ulike dager, tema osv.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" id="velgFordeling" style="display:none; margin-top:2em;">
+            <div class="col-xs-12 col-sm-12">
+                <h4>Skal vi legge til alle innslagene dine i hendelsen?</h4>
+                <p id="viSkillerUtUtstilling" class="text-muted" style="display:none;">
+                    Vi passer selvfølgelig på at alle utstillingsinnslagene havner i utstillingshendelsen
+                </p>
+                <div style="margin-top: 1em;">
+                    <div class="btn-group radioButtons" data-name="leggtil">
+                        <button type="button" class="btn btn-default" value="yes">
+                            &nbsp; Ja &nbsp;</button>
+                        <button type="button" class="btn btn-default selected" value="no">
+                            &nbsp; Nei &nbsp;</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-lg-4">
+                <p style="margin-top:1.2em;">        
+                    OBS: Vi legger til alle innslag som er påmeldt arrangementet ditt nå,
+                    men hvis du får inn flere påmeldinger, må du legge til disse i programmet selv.
+                    Vi jobber med en løsning som kan fikse dette automatisk for deg.
+                </p>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 4em;">
+            <div class="col-xs-12 col-sm-12">
+                <button class="btn btn-success" type="submit">Kom i gang!</button>
+            </div>
+        </div>
+    </div>
+</form>

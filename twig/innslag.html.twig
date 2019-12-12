@@ -1,18 +1,16 @@
-<li class="innslag" data-id="{{ innslag.getId() }}" style="cursor: move;">
+<li class="innslag" data-id="{{ innslag.getId() }}" style="cursor: move;" data-duration="{{ innslag.getType().harTid() ? innslag.getVarighet().getSekunder() : '0' }}" data-type="{{innslag.getType().getKey()}}" data-hendelser="{% for hendelse in innslag.getProgram().getAbsoluteAll() %}{{ hendelse.getId() }}{{ not loop.last ? ','}}{% endfor %}">
 	<div class="infos">
-		<abbr title="{{ innslag.getPersoner().getAntall() }} personer">
-			{{ innslag.getPersoner().getAntall() }}p
-		</abbr> | 
 		{% if innslag.getType().harTitler() %}
 			{% if innslag.getType().harTid() %}
-				{{ innslag.getVarighet().getCompact() }}<br />
-			{% else %}
-				- <br />
+				{{ innslag.getVarighet().getCompact() }} |
 			{% endif %}
 		{% endif %}
-		
+		<abbr title="{{ innslag.getPersoner().getAntall() }} personer">
+			{{ innslag.getPersoner().getAntall() }}p
+		</abbr> 
+		<br />		
 		<small>
-			{{ monstring.getType() == 'land' ? innslag.getFylke() : innslag.getKommune() }}
+			{{ monstring.getEierType() == 'land' ? innslag.getFylke() : innslag.getKommune() }}
 		</small>
 	</div>
 	<div class="navn">{{ innslag.getNavn()|upper }}</div>

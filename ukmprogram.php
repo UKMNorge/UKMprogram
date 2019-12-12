@@ -8,15 +8,15 @@ Version: 2.0
 Author URI: http://www.ukm-norge.no
 */
 
+use UKMNorge\Wordpress\Modul;
 
 // TODO
 #do_action('UKMprogram_save', 'lagre', $_POST['c_id']); @ hendelse save
 
+require_once('UKM/Autoloader.php');
 
-require_once('UKM/wp_modul.class.php');
-
-class UKMprogram extends UKMWPmodul {
-    public static $action = 'snart';
+class UKMprogram extends Modul {
+    public static $action = 'dashboard';
     public static $path_plugin = null;
 
     /**
@@ -66,7 +66,14 @@ class UKMprogram extends UKMWPmodul {
 		wp_enqueue_style('WPbootstrap3_css');
 		wp_enqueue_script('jqueryGoogleUI', '//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js');
         wp_enqueue_style('UKMprogram_css', plugin_dir_url( __FILE__ ) .'UKMprogram.css' );
-        wp_enqueue_script('UKMprogram_js', plugin_dir_url( __FILE__ ) .'UKMprogram.js' );
+        wp_enqueue_script('UKMprogram_js_supply', plugin_dir_url( __FILE__ ) .'js/supply.js');
+        wp_enqueue_script('UKMprogram_js_hendelse', plugin_dir_url( __FILE__ ) .'js/hendelse.js');
+        wp_enqueue_script('UKMprogram_js_hendelser', plugin_dir_url( __FILE__ ) .'js/hendelser.js');
+        wp_enqueue_script('UKMprogram_js_innslag', plugin_dir_url( __FILE__ ) .'js/innslag.js');
+        wp_enqueue_script('UKMprogram_js_filter', plugin_dir_url( __FILE__ ) .'js/filter.js');
+        wp_enqueue_script('UKMprogram_js', plugin_dir_url( __FILE__ ) .'UKMprogram.js', array( 'wp-color-picker' ));
+
+        wp_enqueue_style( 'wp-color-picker' );
 	}
 	
 	public static function save( $case ) {

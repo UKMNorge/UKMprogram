@@ -1,0 +1,25 @@
+<div class="panel panel-warning supplyContainer" data-supply="fordeling" id="supplyFordeling">
+	<div class="panel-heading">
+		<div class="icon">
+			<a href="#" onclick="alert('Dra innslagene fra denne listen og over i en hendelse');">
+				<span class="dashicons dashicons-info text-warning"></span>
+			</a>
+		</div>
+
+		<h3 class="panel-title">Innslag som ikke er fordelt</h3>
+	</div>
+	<div class="panel-body">
+		<p class="text-muted small helper harInnslag" style="margin-top:-.5em">
+			Innslag som er i denne listen når arrangementet starter,
+            er ikke med i programmet. Dra og slipp for å legge de til i en hendelse.
+		</p>
+		<p class="text-muted small helper ingenInnslag" style="margin-top:-.5em;" style="display:none;">
+			Alle dine påmeldte er med i minst én hendelse 🥳
+		</p>
+		<ol class="list-unstyled supplyList" style="min-height: 55px;">
+			{% for innslag in arrangement.getInnslag().getAll()|filter( innslag => innslag.getProgram().getAbsoluteAll()|length == 0 ) %}
+				{% include "innslag.html.twig" %}
+			{% endfor %}
+		</ol>
+	</div>
+</div>

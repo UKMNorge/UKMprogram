@@ -1,0 +1,97 @@
+<div class="clearfix mb-2"></div>
+<div class="row mt-4" id="oppmote" style="display:none">
+	<div class="col-12 col-sm-6">
+		<div class="form-group">
+			<label>Vil du angi detaljer for oppmøte-tid?</label>
+			<div class="btn-group pull-right radioButtons" data-name="angi_oppmote" id="radioButton_angi_oppmote">
+				<button type="button" class="btn btn-default {{ hendelse.getOppmoteFor != 0 or hendelse.getOppmoteDelay != 0 ? 'selected' }}" value="true">
+					&nbsp; Ja &nbsp;</button>
+				<button type="button" class="btn btn-default {{ hendelse.getOppmoteFor == 0 and hendelse.getOppmoteDelay == 0 ? 'selected' }}" value="false">
+					&nbsp; Nei &nbsp;</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script>
+	UKMresources.optionCard.on('type', function (valgt) {
+        if (valgt == 'default') {
+            jQuery('#oppmote').slideDown();
+        } else {
+            jQuery('#oppmote').slideUp();
+        }
+    });
+
+    jQuery(document).on('change', '#radioButtonValue_angi_oppmote', function(e) {
+        if (jQuery(e.target).val() == 'true') {
+            jQuery('#oppmote_detaljer').slideDown();
+        } else {
+            jQuery('#oppmote_detaljer').slideUp();
+        }
+    });
+</script>
+
+<div id="oppmote_detaljer" style="display: none;">
+    <div class="row mt-4">
+        <div class="col-xs-6 col-6 col-sm-4 col-lg-3">
+            <div class="form-group">
+                <label>Hvor lenge før hendelsen skal det første innslaget møte?</label>
+                <select class="form-control" name="oppmote_for">
+                    {% for time in 0..12 %}
+                        {% if time == 1 %}
+                            <optgroup label="Første time">
+                        {% elseif time > 1 %}
+                            </optgroup>
+                        <optgroup label="{{ time }} timer">
+                        {% endif %}
+                        {% for min in range(0,55,5) %}
+                            {% set value = ( time * 60) + min %}
+                            <option value="{{ value }}" {{ value == hendelse.getOppmoteFor() ? 'selected' }}>
+                                {% if time == 1 %}
+                                    1 time,
+                                {% elseif time > 1 %}
+                                    {{ time }}
+                                    timer,
+                                {% endif %}
+                                {{ min }}
+                                min før
+                            </option>
+                        {% endfor %}
+                    {% endfor %}
+                    </optgroup>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-xs-6 col-6 col-sm-4 col-lg-3">
+            <div class="form-group">
+                <label>Deretter, hvor stor tidsforskyving skal det være per innslag?</label>
+                <select class="form-control" name="oppmote_forskyving">
+                    <option value="0">Alle møter samtidig</option>
+                    {% for i in 1..30 %}
+                        <option value="{{ i }}" {{ i == hendelse.getOppmoteDelay() ? 'selected' }}>{{ i }}
+                            min etter forrige</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <input type="hidden" name="oppmote_synlig" value="false" />
+    {# PRØVER Å TA UT DENNE - TROR IKKE DEN BRUKES LENGRE
+    <div class="row mt-3">
+        <div class="col-xs-12 col-12 col-sm-8 col-lg-6">
+            <div class="form-group">
+                <label>Skal oppmøtetiden vises i programmet?</label>
+                <div class="btn-group pull-right radioButtons" data-name="oppmote_synlig" id="radioButton_oppmote_synlig">
+                    <button type="button" class="btn btn-default {{ hendelse.getSynligOppmotetid() ? 'selected' }}" value="true">
+                        &nbsp; Ja &nbsp; <span class="text-muted">(helst ikke)</span></button>
+                    <button type="button" class="btn btn-default {{ not hendelse.getSynligOppmotetid() ? 'selected' }}" value="false">
+                        &nbsp; Nei &nbsp;</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    #}
+</div>

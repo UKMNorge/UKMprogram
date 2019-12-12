@@ -2,6 +2,7 @@
 
 use UKMNorge\Arrangement\Arrangement;
 use UKMNorge\Arrangement\Program\Write;
+use UKMNorge\Wordpress\Blog;
 
 require_once('UKM/Autoloader.php');
 
@@ -16,6 +17,8 @@ $hendelse->setNavn($_POST['navn']);
 $hendelse->setSted($_POST['sted']);
 $hendelse->setStart($start);
 $hendelse->setIntern($_POST['intern'] == 'true');
+$hendelse->setSynligRammeprogram($_POST['synlig_ramme'] == 'true');
+$hendelse->setSynligDetaljprogram($_POST['synlig_detalj'] == 'true');
 $hendelse->setType($_POST['type']);
 
 // HVIS HENDELSEN HAR BESKRIVELSE
@@ -25,8 +28,30 @@ if (isset($_POST['beskrivelse'])) {
 
 // HVIS TYPE:POST
 if (isset($_POST['post_id'])) {
-	$hendelse->setTypePostId($_POST['post_id']);
+    $blog_id = Blog::getIdByPath( $arrangement->getPath() );
+    try {
+        if( $_POST['post_id'] == 'createpage' ) {
+            $post_id = (Int) Blog::opprettSide(
+                $blog_id,
+                'hendelse-'. $hendelse->getId(),
+                $hendelse->getNavn()
+            );
+            Blog::setSideMeta( 
+                $blog_id,
+                $post_id,
+                [
+                    'hendelse' => true
+                ]
+            );
+        } else {
+            $post_id = $_POST['post_id'];
+        }
+        $hendelse->setTypePostId($post_id);
+    } catch( Exception $e ) {
+        UKMprogram::getFlashbag()->add('danger', 'Kunne ikke opprette informasjonssiden. System sa: '. $e->getMessage());
+    }
 }
+
 // HVIS TYPE:KATEGORI
 if (isset($_POST['category_id'])) {
 	$hendelse->setTypeCategoryId($_POST['category_id']);
@@ -53,9 +78,6 @@ if (isset($_POST['angi_oppmote']) && $_POST['angi_oppmote'] == 'true') {
 	$hendelse->setSynligOppmotetid(false);
 }
 
-// SYNLIGHET
-$hendelse->setSynligRammeprogram($_POST['synlig_ramme'] == 'true');
-$hendelse->setSynligDetaljprogram($_POST['synlig_detalj'] == 'true');
 
 Write::save($hendelse);
 

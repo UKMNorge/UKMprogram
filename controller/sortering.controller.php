@@ -5,13 +5,13 @@ use UKMNorge\Innslag\Typer\Typer;
 
 require_once('UKM/Autoloader.php');
 
-$monstring = new Arrangement( get_option('pl_id') );
+$arrangement = new Arrangement( get_option('pl_id') );
+UKMprogram::setAction('grovsort/sorter');
 
 // MULIGENS VIS VALG AV HENDELSER
 if( !isset( $_GET['hendelser'] ) ) {
-
 	$hendelser = [];
-	foreach( $monstring->getProgram()->getAll() as $hendelse ) {
+	foreach( $arrangement->getProgram()->getAbsoluteAll() as $hendelse ) {
 		if( $hendelse->getType() == 'default' ) {
 			$hendelser[] = $hendelse->getId();
 		}
@@ -20,11 +20,9 @@ if( !isset( $_GET['hendelser'] ) ) {
 	// Hvis mønstringen har mer enn 6 hendelser, vis en selector først.
 	// Det er uansett mulig å velge flere, men det er naturlig å anta
 	// at man ikke ønsker å jobbe med alle disse på en gang.
-	if( sizeof( $hendelser ) > 6 ) {
+	if( sizeof( $hendelser ) > 2 ) {
 		UKMprogram::setAction('grovsort/select');
 	} else {
-		UKMprogram::setAction('grovsort/sorter');
-
 		$typer = [];
 		$innslag_typer = Typer::getAllTyper();
 		foreach( $innslag_typer as $type ) {
@@ -37,11 +35,11 @@ if( !isset( $_GET['hendelser'] ) ) {
 			}
 		}
 		UKMprogram::addViewData('innslag_typer', $typer);
-	}
+    }
+    UKMprogram::addViewData('numHendelser', sizeof($hendelser));
 } else {
 	$hendelser = explode('-', $_GET['hendelser'] );
 }
 
 UKMprogram::addViewData('show', $hendelser);
-
-UKMprogram::addViewData('monstring', $monstring);
+UKMprogram::addViewData('arrangement', $arrangement);
