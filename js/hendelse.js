@@ -134,7 +134,7 @@ var hendelse = function($) {
          */
         var header = {
             toggleSynlig: function(newState) {
-                var program = $(jQuerySelector).attr('data-synlighet');
+                var program = $(jQuerySelector).attr('data-synlighet') == 'program' ? 'success' : 'primary';
                 $(jQuerySelector).toggleClass('panel-danger', !newState).toggleClass('panel-' + program, newState);
             },
             bind: function() {
