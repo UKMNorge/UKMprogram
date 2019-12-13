@@ -16,10 +16,20 @@ $hendelse = $arrangement->getProgram()->get($_POST['id']);
 $hendelse->setNavn($_POST['navn']);
 $hendelse->setSted($_POST['sted']);
 $hendelse->setStart($start);
-$hendelse->setIntern($_POST['intern'] == 'true');
-$hendelse->setSynligRammeprogram($_POST['synlig_ramme'] == 'true');
 $hendelse->setSynligDetaljprogram($_POST['synlig_detalj'] == 'true');
 $hendelse->setType($_POST['type']);
+
+if( $_POST['synlighet'] == 'deltakerprogram' ) {
+    $hendelse->setSynligRammeprogram(true);
+    $hendelse->setIntern(true);
+} elseif( $_POST['synlighet'] == 'program' ) {
+    $hendelse->setSynligRammeprogram(true);
+    $hendelse->setIntern(false);
+} else {
+    $hendelse->setSynligRammeprogram(false);
+    // Oppdaterer ikke intern, slik at en evt toggle av synlighet
+    // tar innslaget tilbake til riktig state
+}
 
 // HVIS HENDELSEN HAR BESKRIVELSE
 if (isset($_POST['beskrivelse'])) {

@@ -5,18 +5,8 @@
 </div>
 
 <div class="row">
-	<div class="col-xs-6 col-6 col-sm-4 col-lg-3">
-        <div class="optionCard card {{ hendelse.erSynligRammeprogram() ? 'selected' }}" data-group="synlig_ramme" data-value="true">
-            <div class="dashicons dashicons-visibility"></div>
-            <div class="header">Vis denne på UKM.no</div>
-            <p>
-                Vis denne i program-oversikten
-            </p>
-        </div>
-    </div>
-
-	<div class="col-xs-6 col-6 col-sm-4 col-lg-3">
-        <div class="optionCard card {{ not hendelse.erSynligRammeprogram() ? 'selected' }}" data-group="synlig_ramme" data-value="false">
+	<div class="col-xs-6 col-6 col-sm-3 col-lg-2">
+        <div class="optionCard card {{ not hendelse.erSynligRammeprogram() ? 'selected' }}" data-group="synlighet" data-value="skjult">
             <div class="dashicons dashicons-hidden"></div>
             <div class="header">Skjul fra UKM.no</div>
             <p>
@@ -24,11 +14,20 @@
             </p>
         </div>
     </div>
-</div>
+	
+    <div class="col-xs-6 col-6 col-sm-3 col-lg-2">
+        <div class="optionCard card {{ hendelse.erSynligRammeprogram() and hendelse.erIntern() ? 'selected' }}" data-group="synlighet" data-value="deltakerprogram">
+            <div class="dashicons dashicons-nametag"></div>
+            <div class="header">Vis kun i deltakerprogram</div>
+            <p>
+                Deltakerprogrammet er ikke synlig i menyen,
+                og kan sendes (f.eks. på sms) til dine deltakere.
+            </p>
+        </div>
+    </div>
 
-<div class="row" id="visIntern">
-	<div class="col-xs-6 col-6 col-sm-4 col-lg-3">
-        <div class="optionCard card {{ not hendelse.erIntern() ? 'selected' }}" data-group="intern" data-value="false">
+	<div class="col-xs-6 col-6 col-sm-3 col-lg-2">
+        <div class="optionCard card {{ hendelse.erSynligRammeprogram() and not hendelse.erIntern() ? 'selected' }}" data-group="synlighet" data-value="program">
             <div class="dashicons dashicons-tickets"></div>
             <div class="header">Vis i offentlig program</div>
             <p>
@@ -38,34 +37,9 @@
         </div>
     </div>
 
-	<div class="col-xs-6 col-6 col-sm-4 col-lg-3">
-        <div class="optionCard card {{ hendelse.erIntern() ? 'selected' }}" data-group="intern" data-value="true">
-            <div class="dashicons dashicons-nametag"></div>
-            <div class="header">Vis kun i deltakerprogram</div>
-            <p>
-                Deltakerprogrammet er ikke synlig i menyen,
-                og kan sendes (f.eks. på sms) til dine deltakere.
-            </p>
-        </div>
-    </div>
 </div>
 
-<div class="row mt-4" id="deltakerprogram" style="display:none;">
-    <div class="col-12 col-12 col-sm-8 col-lg-6">
-        <ol class="list-group">
-            <li class="list-group-item">
-                Adressen til ditt 
-                <a href="{{arrangement.getLink()}}deltakerprogram/" target="_blank">deltakerprogram</a>
-                er:
-                <code>
-                    {{ arrangement.getLink() }}deltakerprogram/
-                </code>
-            </li>
-        </ol>
-    </div>
-</div>
-
-<div class="row mt-4" id="visDetaljer">
+<div class="row mt-3" id="visDetaljer">
 	<div class="col-xs-6 col-6 col-sm-4 col-lg-3">
         <div class="optionCard card {{ hendelse.getSynligDetaljprogram() ? 'selected' }}" data-group="synlig_detalj" data-value="true">
             <div class="dashicons dashicons-unlock"></div>
@@ -93,9 +67,25 @@
         </div>
     </div>
 </div>
+
+<div class="row mt-4" id="deltakerprogramUrl" style="display:none;">
+    <div class="col-12 col-12 col-sm-8 col-lg-6">
+        <ol class="list-group">
+            <li class="list-group-item">
+                Adressen til ditt 
+                <a href="{{arrangement.getLink()}}deltakerprogram/" target="_blank">deltakerprogram</a>
+                er:
+                <code>
+                    {{ arrangement.getLink() }}deltakerprogram/
+                </code>
+            </li>
+        </ol>
+    </div>
+</div>
 {% if arrangement.getEierType() == 'land' %}
     {% include "hendelse/avansert.html.twig" %}
 {% endif %}
+
 
 
 <script>
@@ -103,15 +93,15 @@
         jQuery('.vis_detaljer_infos').hide();
         jQuery('.vis_detaljer_'+ valgt).show();
     });
-    UKMresources.optionCard.on('synlig_ramme', function(valgt){
-        if( valgt == 'true' ) {
-            jQuery('#visDetaljer, #visIntern').slideDown();
-            if( UKMresources.optionCard.status('intern') == 'true' ) {
-                jQuery('#deltakerprogram').fadeIn();
-            }
+    UKMresources.optionCard.on('synlighet', function(valgt){
+        if( valgt == 'program' ) {
+            jQuery('#visDetaljer').slideDown();
+            jQuery('#deltakerprogramUrl').slideUp();
+        } else if( valgt == 'deltakerprogram' ) {
+            jQuery('#visDetaljer').slideDown();
+            jQuery('#deltakerprogramUrl').slideDown();
         } else {
-            jQuery('#visDetaljer, #visIntern').slideUp();
-            jQuery('#deltakerprogram').hide();
+            jQuery('#visDetaljer, #deltakerprogramUrl').slideUp();
         }
     });
     UKMresources.optionCard.on('intern', function(valgt) {
