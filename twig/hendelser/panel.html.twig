@@ -1,4 +1,4 @@
-<div class="hendelse panel panel-{{ hendelse.erSynligRammeprogram() ? ( hendelse.erIntern() ? 'primary': 'success' ) : 'danger' }}" id="hendelse_{{hendelse.getId()}}" data-id="{{ hendelse.getId() }}">
+<div class="hendelse panel panel-{{ hendelse.erSynligRammeprogram() ? ( hendelse.erIntern() ? 'primary': 'success' ) : 'danger' }}" id="hendelse_{{hendelse.getId()}}" data-id="{{ hendelse.getId() }}" data-synlighet="{{ hendelse.erIntern() ? 'deltakerprogram':'program' }}">
 	<div class="panel-heading">
 
 		<div class="icon toggleState" data-controller="synligDetaljprogram" data-state="{{ hendelse.harSynligDetaljprogram() ? 'on' : 'off' }}">
@@ -10,7 +10,7 @@
 			</div>
 		</div>
 
-		<div class="icon toggleState toggleSynlig" data-controller="synligRammeprogram" data-synlighet="{{ hendelse.erIntern() ? 'deltakerprogram':'program' }}" data-state="{{ hendelse.erSynligRammeprogram() ? 'on' : 'off' }}">
+		<div class="icon toggleState toggleSynlig" data-controller="synligRammeprogram" data-state="{{ hendelse.erSynligRammeprogram() ? 'on' : 'off' }}">
 			<div class="state-off" {{ hendelse.erSynligRammeprogram() ? 'style="display:none;"' }} title="Vises i programmet">
 				<span class="dashicons dashicons-hidden"></span>
 			</div>
