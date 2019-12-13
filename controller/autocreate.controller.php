@@ -10,7 +10,8 @@ $arrangement = new Arrangement( get_option('pl_id') );
 if( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
     UKMprogram::setAction('dashboard');
 
-    $setup = $arrangement->getMeta('program_editor')->set( in_array($_POST['antall'],['en','to']) ? 'enkel' : 'avansert' );
+    #$setup = $arrangement->getMeta('program_editor')->set( in_array($_POST['antall'],['en','to']) ? 'enkel' : 'avansert' );
+    $setup = $arrangement->getMeta('program_editor')->set( 'enkel' );
     WriteMeta::set($setup);
 
     $utstilling = false;
