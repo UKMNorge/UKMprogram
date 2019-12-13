@@ -11,8 +11,8 @@ jQuery(document).on('click', '#startSort', function() {
 
 jQuery(document).ready(function() {
     // Minst én supply-container må finnes for at appen starter
+    var hendelser = hendelseContainer('.hendelse, .supplyContainer');
     if (jQuery('.supplyContainer').length) {
-        var hendelser = hendelseContainer('.hendelse, .supplyContainer');
         alleInnslag.init(hendelser);
 
         /* SORTERING */

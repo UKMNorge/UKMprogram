@@ -47,8 +47,8 @@
 </div>
 
 <script>
-    UKMresources.optionCard.on('synlig_ramme', function(valgt) {
-        if( valgt == 'true' ) {
+    UKMresources.optionCard.on('synlighet', function(valgt) {
+        if( valgt == 'deltakerprogram' || valgt == 'program' ) {
             jQuery('#avansert').slideDown();
         } else {
             jQuery('#avansert').slideUp();

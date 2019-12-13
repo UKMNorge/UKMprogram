@@ -1,13 +1,6 @@
-<div class="hendelse panel panel-{{ hendelse.erSynligRammeprogram() ? 'success' : 'danger' }}" id="hendelse_{{hendelse.getId()}}" data-id="{{ hendelse.getId() }}">
+<div class="hendelse panel panel-{{ hendelse.erSynligRammeprogram() ? ( hendelse.erIntern() ? 'primary': 'success' ) : 'danger' }}" id="hendelse_{{hendelse.getId()}}" data-id="{{ hendelse.getId() }}">
 	<div class="panel-heading">
-		<div class="icon toggleState" data-controller="erIntern" data-state="{{ hendelse.erIntern() ? 'on' : 'off' }}">
-			<div class="state-on" {{ not hendelse.erIntern() ? 'style="display:none;"' }} title="Intern hendelse">
-				<span class="dashicons dashicons-nametag"></span>
-			</div>
-			<div class="state-off" {{ hendelse.erIntern() ? 'style="display:none;"' }} title="Synlig i offentlig program">
-				<span class="dashicons dashicons-tickets"></span>
-			</div>
-		</div>
+
 		<div class="icon toggleState" data-controller="synligDetaljprogram" data-state="{{ hendelse.harSynligDetaljprogram() ? 'on' : 'off' }}">
 			<div class="state-on" {{ not hendelse.harSynligDetaljprogram() ? 'style="display:none;"' }} title="Detaljprogrammet er synlig">
 				<span class="dashicons dashicons-unlock"></span>
@@ -17,13 +10,19 @@
 			</div>
 		</div>
 
-		<div class="icon toggleState toggleSynlig" data-controller="synligRammeprogram" data-state="{{ hendelse.erSynligRammeprogram() ? 'on' : 'off' }}">
-			<div class="state-on" {{ not hendelse.erSynligRammeprogram() ? 'style="display:none;"' }} title="Vises i programmet">
-				<span class="dashicons dashicons-visibility"></span>
-			</div>
-			<div class="state-off" {{ hendelse.erSynligRammeprogram() ? 'style="display:none;"' }} title="Vises ikke i programmet">
+		<div class="icon toggleState toggleSynlig" data-controller="synligRammeprogram" data-synlighet="{{ hendelse.erIntern() ? 'deltakerprogram':'program' }}" data-state="{{ hendelse.erSynligRammeprogram() ? 'on' : 'off' }}">
+			<div class="state-off" {{ hendelse.erSynligRammeprogram() ? 'style="display:none;"' }} title="Vises i programmet">
 				<span class="dashicons dashicons-hidden"></span>
 			</div>
+            {% if hendelse.erIntern() %}
+                <div class="state-on" {{ not hendelse.erSynligRammeprogram() ? 'style="display:none;"' }} title="Vises kun i deltakerprogram">
+                    <span class="dashicons dashicons-nametag"></span>
+                </div>
+            {% else %}
+                <div class="state-on" {{ not hendelse.erSynligRammeprogram() ? 'style="display:none;"' }} title="Vises også i offentlig program">
+                    <span class="dashicons dashicons-tickets"></span>
+                </div>
+            {% endif %}
 		</div>
 
 		<h3 class="panel-title">
