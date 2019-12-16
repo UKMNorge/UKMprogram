@@ -41,17 +41,19 @@
                     </p>
                 </div>
             </div>
-            <div class="col-xs-6 col-sm-4 col-lg-3">
-                <div class="optionCard card {{ arrangement.getInnslag().getAntall() <= 20 ? 'selected' }}" data-group="antall" data-value="to">
-                    <div class="dashicons dashicons-star-half"></div>
-                    <div class="header">Én hendelse + utstilling</div>
-                    <p>
-                        Alle påmeldte opptrer i en forestilling,
-                        men du vil ha en utstilling i tillegg.
-                        <br />&nbsp;
-                    </p>
+            {% if arrangement.erMonstring() %}
+                <div class="col-xs-6 col-sm-4 col-lg-3">
+                    <div class="optionCard card {{ arrangement.getInnslag().getAntall() <= 20 ? 'selected' }}" data-group="antall" data-value="to">
+                        <div class="dashicons dashicons-star-half"></div>
+                        <div class="header">Én hendelse + utstilling</div>
+                        <p>
+                            Alle påmeldte opptrer i en forestilling,
+                            men du vil ha en utstilling i tillegg.
+                            <br />&nbsp;
+                        </p>
+                    </div>
                 </div>
-            </div>
+            {% endif %}
             <div class="col-xs-6 col-sm-4 col-lg-3">
                 <div class="optionCard card {{ arrangement.getInnslag().getAntall() > 20 ? 'selected' }}" data-group="antall" data-value="flere">
                     <div class="dashicons dashicons-star-filled"></div>
