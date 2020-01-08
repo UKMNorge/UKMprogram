@@ -40,7 +40,7 @@ class UKMprogram extends Modul {
      */
     public static function meny() {		
 		$page = add_submenu_page(
-			'UKMmonstring',
+			'index.php',
 			'Program', 
 			'Program', 
 			'editor', 
