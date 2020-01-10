@@ -28,11 +28,13 @@ class UKMprogram extends Modul {
 			['UKMprogram','ajax']
 		);
 
-        add_action(
-			'admin_menu', 
-			['UKMprogram', 'meny'],
-			200
-		);
+        if( get_option('pl_id') ) {
+            add_action(
+                'admin_menu', 
+                ['UKMprogram', 'meny'],
+                200
+            );
+        }
     }
 
     /**
