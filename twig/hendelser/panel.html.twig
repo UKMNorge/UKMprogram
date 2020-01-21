@@ -58,6 +58,10 @@
 			{{ hendelse.getInnslag().getAntall() }}
 			innslag -
             {{ hendelse.getTid() }}
+
+            <div class="pull-right">
+                <a href="?page={{GET('page')}}&action=sortering&hendelser={{hendelse.getId()}}" class="btn btn-ukm btn-xs">Rediger rekkefølgen</a>
+            </div>
 		{% elseif hendelse.getType() == 'post' %}
             <div class="pull-right">
                 <a href="post.php?post={{ hendelse.getTypePostId() }}&action=edit" target="_blank" class="btn btn-ukm btn-xs">Rediger teksten</a>
@@ -69,5 +73,6 @@
 			En feil har oppstått.
 			{{ hendelse.getType() }}
 		{% endif %}
+        <div class="clearfix"></div>
 	</div>
 </div>

@@ -32,6 +32,20 @@ if( isset($_GET['do']) && $_GET['do'] == 'changeView' && isset($_GET['to'])) {
     WriteMeta::set($setup);
 }
 
+if( $arrangement->getMetaValue('program_editor') == 'enkel' ) {
+    if( $arrangement->getInnslag()->getAntall() > 30 ) {
+        UKMprogram::getFlashbag()->info(
+            'Når du har så mange innslag, er det muligens bedre for deg å bruke den '.
+            '<a href="?page='. $_GET['page'] .'&do=changeView&to=avansert">avanserte visningen</a>'
+        );
+    } elseif( $arrangement->getProgram()->getAntall() > 4 ) {
+        UKMprogram::getFlashbag()->info(
+            'Når du har så mange hendelser, er det muligens bedre for deg å bruke den '.
+            '<a href="?page='. $_GET['page'] .'&do=changeView&to=avansert">avanserte visningen</a>'
+        );
+    }
+}
+
 UKMprogram::addViewData('arrangement', $arrangement);
 UKMprogram::addViewData('program', $program);
 
