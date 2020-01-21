@@ -1,3 +1,6 @@
+{% if visInnslag is not defined %}
+    {% set visInnslag = true %}
+{% endif %}
 {% if show|length < 4 %}
 	{% set maxcol = show|length %}
 	{% set percol = 1 %}
@@ -19,7 +22,7 @@
 	{% endif %}
 	<div class="col-xs-6 col-sm-4 col-md-{{ ( 8 / maxcol )|round }}">
 		{% for hendelse in arrangement.getProgram().getAbsoluteAll()|filter(hendelse => visAlle or (hendelse.getId() in show))|slice(start - percol,stop) %}
-			{% include "hendelser/panel.html.twig" with { visInnslag: true } %}
+			{% include "hendelser/panel.html.twig" with { visInnslag: visInnslag} %}
 		{% endfor %}
 	</div>
 {% endfor %}

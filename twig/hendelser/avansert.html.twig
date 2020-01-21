@@ -1,7 +1,4 @@
 <div class="pull-right float-right" style="margin-top: 1em; margin-right: 2em; margin-bottom: 1em;">
-    {% include "tegnforklaring.html.twig" %}
-</div>
-<div class="pull-right float-right" style="margin-top: 1em; margin-right: 2em; margin-bottom: 1em;">
 	<a href="?page={{GET('page')}}&do=changeView&to=enkel" class="btn btn-ukm btn-sm">Bytt til enkel visning</a>
 </div>
 <h3>
@@ -9,40 +6,53 @@
 	<small style="font-size: .6em; margin-left: 1em;">
 		<a href="?page={{ GET('page') }}&action=hendelse&id=new" class="btn btn-ukm btn-xs btn-success" style="margin-top: -.6em;">Legg til ny hendelse</a>
 
-        <a href="?page={{ GET('page') }}&action=sortering" class="btn btn-ukm btn-xs" style="margin-top: -.6em;">Sorter påmeldte i hendelser</a>
+		<a href="?page={{ GET('page') }}&action=sortering" class="btn btn-ukm btn-xs" style="margin-top: -.6em;">Sorter påmeldte i hendelser</a>
 	</small>
 </h3>
 {% include "wp_modul.flashbag.html.twig" %}
 
 
-<table class="program">
-	<thead>
-		<tr>
-			{% for dag in arrangement.getDager() %}
-				<th>
-					{{ dag|dato('D j. M') }}
-				</th>
-			{% endfor %}
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			{% for dag in arrangement.getDager() %}
-				<td class="kolonne tot-{{ arrangement.getAntallDager() }}">
-					{% for hendelse in program[ dag|dato('d_m') ].forestillinger %}
-						{% include "hendelser/panel.html.twig" %}
-					{% else %}
-						<div class="panel">
-							<div class="panel-heading">
-								<p class="panel-title">
-									<span class="text-muted">Ingen hendelser
-										{{ dag|dato('l j') }}.</span>
-								</p>
+{% if arrangement.getDager()|length == 1 %}
+	<div style="width: 98%" class="program mt-5">
+		<div class="row">
+			{% set show = arrangement.getProgram().getAbsoluteAll() %}
+			{% include "hendelser/liste.html.twig" with {visAlle:true, visInnslag:false} %}
+		</div>
+	</div>
+{% else %}
+	<table class="program">
+		<thead>
+			<tr>
+				{% for dag in arrangement.getDager() %}
+					<th>
+						{{ dag|dato('D j. M') }}
+					</th>
+				{% endfor %}
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				{% for dag in arrangement.getDager() %}
+					<td class="kolonne tot-{{ arrangement.getAntallDager() }}">
+						{% for hendelse in program[ dag|dato('d_m') ].forestillinger %}
+							{% include "hendelser/panel.html.twig" %}
+						{% else %}
+							<div class="panel">
+								<div class="panel-heading">
+									<p class="panel-title">
+										<span class="text-muted">Ingen hendelser
+											{{ dag|dato('l j') }}.</span>
+									</p>
+								</div>
 							</div>
-						</div>
-					{% endfor %}
-				</td>
-			{% endfor %}
-		</tr>
-	</tbody>
-</table>
+						{% endfor %}
+					</td>
+				{% endfor %}
+			</tr>
+		</tbody>
+	</table>
+{% endif %}
+<div class="clearfix"></div>
+<div class="" style="margin-top: 1em; margin-right: 2em; margin-bottom: 1em;">
+	{% include "tegnforklaring.html.twig" %}
+</div>
