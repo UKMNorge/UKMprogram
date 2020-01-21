@@ -32,19 +32,29 @@ if( isset($_GET['do']) && $_GET['do'] == 'changeView' && isset($_GET['to'])) {
     WriteMeta::set($setup);
 }
 
+
+$grense_avansert_innslag = 40;
+$grense_avansert_hendelser = 4;
 if( $arrangement->getMetaValue('program_editor') == 'enkel' ) {
-    if( $arrangement->getInnslag()->getAntall() > 30 ) {
+    if( $arrangement->getInnslag()->getAntall() > $grense_avansert_innslag ) {
         UKMprogram::getFlashbag()->info(
             'Når du har så mange innslag, er det muligens bedre for deg å bruke den '.
             '<a href="?page='. $_GET['page'] .'&do=changeView&to=avansert">avanserte visningen</a>'
         );
-    } elseif( $arrangement->getProgram()->getAntall() > 4 ) {
+    } elseif( $arrangement->getProgram()->getAntall() > $grense_avansert_hendelser ) {
         UKMprogram::getFlashbag()->info(
             'Når du har så mange hendelser, er det muligens bedre for deg å bruke den '.
             '<a href="?page='. $_GET['page'] .'&do=changeView&to=avansert">avanserte visningen</a>'
         );
     }
 }
+UKMprogram::addViewData(
+    'grense',
+    [
+        'innslag' => $grense_avansert_innslag,
+        'hendelser' => $grense_avansert_hendelser
+    ]
+);
 
 UKMprogram::addViewData('arrangement', $arrangement);
 UKMprogram::addViewData('program', $program);
