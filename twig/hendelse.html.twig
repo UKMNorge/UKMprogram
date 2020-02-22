@@ -6,7 +6,8 @@
 	{% set currentStartDate = hendelse.getStart()|dato('d.m.Y') %}
 {% endif %}
 
-
+<div id="secondary_flashbag" style="display:none; ">
+</div>
 <h3>
     {% if GET('id') == 'new' %}
         Opprett hendelse
@@ -19,6 +20,7 @@
         {% if GET('id') != 'new' %}
             <a class="btn btn-ukm btn-xs btn-danger" href="?page={{GET('page')}}&delete=hendelse&c_id={{hendelse.getId()}}" onclick="return confirm('Er du sikker på at du vil slette denne?');" style="margin-top: -.6em;">slett denne hendelsen</a>
         {% endif %}
+        <a class="btn btn-ukm btn-xs" id="dupliser_hendelse" href="#" style="margin-top: -.6em;">dupliser</a>
     </small>
 </h3>
 <div class="clearfix clear clear-fix"></div>
@@ -41,3 +43,30 @@
     {# bottom-spacer for å håndtere color-picker #}
     <div style="min-height: 300px; display:block;"></div>
 {% endif %}
+
+{% block javascripts %}
+<script>
+jQuery(document).ready(function() {
+    jQuery("#dupliser_hendelse").click(function(clickEvent) {
+        if(confirm('Er du sikker på at du vil duplisere denne hendelsen?')) {
+            jQuery.post(
+                ajaxurl, {
+                    action: 'UKMprogramV2_ajax',
+                    controller: 'save',
+                    save: 'dupliserHendelse',
+                    hendelse: {{ hendelse.getId() }}
+                },
+                function(response) {
+                    if (response !== null && response.success) {
+                        console.log(response.hendelse.id.toString());
+                        jQuery("#secondary_flashbag").html('<div class="alert alert-success"><a href="?page=UKMprogram&action=hendelse&id='+response.hendelse.id.toString()+'">Hendelse duplisert! Klikk her for å gå til den nye hendelsen din</a></div>').slideDown();
+                    } else {
+                        alert('Klarte ikke å duplisere hendelse. Feilmelding: '+response.message);
+                    }
+                }
+            );
+        }
+    });
+});
+</script> 
+{% endblock %}
