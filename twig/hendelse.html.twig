@@ -58,7 +58,6 @@ jQuery(document).ready(function() {
                 },
                 function(response) {
                     if (response !== null && response.success) {
-                        console.log(response.hendelse.id.toString());
                         jQuery("#secondary_flashbag").html('<div class="alert alert-success"><a href="?page=UKMprogram&action=hendelse&id='+response.hendelse.id.toString()+'">Hendelse duplisert! Klikk her for å gå til den nye hendelsen din</a></div>').slideDown();
                     } else {
                         alert('Klarte ikke å duplisere hendelse. Feilmelding: '+response.message);
