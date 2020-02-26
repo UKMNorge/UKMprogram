@@ -15,12 +15,16 @@
         Rediger
         {{ hendelse.getNavn() }}
     {% endif %}
+    <div class="pull-right">
+        <small style="font-size:.6em; margin-right: 2em;">
+            <a class="btn btn-ukm btn-xs" href="?page={{GET('page')}}" style="margin-top: -.6em;">avbryt, tilbake til oversikten</a>
+        </small>
+    </div>
     <small style="font-size:.6em; margin-left: 1em;">
-        <a class="btn btn-ukm btn-xs" href="?page={{GET('page')}}" style="margin-top: -.6em;">avbryt, tilbake til oversikten</a>
+        <a class="btn btn-ukm btn-xs" id="dupliser_hendelse" href="#" style="margin-top: -.6em;">lag kopi av denne hendelsen</a>
         {% if GET('id') != 'new' %}
             <a class="btn btn-ukm btn-xs btn-danger" href="?page={{GET('page')}}&delete=hendelse&c_id={{hendelse.getId()}}" onclick="return confirm('Er du sikker på at du vil slette denne?');" style="margin-top: -.6em;">slett denne hendelsen</a>
         {% endif %}
-        <a class="btn btn-ukm btn-xs" id="dupliser_hendelse" href="#" style="margin-top: -.6em;">dupliser</a>
     </small>
 </h3>
 <div class="clearfix clear clear-fix"></div>
@@ -35,6 +39,10 @@
     
 	<div style="margin-top: 2em;">
 		<input type="submit" value="Lagre" class="btn btn-success"/>
+        <span style="margin-left: 1.2em; margin-right: 1.2em;">
+            eller
+        </span>
+        <a href="?page={{GET('page')}}" style="margin-top: -.6em;">tilbake til oversikten</a>
 	</div>
 
 </form>
