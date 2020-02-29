@@ -7,11 +7,6 @@
 <h3>
 	Fordel innslag
 	<small>(Trekk de over til en hendelse)</small>
-	{% if show|length == 1 %}
-		<small style="font-size:.6em; margin-left: 1em;">
-			<a class="btn btn-ukm btn-xs" id="reverser_rekkefolge" href="#" style="margin-top: -.6em;">reverser rekkefølge</a>
-		</small>
-	{% endif %}
 </h3>
 
 <div class="clearfix"></div>
@@ -25,29 +20,3 @@
 		{% include "hendelser/liste.html.twig" %}
 	</div>
 </div>
-
-{% block javascripts %}
-<script>
-jQuery(document).ready(function() {
-    jQuery("#reverser_rekkefolge").click(function(clickEvent) {
-        if(confirm('Er du sikker på at du vil reversere rekkefølgen på alle innslag i denne hendelsen?')) {
-            jQuery.post(
-                ajaxurl, {
-                    action: 'UKMprogramV2_ajax',
-                    controller: 'save',
-                    save: 'reverserRekkefolge',
-                    hendelse: {{ show|first }}
-                },
-                function(response) {
-                    if (response !== null && response.success) {
-                    	location.reload();
-                    } else {
-                        alert('Klarte ikke å reversere rekkefølgen på innslagene.');
-                    }
-                }
-            );
-        }
-    });
-});
-</script> 
-{% endblock %}
