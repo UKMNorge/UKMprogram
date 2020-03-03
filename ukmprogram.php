@@ -73,6 +73,7 @@ class UKMprogram extends Modul {
         wp_enqueue_script('UKMprogram_js_hendelser', plugin_dir_url( __FILE__ ) .'js/hendelser.js');
         wp_enqueue_script('UKMprogram_js_innslag', plugin_dir_url( __FILE__ ) .'js/innslag.js');
         wp_enqueue_script('UKMprogram_js_filter', plugin_dir_url( __FILE__ ) .'js/filter.js');
+        wp_enqueue_script('UKMprogram_js_reverser', plugin_dir_url( __FILE__ ) .'js/reverser.js');
         wp_enqueue_script('UKMprogram_js', plugin_dir_url( __FILE__ ) .'UKMprogram.js', array( 'wp-color-picker' ));
 
         wp_enqueue_style( 'wp-color-picker' );

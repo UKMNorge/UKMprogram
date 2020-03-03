@@ -54,12 +54,17 @@
                 <span class="antall_innslag"></span> innslag, 
                 <span class="varighet">x min og y sek</span>
             </p>
+
+            <div class="">
+                <a class="reverser_rekkefolge btn btn-ukm btn-xs btn-block" data-hendelse="{{ hendelse.getId() }}">Snu rekkefølgen</a>
+            </div>
 		{% elseif hendelse.getType() == 'default' %}
 			{{ hendelse.getInnslag().getAntall() }}
 			innslag -
             {{ hendelse.getTid() }}
 
             <div class="pull-right">
+                <a href="#" class="reverser_rekkefolge btn btn-ukm btn-xs" data-hendelse="{{ hendelse.getId() }}">Snu rekkefølgen</a>
                 <a href="?page={{GET('page')}}&action=sortering&hendelser={{hendelse.getId()}}" class="btn btn-ukm btn-xs">Rediger rekkefølgen</a>
             </div>
 		{% elseif hendelse.getType() == 'post' %}
