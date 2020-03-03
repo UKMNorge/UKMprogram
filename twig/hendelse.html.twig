@@ -21,8 +21,8 @@
         </small>
     </div>
     <small style="font-size:.6em; margin-left: 1em;">
-        <a class="btn btn-ukm btn-xs" id="dupliser_hendelse" href="#" style="margin-top: -.6em;">lag kopi av denne hendelsen</a>
         {% if GET('id') != 'new' %}
+            <a class="btn btn-ukm btn-xs" id="dupliser_hendelse" href="#" style="margin-top: -.6em;">lag kopi av denne hendelsen</a>
             <a class="btn btn-ukm btn-xs btn-danger" href="?page={{GET('page')}}&delete=hendelse&c_id={{hendelse.getId()}}" onclick="return confirm('Er du sikker på at du vil slette denne?');" style="margin-top: -.6em;">slett denne hendelsen</a>
         {% endif %}
     </small>
