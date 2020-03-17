@@ -33,21 +33,7 @@ if( isset($_GET['do']) && $_GET['do'] == 'changeView' && isset($_GET['to'])) {
 }
 
 
-$grense_avansert_innslag = 40;
-$grense_avansert_hendelser = 4;
-if( $arrangement->getMetaValue('program_editor') == 'enkel' ) {
-    if( $arrangement->getInnslag()->getAntall() > $grense_avansert_innslag ) {
-        UKMprogram::getFlashbag()->info(
-            'Når du har så mange innslag, er det muligens bedre for deg å bruke den '.
-            '<a href="?page='. $_GET['page'] .'&do=changeView&to=avansert">avanserte visningen</a>'
-        );
-    } elseif( $arrangement->getProgram()->getAntall() > $grense_avansert_hendelser ) {
-        UKMprogram::getFlashbag()->info(
-            'Når du har så mange hendelser, er det muligens bedre for deg å bruke den '.
-            '<a href="?page='. $_GET['page'] .'&do=changeView&to=avansert">avanserte visningen</a>'
-        );
-    }
-}
+
 UKMprogram::addViewData(
     'grense',
     [
@@ -66,6 +52,23 @@ if( sizeof($program) == 0 ) {
 }
 // Vi har forestillinger, og jobber med enkel setup
 elseif( $arrangement->getMetaValue('program_editor') == 'enkel' ) {
+    
+    $grense_avansert_innslag = 40;
+    $grense_avansert_hendelser = 4;
+    if( $arrangement->getMetaValue('program_editor') == 'enkel' ) {
+        if( $arrangement->getInnslag()->getAntall() > $grense_avansert_innslag ) {
+            UKMprogram::getFlashbag()->info(
+                'Når du har så mange innslag, er det muligens bedre for deg å bruke den '.
+                '<a href="?page='. $_GET['page'] .'&do=changeView&to=avansert">avanserte visningen</a>'
+            );
+        } elseif( $arrangement->getProgram()->getAntall() > $grense_avansert_hendelser ) {
+            UKMprogram::getFlashbag()->info(
+                'Når du har så mange hendelser, er det muligens bedre for deg å bruke den '.
+                '<a href="?page='. $_GET['page'] .'&do=changeView&to=avansert">avanserte visningen</a>'
+            );
+        }
+    }
+
     UKMprogram::setAction('hendelser/enkel');
 }
 // Vi har forestillinger, og jobber med avansert setup

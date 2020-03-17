@@ -7,18 +7,35 @@
     jQuery(document).ready(function() {
         UKMresources.optionCard.on('antall', function(valgt) {
             if (valgt == 'flere') {
-                jQuery('#velgFordeling').slideUp();
-                jQuery('#viSkillerUtUtstilling').slideUp();
+                jQuery('#forestilling').slideUp();
             } else {
-                if( valgt == 'to' ) {
-                    jQuery('#viSkillerUtUtstilling').slideDown();
-                } else {
-                    jQuery('#viSkillerUtUtstilling').slideUp();
-                }
-                jQuery('#velgFordeling').slideDown();
+                jQuery('#forestilling').slideDown();
             }
+            jQuery('#radioButtonValue_utstilling').change();
         });
         UKMresources.optionCard.pullStatus('antall');
+    });
+    jQuery('#radioButtonValue_utstilling').trigger('change');
+
+    jQuery(document).on('change', '#radioButtonValue_utstilling, #radioButtonValue_forestilling, #radioButtonValue_arrangor, #radioButtonValue_nettredaksjon', function(e) {
+        var forestilling = UKMresources.optionCard.status('antall') != 'flere';
+        var utstilling = jQuery('#radioButtonValue_utstilling').val() == 'yes';
+        var nettredaksjon = jQuery('#radioButtonValue_nettredaksjon').val() == 'yes';
+        var arrangor = jQuery('#radioButtonValue_arrangor').val() == 'yes';
+
+        if( forestilling || utstilling || nettredaksjon || arrangor ) {
+            jQuery('#fordele').slideDown();
+        } else {
+            jQuery('#fordele').slideUp();
+        }   
+    });
+    
+    jQuery(document).on('change', '#radioButtonValue_leggtil', function(e) {
+        if (jQuery(e.target).val() == 'yes') {
+            jQuery('#viSkillerUtUtstilling').slideDown();
+        } else {
+            jQuery('#viSkillerUtUtstilling').slideUp();
+        }
     });
 </script>
 
@@ -30,25 +47,27 @@
             Frykt ikke, du kan endre dette når som helst.
         </p>
         <div class="row">
-            <div class="col-xs-6 col-sm-4 col-lg-3">
-                <div class="optionCard card" data-group="antall" data-value="en">
-                    <div class="dashicons dashicons-star-empty"></div>
-                    <div class="header">Én hendelse</div>
-                    <p>
-                        Hvis alle dine påmeldte opptrer i en forestilling,
-                        velger du denne.
-                        <br />&nbsp;
-                    </p>
+            {% if arrangement.erArrangement() %}
+                <div class="col-xs-6 col-sm-4 col-lg-3">
+                    <div class="optionCard card selected" data-group="antall" data-value="en">
+                        <div class="dashicons dashicons-star-empty"></div>
+                        <div class="header">Én hendelse</div>
+                        <p>
+                            Hvis alle dine påmeldte skal legges til i en hendelse,
+                            velger du denne.
+                            <br />&nbsp;
+                        </p>
+                    </div>
                 </div>
-            </div>
+            {% endif %}
             {% if arrangement.erMonstring() %}
                 <div class="col-xs-6 col-sm-4 col-lg-3">
-                    <div class="optionCard card {{ arrangement.getInnslag().getAntall() <= 20 ? 'selected' }}" data-group="antall" data-value="to">
+                    <div class="optionCard card {{ arrangement.getInnslag().getAntall() <= 20 ? 'selected' }}" data-group="antall" data-value="noen">
                         <div class="dashicons dashicons-star-half"></div>
-                        <div class="header">Én hendelse + utstilling</div>
+                        <div class="header">Én forestilling + noen grupper</div>
                         <p>
                             Alle påmeldte opptrer i en forestilling,
-                            men du vil ha en utstilling i tillegg.
+                            men du vil ha en utstilling, og kanskje en gruppe arrangører i tillegg.
                             <br />&nbsp;
                         </p>
                     </div>
@@ -57,7 +76,7 @@
             <div class="col-xs-6 col-sm-4 col-lg-3">
                 <div class="optionCard card {{ arrangement.getInnslag().getAntall() > 20 ? 'selected' }}" data-group="antall" data-value="flere">
                     <div class="dashicons dashicons-star-filled"></div>
-                    <div class="header">Flere hendelser</div>
+                    <div class="header">Flere forestillinger (hendelser)</div>
                     <p>
                         For deg som har mange innslag som skal fordeles i flere forestillinger
                         eller vil fordele de i ulike dager, tema osv.
@@ -66,27 +85,86 @@
             </div>
         </div>
 
-        <div class="row" id="velgFordeling" style="display:none; margin-top:2em;">
-            <div class="col-xs-12 col-sm-12">
-                <h4>Skal vi legge til alle innslagene dine i hendelsen?</h4>
-                <p id="viSkillerUtUtstilling" class="text-muted" style="display:none;">
-                    Vi passer selvfølgelig på at alle utstillingsinnslagene havner i utstillingshendelsen
-                </p>
-                <div style="margin-top: 1em;">
+        {% if arrangement.erMonstring() %}
+        <div class="row" style="margin-top:2em;">
+            <div class="col-12 col-sm-8 col-lg-6" style="margin-top: 1em;">
+                <h4>Hvilke hendelser skal vi opprette?</h4>
+                <ol class="list-group">
+                    <li class="list-group-item" id="forestilling">
+                        <div class="btn-group radioButtons pull-right" data-name="forestilling">
+                            <button type="button" class="btn btn-default" value="to">
+                                &nbsp; Med pause &nbsp;</button>
+                            <button type="button" class="btn btn-default selected" value="en">
+                                &nbsp; Uten pause &nbsp;</button>
+                        </div>
+                        Forestillingen
+                        <div class="clearfix"></div>
+                    </li>
+
+                    {% if arrangement.getInnslagTyper().har( innslag_typer.getByKey('utstilling') ) %}
+                        <li class="list-group-item">
+                            <div class="btn-group radioButtons pull-right" data-name="utstilling">
+                                <button type="button" class="btn btn-default" value="yes">
+                                    &nbsp; Ja &nbsp;</button>
+                                <button type="button" class="btn btn-default selected" value="no">
+                                    &nbsp; Nei &nbsp;</button>
+                            </div>
+                            Utstilling
+                            <div class="clearfix"></div>
+                        </li>
+                    {% endif %}
+
+                    {% if arrangement.getInnslagTyper().har( innslag_typer.getByKey('arrangor') ) %}
+                        <li class="list-group-item">
+                            <div class="btn-group radioButtons pull-right" data-name="arrangor">
+                                <button type="button" class="btn btn-default" value="yes">
+                                    &nbsp; Ja &nbsp;</button>
+                                <button type="button" class="btn btn-default selected" value="no">
+                                    &nbsp; Nei &nbsp;</button>
+                            </div>
+                            Arrangører
+                            <div class="clearfix"></div>
+                        </li>
+                    {% endif %}
+
+                    {% if arrangement.getInnslagTyper().har( innslag_typer.getByKey('nettredaksjon') ) %}
+                        <li class="list-group-item">
+                            <div class="btn-group radioButtons pull-right" data-name="nettredaksjon">
+                                <button type="button" class="btn btn-default" value="yes">
+                                    &nbsp; Ja &nbsp;</button>
+                                <button type="button" class="btn btn-default selected" value="no">
+                                    &nbsp; Nei &nbsp;</button>
+                            </div>
+                            Media
+                            <div class="clearfix"></div>
+                        </li>
+                    {% endif %}
+
+                </ol>
+            </div>
+        </div>
+        {% endif %}
+        <div class="row" id="fordele" style="margin-top:2em;">
+            <div class="col-xs-12 col-sm-8 col-lg-6">
+                <div class="pull-right" style="margin-top: .5em; margin-right: 1em;">
                     <div class="btn-group radioButtons" data-name="leggtil">
-                        <button type="button" class="btn btn-default" value="yes">
+                        <button type="button" class="btn btn-default selected" value="yes">
                             &nbsp; Ja &nbsp;</button>
-                        <button type="button" class="btn btn-default selected" value="no">
+                        <button type="button" class="btn btn-default" value="no">
                             &nbsp; Nei &nbsp;</button>
                     </div>
                 </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-lg-4">
-                <p style="margin-top:1.2em;">        
-                    OBS: Vi legger til alle innslag som er påmeldt arrangementet ditt nå,
-                    men hvis du får inn flere påmeldinger, må du legge til disse i programmet selv.
-                    Vi jobber med en løsning som kan fikse dette automatisk for deg.
-                </p>
+                <h4>Skal vi fordele innslagene ?</h4>
+                <div id="viSkillerUtUtstilling">
+                    <p>
+                        Vi passer selvfølgelig på at alle havner i riktig hendelse basert på valgene ovenfor.
+                    </p>
+                    <p class="text-muted" style="margin-top:1.2em;">        
+                        OBS: Vi legger til alle innslag som er påmeldt arrangementet ditt nå,
+                        men hvis du får inn flere påmeldinger, må du legge til disse i programmet selv.
+                        Vi jobber med en løsning som kan fikse dette automatisk for deg.
+                    </p>
+                </div>
             </div>
         </div>
 
