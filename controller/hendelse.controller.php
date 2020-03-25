@@ -1,8 +1,10 @@
 <?php
 
-require_once('UKM/monstring.class.php');
+use UKMNorge\Arrangement\Arrangement;
 
-$arrangement = new monstring_v2( get_option('pl_id') );
+require_once('UKM/Autoloader.php');
+
+$arrangement = new Arrangement(intval( get_option('pl_id') ));
 
 // A sql query to return all post titles
 global $wpdb;
