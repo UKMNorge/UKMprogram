@@ -11,7 +11,7 @@
 		</div>
 
 		<div class="icon toggleState toggleSynlig" data-controller="synligRammeprogram" data-state="{{ hendelse.erSynligRammeprogram() ? 'on' : 'off' }}">
-			<div class="state-off" {{ hendelse.erSynligRammeprogram() ? 'style="display:none;"' }} title="Vises i programmet">
+			<div class="state-off" {{ hendelse.erSynligRammeprogram() ? 'style="display:none;"' }} title="Vises ikke i programmet">
 				<span class="dashicons dashicons-hidden"></span>
 			</div>
             {% if hendelse.erIntern() %}
@@ -19,7 +19,7 @@
                     <span class="dashicons dashicons-nametag"></span>
                 </div>
             {% else %}
-                <div class="state-on" {{ not hendelse.erSynligRammeprogram() ? 'style="display:none;"' }} title="Vises også i offentlig program">
+                <div class="state-on" {{ not hendelse.erSynligRammeprogram() ? 'style="display:none;"' }} title="Vises i offentlig- og deltakerprogram">
                     <span class="dashicons dashicons-tickets"></span>
                 </div>
             {% endif %}
