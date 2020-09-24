@@ -4,6 +4,8 @@ use UKMNorge\Arrangement\Arrangement;
 use UKMNorge\Arrangement\Program\Write;
 use UKMNorge\Wordpress\Blog;
 
+date_default_timezone_set('Europe/Oslo');
+
 require_once('UKM/Autoloader.php');
 
 $start_string = $_POST['start_date'] . '-' . $_POST['start_time'];
