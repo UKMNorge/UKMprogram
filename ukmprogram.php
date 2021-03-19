@@ -67,14 +67,14 @@ class UKMprogram extends Modul {
 		wp_enqueue_script('WPbootstrap3_js');
 		wp_enqueue_style('WPbootstrap3_css');
 		wp_enqueue_script('jqueryGoogleUI', '//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js');
-        wp_enqueue_style('UKMprogram_css', plugin_dir_url( __FILE__ ) .'UKMprogram.css' );
-        wp_enqueue_script('UKMprogram_js_supply', plugin_dir_url( __FILE__ ) .'js/supply.js');
-        wp_enqueue_script('UKMprogram_js_hendelse', plugin_dir_url( __FILE__ ) .'js/hendelse.js');
-        wp_enqueue_script('UKMprogram_js_hendelser', plugin_dir_url( __FILE__ ) .'js/hendelser.js');
-        wp_enqueue_script('UKMprogram_js_innslag', plugin_dir_url( __FILE__ ) .'js/innslag.js');
-        wp_enqueue_script('UKMprogram_js_filter', plugin_dir_url( __FILE__ ) .'js/filter.js');
-        wp_enqueue_script('UKMprogram_js_reverser', plugin_dir_url( __FILE__ ) .'js/reverser.js');
-        wp_enqueue_script('UKMprogram_js', plugin_dir_url( __FILE__ ) .'UKMprogram.js', array( 'wp-color-picker' ));
+        wp_enqueue_style('UKMprogram_css', PLUGIN_PATH .'UKMprogram/UKMprogram.css' );
+        wp_enqueue_script('UKMprogram_js_supply', PLUGIN_PATH .'UKMprogram/js/supply.js');
+        wp_enqueue_script('UKMprogram_js_hendelse', PLUGIN_PATH .'UKMprogram/js/hendelse.js');
+        wp_enqueue_script('UKMprogram_js_hendelser', PLUGIN_PATH .'UKMprogram/js/hendelser.js');
+        wp_enqueue_script('UKMprogram_js_innslag', PLUGIN_PATH .'UKMprogram/js/innslag.js');
+        wp_enqueue_script('UKMprogram_js_filter', PLUGIN_PATH .'UKMprogram/js/filter.js');
+        wp_enqueue_script('UKMprogram_js_reverser', PLUGIN_PATH .'UKMprogram/js/reverser.js');
+        wp_enqueue_script('UKMprogram_js', PLUGIN_PATH .'UKMprogram/UKMprogram.js', array( 'wp-color-picker' ));
 
         wp_enqueue_style( 'wp-color-picker' );
 	}
