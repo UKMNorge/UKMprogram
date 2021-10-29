@@ -9,6 +9,8 @@ Author URI: http://www.ukm-norge.no
 */
 
 use UKMNorge\Wordpress\Modul;
+use UKMNorge\Arrangement\Arrangement;
+
 
 // TODO
 #do_action('UKMprogram_save', 'lagre', $_POST['c_id']); @ hendelse save
@@ -41,19 +43,23 @@ class UKMprogram extends Modul {
      * Add menu
      */
     public static function meny() {		
-		$page = add_submenu_page(
-			'index.php',
-			'Program', 
-			'Program', 
-			'editor', 
-			'UKMprogram', 
-			['UKMprogram', 'renderAdmin']
-		);
-
-		add_action(
-			'admin_print_styles-' . $page,
-			['UKMprogram', 'scripts_and_styles']
-		);
+		$arrangement = new Arrangement( get_option( 'pl_id ') );
+		
+		if(!$arrangement->erKunstgalleri()) {
+			$page = add_submenu_page(
+				'index.php',
+				'Program', 
+				'Program', 
+				'editor', 
+				'UKMprogram', 
+				['UKMprogram', 'renderAdmin']
+			);
+	
+			add_action(
+				'admin_print_styles-' . $page,
+				['UKMprogram', 'scripts_and_styles']
+			);
+		}
 	}
 	
 
