@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             break;
         case 'flere':
             // Viktig at "flere" går videre, og ikke stopper i default
-            break;
+            // break;
         default:
             $_GET['id'] = 'new';
             UKMprogram::setAction('hendelse');
