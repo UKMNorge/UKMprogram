@@ -12,6 +12,7 @@
 {% include "wp_modul.flashbag.html.twig" %}
 
 
+
 {% if arrangement.getDager()|length == 1 %}
 	<div style="width: 98%" class="program mt-5">
 		<div class="row">
@@ -34,18 +35,25 @@
 			<tr>
 				{% for dag in arrangement.getDager() %}
 					<td class="kolonne tot-{{ arrangement.getAntallDager() }}">
-						{% for hendelse in program[ dag|dato('d_m') ].forestillinger %}
-							{% include "hendelser/panel.html.twig" %}
-						{% else %}
-							<div class="panel">
-								<div class="panel-heading">
-									<p class="panel-title">
-										<span class="text-muted">Ingen hendelser
-											{{ dag|dato('l j') }}.</span>
-									</p>
-								</div>
-							</div>
+						{% set dagEmpty = true %}
+						{% for p in program %}
+							{% if p.key == dag|dato('d_m') %}
+								{% set dagEmpty = false %}
+								{% for hendelse in p.forestillinger %}
+									{% include "hendelser/panel.html.twig" %}
+								{% endfor %}
+							{% endif %}
 						{% endfor %}
+						{% if dagEmpty %}
+								<div class="panel">
+									<div class="panel-heading">
+										<p class="panel-title">
+											<span class="text-muted">Ingen hendelser
+												{{ dag|dato('l j') }}.</span>
+										</p>
+									</div>
+								</div>
+						{% endif %}
 					</td>
 				{% endfor %}
 			</tr>
