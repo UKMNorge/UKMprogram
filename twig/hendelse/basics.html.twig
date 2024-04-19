@@ -23,7 +23,7 @@
 		<div class="form-group mb-0">
 			<label>Når starter hendelsen</label>
 			<select class="form-control mb-0" name="start_date" required>
-				{% for dag in arrangement.getDager() %}
+				{% for dag in arrangement.getDagerUansettKlokke() %}
 					<option value="{{ dag|dato('d.m.Y') }}" {{ currentStartDate == dag|dato('d.m.Y') ? 'selected' }}>{{ dag|dato('D d.M')|capitalize }}</option>
 				{% endfor %}
 			</select>
