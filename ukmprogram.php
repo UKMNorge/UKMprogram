@@ -1,10 +1,10 @@
 <?php  
 /* 
-Plugin Name: Landsfestivalen UKM Program
+Plugin Name: UKM Program Landsfestivalen
 Plugin URI: http://www.ukm-norge.no
 Description: UKM Norge admin
-Author: UKM Norge / M Mandal 
-Version: 2.0 
+Author: UKM Norge / Kushtrim Aliu
+Version: 1.0 
 Author URI: http://www.ukm-norge.no
 */
 
