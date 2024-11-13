@@ -60,7 +60,7 @@ if (isset($_POST['post_id'])) {
         }
         $hendelse->setTypePostId($post_id);
     } catch( Exception $e ) {
-        UKMprogram::getFlashbag()->add('danger', 'Kunne ikke opprette informasjonssiden. System sa: '. $e->getMessage());
+        UKMprogramLandsfestivalen::getFlashbag()->add('danger', 'Kunne ikke opprette informasjonssiden. System sa: '. $e->getMessage());
     }
 }
 
@@ -93,4 +93,4 @@ if (isset($_POST['angi_oppmote']) && $_POST['angi_oppmote'] == 'true') {
 
 Write::save($hendelse);
 
-UKMprogram::getFlashbag()->add('success', $_POST['navn'] . ' lagret');
+UKMprogramLandsfestivalen::getFlashbag()->add('success', $_POST['navn'] . ' lagret');

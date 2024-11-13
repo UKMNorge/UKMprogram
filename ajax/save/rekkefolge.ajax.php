@@ -12,4 +12,4 @@ $rekkefolge = explode(',',$_POST['innslag']);
 Write::redefineOrder( $hendelse, $rekkefolge );
 
 // Sett til true, fordi try-catch vil sette false hvis write feiler
-UKMprogram::addResponseData('success', true);
+UKMprogramLandsfestivalen::addResponseData('success', true);

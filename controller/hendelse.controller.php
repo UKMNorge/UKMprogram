@@ -17,18 +17,18 @@ $results = $wpdb->get_results(
     ARRAY_A 
 );
 
-UKMprogram::addViewData(
+UKMprogramLandsfestivalen::addViewData(
     'posts',
     !$results ? [] : $results
 );
 
-UKMprogram::addViewData(
+UKMprogramLandsfestivalen::addViewData(
     'categories',
     get_categories()
 );
 
-UKMprogram::addViewData('arrangement', $arrangement);
+UKMprogramLandsfestivalen::addViewData('arrangement', $arrangement);
 if( $_GET['id'] !== 'new' ) {
 	$hendelse = $arrangement->getProgram()->get( $_GET['id'] );
-	UKMprogram::addViewData('hendelse', $hendelse);
+	UKMprogramLandsfestivalen::addViewData('hendelse', $hendelse);
 }

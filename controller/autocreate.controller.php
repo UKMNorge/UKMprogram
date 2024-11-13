@@ -8,7 +8,7 @@ $arrangement = new Arrangement(get_option('pl_id'));
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    UKMprogram::setAction('dashboard');
+    UKMprogramLandsfestivalen::setAction('dashboard');
 
     WriteMeta::set(
         $arrangement->getMeta('program_editor')->set('enkel')
@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // break;
         default:
             $_GET['id'] = 'new';
-            UKMprogram::setAction('hendelse');
+            UKMprogramLandsfestivalen::setAction('hendelse');
             break;
     }
 
@@ -109,6 +109,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 } else {
-    UKMprogram::setAction('dashboard');
+    UKMprogramLandsfestivalen::setAction('dashboard');
 }
-UKMprogram::includeActionController();
+UKMprogramLandsfestivalen::includeActionController();

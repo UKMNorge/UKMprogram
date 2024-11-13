@@ -2,4 +2,4 @@
 
 use UKMNorge\Innslag\Typer\Typer;
 
-UKMprogram::addViewData('innslag_typer', new Typer());
+UKMprogramLandsfestivalen::addViewData('innslag_typer', new Typer());

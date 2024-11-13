@@ -18,9 +18,9 @@ try {
 
 	$ny_hendelse = Write::dupliser($hendelse);
 
-	UKMprogram::addResponseData('success', true);
-	UKMprogram::addResponseData('hendelse', $ny_hendelse);
+	UKMprogramLandsfestivalen::addResponseData('success', true);
+	UKMprogramLandsfestivalen::addResponseData('hendelse', $ny_hendelse);
 } catch ( Exception $e ) {
-	UKMprogram::addResponseData('success', false);
-	UKMprogram::addResponseData('message', $e->getMessage());
+	UKMprogramLandsfestivalen::addResponseData('success', false);
+	UKMprogramLandsfestivalen::addResponseData('message', $e->getMessage());
 }

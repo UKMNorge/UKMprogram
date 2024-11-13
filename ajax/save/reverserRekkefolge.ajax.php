@@ -10,4 +10,4 @@ $arrangement = new Arrangement( get_option('pl_id') );
 $hendelse = $arrangement->getProgram()->get( $_POST['hendelse'] );
 $success = Write::setRekkefolgeMotsatt( $hendelse );
 
-UKMprogram::addResponseData( 'success', $success );
+UKMprogramLandsfestivalen::addResponseData( 'success', $success );

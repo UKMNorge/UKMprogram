@@ -8,7 +8,7 @@ use UKMNorge\Wordpress\Blog;
 require_once('UKM/Autoloader.php');
 
 if( isset($_GET['delete'] ) && $_GET['delete'] == 'hendelse') {
-    require_once( UKMprogram::getPluginPath() .'delete/hendelse.delete.php');
+    require_once( UKMprogramLandsfestivalen::getPluginPath() .'delete/hendelse.delete.php');
 }
 
 $arrangement = new Arrangement( get_option('pl_id') );
@@ -34,7 +34,7 @@ if( isset($_GET['do']) && $_GET['do'] == 'changeView' && isset($_GET['to'])) {
 
 
 
-UKMprogram::addViewData(
+UKMprogramLandsfestivalen::addViewData(
     'grense',
     [
         'innslag' => $grense_avansert_innslag,
@@ -42,13 +42,13 @@ UKMprogram::addViewData(
     ]
 );
 
-UKMprogram::addViewData('arrangement', $arrangement);
-UKMprogram::addViewData('program', $program);
+UKMprogramLandsfestivalen::addViewData('arrangement', $arrangement);
+UKMprogramLandsfestivalen::addViewData('program', $program);
 
 // Inntil vi har forestillinger, vis veiviser
 if( sizeof($program) == 0 ) {
-    UKMprogram::setAction('veiviser');
-    UKMprogram::includeActionController();
+    UKMprogramLandsfestivalen::setAction('veiviser');
+    UKMprogramLandsfestivalen::includeActionController();
 }
 // Vi har forestillinger, og jobber med enkel setup
 elseif( $arrangement->getMetaValue('program_editor') == 'enkel' ) {
@@ -57,21 +57,21 @@ elseif( $arrangement->getMetaValue('program_editor') == 'enkel' ) {
     $grense_avansert_hendelser = 4;
     if( $arrangement->getMetaValue('program_editor') == 'enkel' ) {
         if( $arrangement->getInnslag()->getAntall() > $grense_avansert_innslag ) {
-            UKMprogram::getFlashbag()->info(
+            UKMprogramLandsfestivalen::getFlashbag()->info(
                 'Når du har så mange innslag, er det muligens bedre for deg å bruke den '.
                 '<a href="?page='. $_GET['page'] .'&do=changeView&to=avansert">avanserte visningen</a>'
             );
         } elseif( $arrangement->getProgram()->getAntall() > $grense_avansert_hendelser ) {
-            UKMprogram::getFlashbag()->info(
+            UKMprogramLandsfestivalen::getFlashbag()->info(
                 'Når du har så mange hendelser, er det muligens bedre for deg å bruke den '.
                 '<a href="?page='. $_GET['page'] .'&do=changeView&to=avansert">avanserte visningen</a>'
             );
         }
     }
 
-    UKMprogram::setAction('hendelser/enkel');
+    UKMprogramLandsfestivalen::setAction('hendelser/enkel');
 }
 // Vi har forestillinger, og jobber med avansert setup
 else {
-    UKMprogram::setAction('hendelser/avansert');
+    UKMprogramLandsfestivalen::setAction('hendelser/avansert');
 }

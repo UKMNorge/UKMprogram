@@ -6,7 +6,7 @@ use UKMNorge\Innslag\Typer\Typer;
 require_once('UKM/Autoloader.php');
 
 $arrangement = new Arrangement( get_option('pl_id') );
-UKMprogram::setAction('grovsort/sorter');
+UKMprogramLandsfestivalen::setAction('grovsort/sorter');
 
 // MULIGENS VIS VALG AV HENDELSER
 if( !isset( $_GET['hendelser'] ) ) {
@@ -21,7 +21,7 @@ if( !isset( $_GET['hendelser'] ) ) {
 	// Det er uansett mulig å velge flere, men det er naturlig å anta
 	// at man ikke ønsker å jobbe med alle disse på en gang.
 	if( sizeof( $hendelser ) > 2 ) {
-		UKMprogram::setAction('grovsort/select');
+		UKMprogramLandsfestivalen::setAction('grovsort/select');
 	} else {
 		$typer = [];
 		$innslag_typer = Typer::getAllTyper();
@@ -34,12 +34,12 @@ if( !isset( $_GET['hendelser'] ) ) {
 				$typer[] = $type;
 			}
 		}
-		UKMprogram::addViewData('innslag_typer', $typer);
+		UKMprogramLandsfestivalen::addViewData('innslag_typer', $typer);
     }
-    UKMprogram::addViewData('numHendelser', sizeof($hendelser));
+    UKMprogramLandsfestivalen::addViewData('numHendelser', sizeof($hendelser));
 } else {
 	$hendelser = explode('-', $_GET['hendelser'] );
 }
 
-UKMprogram::addViewData('show', $hendelser);
-UKMprogram::addViewData('arrangement', $arrangement);
+UKMprogramLandsfestivalen::addViewData('show', $hendelser);
+UKMprogramLandsfestivalen::addViewData('arrangement', $arrangement);
