@@ -25,6 +25,10 @@ class UKMprogram extends Modul {
      * Register hooks
      */
     public static function hook() {
+		if ( defined( 'MULTISITE' ) && get_current_blog_id() == LANDSFESTIVALEN_ID ) {
+			return;
+		}
+
 		add_action(
 			'wp_ajax_UKMprogramV2_ajax', 
 			['UKMprogram','ajax']
