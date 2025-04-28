@@ -20,6 +20,18 @@ $hendelse->setSted($_POST['sted']);
 $hendelse->setStart($start);
 $hendelse->setSynligDetaljprogram($_POST['synlig_detalj'] == 'true');
 $hendelse->setType($_POST['type']);
+$hendelse->setTag($_POST['tagg']);
+
+// HVIS ANGITT BILDE
+if (isset($_FILES['bilde'])) {
+    $resBilde = upload_image_to_current_blog($_FILES['bilde']);
+    if ($resBilde) {
+        $hendelse->setBilde($resBilde);
+    } else {
+        UKMprogram::getFlashbag()->add('danger', 'Kunne ikke laste opp bildet');
+    }
+}
+
 
 if( $_POST['synlighet'] == 'deltakerprogram' ) {
     $hendelse->setSynligRammeprogram(true);
@@ -88,6 +100,63 @@ if (isset($_POST['angi_oppmote']) && $_POST['angi_oppmote'] == 'true') {
 	$hendelse->setOppmoteFor(0);
 	$hendelse->setOppmoteDelay(0);
 	$hendelse->setSynligOppmotetid(false);
+}
+
+
+function upload_image_to_current_blog($imageFile) {
+    echo 'a';
+    if ( !isset($imageFile) || $imageFile['error'] !== 0 ) {
+        return false;
+    }
+
+    echo 'b';
+
+    $file_name = sanitize_file_name( $imageFile['name'] );
+    $file_temp = $imageFile['tmp_name'];
+
+    echo 'c';
+
+    // Get correct upload folder for current blog
+    $upload_dir = wp_upload_dir();
+
+    echo 'd';
+
+    // Read the uploaded file
+    $image_data = file_get_contents($file_temp);
+
+    // Create a unique filename
+    $filetype = wp_check_filetype($file_name);
+    $filename = time() . '.' . $filetype['ext'];
+
+    echo 'e';
+
+    // Define the final path
+    if ( wp_mkdir_p( $upload_dir['path'] ) ) {
+        $file = $upload_dir['path'] . '/' . $filename;
+    } else {
+        $file = $upload_dir['basedir'] . '/' . $filename;
+    }
+
+    // Save file to the filesystem
+    file_put_contents( $file, $image_data );
+
+    // Prepare attachment post
+    $attachment = array(
+        'post_mime_type' => $filetype['type'],
+        'post_title'     => pathinfo($filename, PATHINFO_FILENAME),
+        'post_content'   => '',
+        'post_status'    => 'inherit'
+    );
+
+    // Insert attachment into media library
+    $attach_id = wp_insert_attachment( $attachment, $file );
+
+    // Generate and update attachment metadata
+    require_once( ABSPATH . 'wp-admin/includes/image.php' );
+    $attach_data = wp_generate_attachment_metadata( $attach_id, $file );
+    wp_update_attachment_metadata( $attach_id, $attach_data );
+
+    return wp_get_attachment_url($attach_id);
 }
 
 

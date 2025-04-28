@@ -29,7 +29,7 @@
 </h3>
 <div class="clearfix clear clear-fix"></div>
 
-<form method="POST" action="?page=UKMprogram&save=hendelse">
+<form method="POST" action="?page=UKMprogram&save=hendelse" enctype="multipart/form-data">
     <input type="hidden" name="id" value="{{ GET('id') }}"/>
     <div style="width:98%">
         {% include "hendelse/basics.html.twig" %}
