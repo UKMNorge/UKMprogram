@@ -1,4 +1,43 @@
 <div id="avansert">
+
+    <div class="row mt-5" id="tagger">
+        <div class="col-12 col-xs-12 col-sm-8 col-lg-6">
+            <div class="form-group mb-0">
+                <label>
+                    Tagg
+                    <span class="text-muted small" style="font-weight:normal;">(valgfritt)</span>
+                </label>
+                <input type="text" class="form-control" name="tagg" value="{{ hendelse.getTag() }}"/>
+            </div>
+            <p class="help text-muted mt-1">
+                Taggen skal brukes for å skille/gruppere mellom ulike hendelser i programmet.
+            </p>
+        </div>
+    </div>
+
+    <div class="row mt-5" id="fremhevetBilde">
+        <div class="col-12 col-xs-12 col-sm-8 col-lg-6">
+            <div class="form-group mb-0">
+                <label>
+                    Fremhevet bilde
+                    <span class="text-muted small" style="font-weight:normal;">(valgfritt)</span>
+                </label>
+                <div>
+                {% if hendelse.getBilde() and hendelse.getBilde()|length > 0 %}
+                    <img src="{{ hendelse.getBilde() }}" class="img-fluid" alt="Fremhevet bilde" style="max-width: 100%; max-height: 200px;"/>
+                {% endif %}
+                </div>
+                
+                <input type="file" name="bilde" accept="image/*">
+
+            </div>
+            <p class="help text-muted mt-1">
+                Bilder vises i oversikten i programmet
+            </p>
+        </div>
+    </div>
+    
+
     {# BESKRIVELSE PÅ PROGRAM-SIDEN #}
     <div class="row mt-5" id="description">
         <div class="col-12 col-xs-12 col-sm-8 col-lg-6">
@@ -15,7 +54,7 @@
         </div>
     </div>
 
-    <div class="row mt-4">
+    {# <div class="row mt-4">
         <div class="col-12 col-sm-8 col-lg-6">
             <div class="form-group">
                 <label>Skal hendelsen fremheves ekstra?</label>
@@ -30,8 +69,8 @@
                 </p>
             </div>
         </div>
-    </div>
-    <div class="row mt-4" id="myColor">
+    </div> #}
+    {# <div class="row mt-4" id="myColor">
         <div class="col-12 col-sm-8 col-lg-6">
             <div class="form-group">
                 <label>
@@ -43,7 +82,7 @@
                 <p class="help text-muted">Angi fargen på "boksen" til hendelsen i oversikten.</p>
             </div>
         </div>
-    </div>
+    </div> #}
 </div>
 
 <script>
