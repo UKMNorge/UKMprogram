@@ -23,13 +23,15 @@ $hendelse->setType($_POST['type']);
 $hendelse->setTag($_POST['tagg']);
 
 // HVIS ANGITT BILDE
-if (isset($_FILES['bilde'])) {
+if (isset($_FILES['bilde']) && $_FILES['bilde']['size'] > 0) {
     $resBilde = upload_image_to_current_blog($_FILES['bilde']);
     if ($resBilde) {
         $hendelse->setBilde($resBilde);
     } else {
         UKMprogram::getFlashbag()->add('danger', 'Kunne ikke laste opp bildet');
     }
+} else if($_POST['currentBilde'] == '') {
+    $hendelse->setBilde(null);
 }
 
 

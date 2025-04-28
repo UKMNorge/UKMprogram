@@ -24,7 +24,11 @@
                 </label>
                 <div>
                 {% if hendelse.getBilde() and hendelse.getBilde()|length > 0 %}
-                    <img src="{{ hendelse.getBilde() }}" class="img-fluid" alt="Fremhevet bilde" style="max-width: 100%; max-height: 200px;"/>
+                    <input type="hidden" name="currentBilde" value="{{ hendelse.getBilde() }}"/>
+                    <a href="{{ hendelse.getBilde() }}" target="_blank" class="btn btn-default btn-sm">
+                        <img src="{{ hendelse.getBilde() }}" class="img-fluid" alt="Fremhevet bilde" style="max-width: 100%; max-height: 200px;"/>
+                    </a>
+                    <button id="fjernFremhevetBilde">Fjern bilde</button>
                 {% endif %}
                 </div>
                 
@@ -92,6 +96,12 @@
         } else {
             jQuery('#avansert').slideUp();
         }
+    });
+
+    jQuery('#fjernFremhevetBilde').on('click', function(e) {
+        e.preventDefault();
+        jQuery('input[name="currentBilde"]').val('');
+        jQuery('#fjernFremhevetBilde').parent().remove();
     });
 
     jQuery(document).ready(function(){
