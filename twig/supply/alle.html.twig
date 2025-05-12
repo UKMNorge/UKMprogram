@@ -17,6 +17,20 @@
                         <option value="{{ innslag_type.getKey() }}">{{ innslag_type.getNavn() }}</option>
                     {% endfor %}
                 </select>
+                
+                {% if arrangement.getType() == 'land' %}
+                    <br>
+                    <br>
+                    {# fylker #}
+                    <select id="fylkeFilterProgram" name="filter_fylke">
+                        <option value="false">alle fylker</option>
+                        {% for fylke in alle_fylker %}
+                            <option value="{{ fylke.getId() }}">{{ fylke.getNavn() }}</option>
+                        {% endfor %}
+                    </select>
+                    <br>
+                {% endif %}
+                
                 <br />som<br />
                 <select name="filter_hendelser">
                     <option value="antall_anything">er påmeldt ditt arrangement</option>
