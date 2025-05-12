@@ -1,6 +1,7 @@
 <?php
 
 use UKMNorge\Arrangement\Arrangement;
+use UKMNorge\Geografi\Fylker;
 use UKMNorge\Innslag\Typer\Typer;
 
 require_once('UKM/Autoloader.php');
@@ -43,3 +44,4 @@ if( !isset( $_GET['hendelser'] ) ) {
 
 UKMprogram::addViewData('show', $hendelser);
 UKMprogram::addViewData('arrangement', $arrangement);
+UKMprogram::addViewData('alle_fylker', Fylker::getAll());
