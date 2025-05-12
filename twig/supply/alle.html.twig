@@ -13,7 +13,7 @@
                 Viser <br />
                 <select name="filter_type">
                     <option value="false">alle innslag</option>
-                    {% for innslag_type in arrangement.getInnslagTyper().getAll() %}
+                    {% for innslag_type in arrangement.getInnslagTyper(true).getAll() %}
                         <option value="{{ innslag_type.getKey() }}">{{ innslag_type.getNavn() }}</option>
                     {% endfor %}
                 </select>
