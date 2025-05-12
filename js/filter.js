@@ -4,6 +4,7 @@ var innslagFilter = function($) {
 
         var self = {
             type: false,
+            fylke : false,
             hendelse: false,
             count: false,
 
@@ -44,6 +45,15 @@ var innslagFilter = function($) {
                     self.type = type;
                 }
 
+                // Fylke filter
+                var fylke = self.object().find('[name="filter_fylke"]').val() ?? false;
+                if (fylke == 'false') {
+                    self.fylke = false;
+                }
+                else {
+                    self.fylke = fylke;
+                }
+
                 var hendelse = self.object().find('[name="filter_hendelser"]').val();
                 if (hendelse.indexOf('antall_') == 0) {
                     self.count = hendelse.replace('antall_', '');
@@ -63,6 +73,12 @@ var innslagFilter = function($) {
                 return visible;
             },
             show: function(innslag) {
+                let innslagFylke = $('.innslag[data-id="' + innslag.getId() + '"]').attr('fylke-id');
+                // fylke sjekk
+                if (self.fylke !== false && self.fylke != innslagFylke) {
+                    return false;
+                }
+
                 // Vi har et type-filter
                 //console.group('show( ' + innslag.getId() + ')');
                 if (self.type !== false && innslag.getType() != self.type) {
