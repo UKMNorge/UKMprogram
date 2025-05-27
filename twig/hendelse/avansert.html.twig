@@ -17,6 +17,19 @@
 
     <div class="row mt-5" id="fremhevetBilde">
         <div class="col-12 col-xs-12 col-sm-8 col-lg-6">
+            <label>
+                {% set isChecked = hendelse.getVisning() is not null and hendelse.getVisning() == 'liste' ? 'checked' : '' %}
+                <input type="checkbox" name="visning_liste" value="liste" {{ isChecked }}/>
+                Visning av personer som liste i offentlig programmet
+            </label>
+            <p class="help text-muted mt-1">
+                Når avkrysset vil alle personer som er med i hendelsen vises som en liste i det offentlige programmet. Dette gjelder kun landsfestivalen
+            </p>
+        </div>
+    </div>
+
+    <div class="row mt-5" id="fremhevetBilde">
+        <div class="col-12 col-xs-12 col-sm-8 col-lg-6">
             <div class="form-group mb-0">
                 <label>
                     Fremhevet bilde

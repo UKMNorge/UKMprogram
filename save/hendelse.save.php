@@ -21,6 +21,7 @@ $hendelse->setStart($start);
 $hendelse->setSynligDetaljprogram($_POST['synlig_detalj'] == 'true');
 $hendelse->setType($_POST['type']);
 $hendelse->setTag($_POST['tagg']);
+$hendelse->setVisning($_POST['visning_liste']);
 
 // HVIS ANGITT BILDE
 if (isset($_FILES['bilde']) && $_FILES['bilde']['size'] > 0) {
