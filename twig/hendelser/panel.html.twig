@@ -69,9 +69,10 @@
             </div>
 		{% elseif hendelse.getType() == 'post' %}
             <div class="pull-right">
-                <a href="post.php?post={{ hendelse.getTypePostId() }}&action=edit" target="_blank" class="btn btn-ukm btn-xs">Rediger teksten</a>
+                <span>Infoteksten er ikke lenger tilgjengelig på nettsiden</span>
+                {# <a href="post.php?post={{ hendelse.getTypePostId() }}&action=edit" target="_blank" class="btn btn-ukm btn-xs">Rediger teksten</a> #}
             </div>
-			Dette er en informasjonsside.
+			{# Dette er en informasjonsside. #}
 		{% elseif hendelse.getType() == 'category' %}
 			Viser innlegg fra en kategori
 		{% else %}
