@@ -238,6 +238,16 @@ ol.detaljprogram li.innslag::before {
 .label-kat-matkultur {
     background: #ff0000;
 }
+.label-kat-aktivitet {
+    background: #000000;
+    color: #fff;
+    font-weight: bold;
+    padding: 0.2em 0.5em;
+    border-radius: 0.2em;
+    text-transform: uppercase;
+    font-size: 0.8em;
+    letter-spacing: 0.05em;
+}
 
 
 /* rød */
