@@ -41,8 +41,12 @@
 	<div class="panel-body">
         {% if hendelse.getType() == 'default' and visInnslag is defined and visInnslag %}
             <ol class="list-unstyled detaljprogram" style="min-height: 55px;">
-                {% for innslag in hendelse.getInnslag().getAll() %}
-                    {% include "innslag.html.twig" %}
+                    {% for item in hendelse.getItems() %}
+                        {% if item.getItemType() == 'innslag' %}
+                            {% include "innslag.html.twig" with {innslag: item} %}
+                        {% elseif item.getItemType() == 'aktivitet' %}
+                            {% include "aktivitet.html.twig" with {aktivitet: item} %}
+                        {% endif %}
                 {% else %}
                     <li class="ingeninnslag text-muted" style="cursor: move;">
                         Start med å trekke det første innslaget hit.

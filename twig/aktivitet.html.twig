@@ -1,4 +1,4 @@
-<li class="innslag" object-type="aktivitet" fylke-id="{{ innslag.getFylke().getId() }}" data-id="{{ aktivitet.getId() }}" style="cursor: move;" data-duration="{{ innslag.getType().harTid() ? innslag.getVarighet().getSekunder() : '0' }}" data-type="{{innslag.getType().getKey()}}" data-hendelser="{% for hendelse in innslag.getProgram().getAbsoluteAll() %}{{ hendelse.getId() }}{{ not loop.last ? ','}}{% endfor %}">
+<li class="innslag aktivitet-item" object-type="aktivitet" fylke-id="{{ innslag.getFylke().getId() }}" data-id="{{ aktivitet.getId() }}" style="cursor: move;" data-duration="{{ innslag.getType().harTid() ? innslag.getVarighet().getSekunder() : '0' }}" data-type="{{innslag.getType().getKey()}}" data-hendelser="{% for hendelse in innslag.getProgram().getAbsoluteAll() %}{{ hendelse.getId() }}{{ not loop.last ? ','}}{% endfor %}">
 	<div class="infos">
 		<abbr title="{{ innslag.getPersoner().getAntall() }} personer">
             {{ aktivitet.getkursholder()|length > 20 ? aktivitet.getkursholder()|slice(0, 20) ~ '...' : aktivitet.getkursholder() }}
@@ -14,3 +14,10 @@
 	</small>
 	<div class="clearfix"></div>
 </li>
+<style>
+li.aktivitet-item {
+    border: solid 1px #8a6d3b3d !important;
+    padding: 20px 5px;
+    background: #fcf8e3 !important;
+}
+</style>
