@@ -57,18 +57,27 @@
                 Dra og slipp herfra hvis det skal være med i flere hendelser.
             </p>
         {% endif %}
-        <h4 class="mt-4">Innslag</h4>
-		<ol class="list-unstyled supplyList innslagListe" style="min-height: 55px;">
-			{% for innslag in arrangement.getInnslag().getAll() %}
-				{% include "innslag.html.twig" with { visFilter: visFilter } %}
-			{% endfor %}
-		</ol>
-        <h4 class="mt-4">Aktiviteter</h4>
-		<ol class="list-unstyled supplyList innslagListe" style="min-height: 55px;">
-			{% for aktivitet in arrangement.getAktiviteter() %}
-				{% include "aktivitet.html.twig" with { visFilter: visFilter } %}
-			{% endfor %}
-		</ol>
+        
+        {% set alle_innslag = arrangement.getInnslag().getAll() %}
+        {% if alle_innslag|length > 0 %}
+            <h4 class="mt-4">Innslag</h4>
+            <ol class="list-unstyled supplyList innslagListe" style="min-height: 55px;">
+                {% for innslag in alle_innslag %}
+                    {% include "innslag.html.twig" with { visFilter: visFilter } %}
+                {% endfor %}
+            </ol>
+        {% endif %}
+        
+        {% set aktiviteter = arrangement.getAktiviteter() %}
+        {% if aktiviteter|length > 0 %}
+            <h4 class="mt-4">Aktiviteter</h4>
+            <ol class="list-unstyled supplyList innslagListe" style="min-height: 55px;">
+                {% for aktivitet in aktiviteter %}
+                    {% include "aktivitet.html.twig" with { visFilter: visFilter } %}
+                {% endfor %}
+            </ol>
+        {% endif %}
+    
 	</div>
 </div>
 
