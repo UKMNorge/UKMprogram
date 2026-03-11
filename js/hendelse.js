@@ -152,7 +152,7 @@ var hendelse = function($) {
                 var rekkefolge = [];
                 self.object().find('.ui-sortable li.innslag').each(function() {
                     if (jQuery(this).attr('data-id')) {
-                        rekkefolge.push(jQuery(this).attr('data-id'));
+                        rekkefolge.push({id: jQuery(this).attr('data-id'), type: jQuery(this).attr('object-type')});
                     }
                 });
 
@@ -170,7 +170,7 @@ var hendelse = function($) {
                         controller: 'save',
                         save: 'rekkefolge',
                         hendelse: self.object().attr('data-id'),
-                        innslag: rekkefolge.join(',')
+                        rekkefolge: JSON.stringify(rekkefolge)
                     },
                     function(response) {
                         /* HANDLING GJENNOMFØRT. HÅNDTER RESPONS */
