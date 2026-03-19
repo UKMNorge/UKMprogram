@@ -48,6 +48,12 @@ if( $_POST['synlighet'] == 'deltakerprogram' ) {
     // tar innslaget tilbake til riktig state
 }
 
+if( $_POST['intern_deltakerprogram'] == 'true' ) {
+    $hendelse->setDeltakerprogram(true);
+} else {
+    $hendelse->setDeltakerprogram(false);
+}
+
 // HVIS HENDELSEN HAR BESKRIVELSE
 if (isset($_POST['beskrivelse'])) {
 	$hendelse->setBeskrivelse($_POST['beskrivelse']);
