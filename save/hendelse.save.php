@@ -17,6 +17,7 @@ $hendelse = $arrangement->getProgram()->get($_POST['id']);
 // BASIS-INFO
 $hendelse->setNavn($_POST['navn']);
 $hendelse->setSted($_POST['sted']);
+$hendelse->setPlaceUrl($_POST['place_url'] ?: null);
 $hendelse->setStart($start);
 $hendelse->setSynligDetaljprogram($_POST['synlig_detalj'] == 'true');
 $hendelse->setType($_POST['type']);
