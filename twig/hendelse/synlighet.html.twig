@@ -69,7 +69,7 @@
     </div>
 </div>
 
-{% if arrangement.getType() == 'land' %}
+{% if arrangement.getType() == 'land' or arrangement.getType() == 'fylke' %}
 <div class="row mt-3" id="">
 	<div class="col-xs-6 col-6 col-sm-4 col-lg-3">
         <div class="optionCard card {{ not hendelse.getDeltakerprogram() ? 'selected' }}" data-group="intern_deltakerprogram" data-value="false">
